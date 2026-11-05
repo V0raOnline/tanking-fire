@@ -65,6 +65,10 @@ img/         esquemas de alambre en WebP con fondo transparente
 
 **Licencia:** © 2026 V0ra (v0raonline). El código, las reglas, los textos y el arte propio se publican con la licencia [PolyForm Noncommercial 1.0.0](LICENSE): se pueden usar, copiar y modificar sin fines comerciales. Los créditos y las licencias del material de terceros están en [CREDITS.md](CREDITS.md). El estado del trabajo y los siguientes pasos, en [ESTADO.md](ESTADO.md).
 
+## Privacidad
+
+La web publicada cuenta visitas con [GoatCounter](https://www.goatcounter.com/): sin cookies ni datos personales. También anota, de forma anónima, cuándo empieza una partida, en qué modo y en qué idioma. El progreso se guarda solo en tu navegador.
+
 ## Créditos y fuentes
 
 - Disparo, impactos y calibración de vistas: Armor Sandbox, el proyecto propio de V0ra del que salió este juego (sin publicar). Esquemas de alambre: modelos 3D de terceros con licencia CC BY (autores en CREDITS.md).

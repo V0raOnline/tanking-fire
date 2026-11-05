@@ -30,6 +30,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<!-- Contador de visitas sin cookies ni datos personales (GoatCounter). Solo en la web publicada: ni en local ni en copias. -->
+<script>
+if (location.hostname === 'v0raonline.github.io') {
+  window.goatcounter = { endpoint: 'https://v0raonline.goatcounter.com/count' };
+  const gc = document.createElement('script'); gc.async = true; gc.src = 'https://gc.zgo.at/count.js'; document.head.appendChild(gc);
+}
+</script>
 <style>
 /* Mesa de mando: mapa del frente arriba, tablero cuadriculado a la izquierda, panel de mando a la derecha. Un solo tema oscuro, deliberado. */
 :root{
@@ -1248,7 +1255,10 @@ function sortHand(side) {
 }
 function log(t) { S.log.unshift({ r: S.round, t }); S.log = S.log.slice(0, 60); if ($('log')) renderLog(); }
 
+// Evento anónimo al empezar una partida: modo e idioma. Los rivales siguientes de una Ofensiva no cuentan como partida nueva.
+function gcEvent(path) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path, title: path, event: true }); } catch (e) {} }
 function newGame(vehId, opts = {}) {
+  if (!opts.silent && !(opts.mode === 'ofensiva' && OFE && OFE.n > 1)) gcEvent(`partida-${opts.tutorial ? 'nivel0' : opts.mode || 'free'}-${LANG}`);
   if (typeof setMusic === 'function' && !opts.silent) setMusic('batalla');
   const pv = VEHICLES.find(v => v.id === vehId);
   const others = VEHICLES.filter(v => v.id !== vehId);
