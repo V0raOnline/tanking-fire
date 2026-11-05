@@ -47,4 +47,4 @@ Pixabay, licencia de contenido de Pixabay:
 
 ## Agradecimientos
 
-- A **Jalapeño**, por la idea de exportar e importar el progreso.
+- 🎖️ **Cruz al Mérito en Intendencia**, concedida a **Jalapeño**: «Por su previsión al proponer que ninguna hoja de servicio se perdiera al cambiar de puesto de mando». La idea de exportar e importar el progreso.

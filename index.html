@@ -535,6 +535,15 @@ button.card:disabled{cursor:default}
 .mcred-arrow{font-family:var(--f-mono);font-size:22px;color:#8a3a2c}
 .mcred-wire{width:100%;background:#2a2417;-webkit-mask:var(--src) center/contain no-repeat;mask:var(--src) center/contain no-repeat}
 .mcred figcaption{grid-column:1/-1;font-size:13.5px;color:#241f14}
+/* Mención en el boletín: cinta con los colores de los cuatro palos y una cruz colgando, sobre el papel del manual. */
+.mencion{display:flex;gap:16px;align-items:center;border:1.5px solid #8a3a2c;outline:1px dashed #a8996f;outline-offset:3px;padding:12px 16px;margin:8px 0;max-width:72ch;transform:rotate(-.4deg)}
+.m-medal{display:flex;flex-direction:column;align-items:center;flex:none}
+.m-medal i{width:30px;height:34px;background:linear-gradient(90deg,var(--s-E) 0 25%,var(--s-M) 25% 50%,var(--s-R) 50% 75%,var(--s-B) 75%);clip-path:polygon(0 0,100% 0,100% 80%,50% 100%,0 80%)}
+.m-medal b{margin-top:-6px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#e8c873,#a8812c);color:#4a3510;font-size:22px;line-height:1;box-shadow:0 2px 4px #00000055}
+.m-txt{display:flex;flex-direction:column;gap:2px;color:#241f14;font-size:14.5px}
+.m-tit{font-family:var(--f-display);font-size:19px;letter-spacing:.03em;text-transform:uppercase;color:#8a3a2c}
+.m-txt em{font-style:italic;line-height:1.45}
+.m-txt small{font-family:var(--f-mono);font-size:11px;color:#6d6a58}
 @media (max-width:760px){.mcred{grid-template-columns:minmax(0,1fr)}.mcred-arrow{display:none}}
 /* Sin captura del modelo original todavía: solo el esquema. */
 .mcred.nocap{grid-template-columns:minmax(0,1fr)} .mcred.nocap img,.mcred.nocap .mcred-arrow{display:none} .mcred.nocap .mcred-wire{max-width:420px}
@@ -2081,7 +2090,7 @@ const MAN = [
     </figure>`).join('')}
     <p>El esquema del M4A3E2 Jumbo es provisional: estamos buscando un modelo 3D con licencia clara para sustituirlo.</p>
     <p>Efectos de sonido de Pixabay (freesound_community, floraphonic, Dragon Studio, emand_edroff, liecio). Música generada con Google Flow Music. Textura de papel generada con ChatGPT.</p>
-    <p>Gracias a <b>Jalapeño</b> por la idea de exportar e importar el progreso.</p>`]
+    <div class="mencion"><span class="m-medal" aria-hidden="true"><i></i><b>✠</b></span><div class="m-txt"><span class="m-tit">Cruz al Mérito en Intendencia</span><span>Concedida a <b>Jalapeño</b></span><em>Por su previsión al proponer que ninguna hoja de servicio se perdiera al cambiar de puesto de mando.</em><small>La idea de exportar e importar el progreso.</small></div></div>`]
 ];
 const CREDIT_MODELS = [
   { veh: 'IS-2', img: 'is2', ratio: '640/170', title: 'IS2 Heavy Tank', author: 'adrielcz', url: 'https://skfb.ly/6AGwO' },
