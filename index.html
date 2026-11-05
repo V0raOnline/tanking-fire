@@ -866,6 +866,10 @@ let OFE = null;
 const ofeRival = (veh, n) => { const pool = CHRONO.filter(v => SIDE[v] !== SIDE[veh]); return pool[(n - 1) % pool.length]; };
 const COMPS = { oruga: 'Oruga', canon: 'Cañón', motor: 'Motor', optica: 'Óptica' };
 const EFFECT = { oruga: 'no puede perseguir ni replegarse', canon: 'tira 1 dado menos', motor: 'roba 2 cartas menos', optica: 'resta 2 a su potencia' };
+// Género de cada pieza en español, para concordar artículo y adjetivo: «el cañón averiado», «la oruga averiada».
+const COMP_M = { canon: true, motor: true };
+const laPieza = k => (COMP_M[k] ? 'el ' : 'la ') + COMPS[k].toLowerCase();
+const gA = (k, w) => COMP_M[k] ? w.replace(/a$/, 'o') : w;
 if (EN) { Object.assign(COMPS, { oruga: 'Tracks', canon: 'Gun', motor: 'Engine', optica: 'Optics' });
   Object.assign(EFFECT, { oruga: 'cannot pursue or fall back', canon: 'rolls 1 die fewer', motor: 'draws 2 fewer cards', optica: 'loses 2 firepower' }); }
 
@@ -994,7 +998,7 @@ function artHTML(side, who) {
   if (!v.img) return tankSVG(v, side.dmg, who === 'ai', side.destroyed);
   const sv = sideView(v, who), flip = sv.flip;
   const pos = k => { const [x, y] = sv.pts[k]; return `left:${(flip ? 1 - x : x) * 100}%;top:${y * 100}%`; };
-  let marks = Object.keys(COMPS).filter(k => side.dmg[k]).map(k => `<span class="dmg-mark" style="${pos(k)}" title="${COMPS[k]} ${tl('averiada', 'damaged')}"></span>`).join('');
+  let marks = Object.keys(COMPS).filter(k => side.dmg[k]).map(k => `<span class="dmg-mark" style="${pos(k)}" title="${COMPS[k]} ${tl(gA(k, 'averiada'), 'damaged')}"></span>`).join('');
   if (side.dmg.motor || side.destroyed) marks += `<span class="puff" style="${pos('motor')}"></span><span class="puff p2" style="${pos('motor')}"></span>`;
   return `<div class="wire ${flip ? 'flip' : ''}" style="aspect-ratio:${sv.ratio};width:min(100%, calc(var(--art-h, 9999px) * ${sv.ratio}))" role="img" aria-label="${v.name}"><span class="wire-img" style="--src:url('${sv.img}')"></span>${marks}</div>`;
 }
@@ -1458,8 +1462,8 @@ function aiInstants() {
     const q = LV().roll ? supRoll().q : 'full';
     if (q === 'fail') log(tl('El ingeniero del rival no consigue reparar nada esta ronda.', 'The enemy engineer fails to repair anything this round.'));
     else { ai.support.splice(ing, 1);
-      if (q === 'full') { ai.dmg[k] = false; log(tl(`El rival manda a su ingeniero: repara ${COMPS[k].toLowerCase()}.`, `The enemy sends in their engineer: repairs the ${COMPS[k].toLowerCase()}.`)); }
-      else { ai.pendingFix = k; log(tl(`El ingeniero del rival repara ${COMPS[k].toLowerCase()} al final de la ronda.`, `The enemy engineer repairs the ${COMPS[k].toLowerCase()} at the end of the round.`)); } }
+      if (q === 'full') { ai.dmg[k] = false; log(tl(`El rival manda a su ingeniero: repara ${laPieza(k)}.`, `The enemy sends in their engineer: repairs the ${COMPS[k].toLowerCase()}.`)); }
+      else { ai.pendingFix = k; log(tl(`El ingeniero del rival repara ${laPieza(k)} al final de la ronda.`, `The enemy engineer repairs the ${COMPS[k].toLowerCase()} at the end of the round.`)); } }
   }
   const f = ai.support.findIndex(x => x.id === 'fald');
   if (f >= 0 && !ai.faldones && !ai.armorBonus && Math.random() < 0.6) {
@@ -1522,7 +1526,7 @@ function vehHTML(side, who) {
   const v = side.veh;
   const comps = Object.entries(COMPS).map(([k, l]) => {
     const fix = who === 'p' && S.repairMode && side.dmg[k];
-    return `<button type="button" class="comp ${side.dmg[k] ? 'broken' : ''} ${fix ? 'fixable' : ''}" data-comp="${k}" ${fix ? '' : 'tabindex="-1"'} title="${side.dmg[k] ? COMPS[k] + tl(' averiada: ', ' damaged: ') + EFFECT[k] : COMPS[k] + tl(' en buen estado', ' in good order')}">${l}</button>`;
+    return `<button type="button" class="comp ${side.dmg[k] ? 'broken' : ''} ${fix ? 'fixable' : ''}" data-comp="${k}" ${fix ? '' : 'tabindex="-1"'} title="${side.dmg[k] ? COMPS[k] + tl(` ${gA(k, 'averiada')}: `, ' damaged: ') + EFFECT[k] : COMPS[k] + tl(' en buen estado', ' in good order')}">${l}</button>`;
   }).join('');
   return `<div class="veh ${who} ${side.destroyed ? 'down' : ''}" id="veh-${who}">
     ${side.faldones ? `<span class="token">${tl('Faldones', 'Skirts')} ×${side.faldones}</span>` : side.armorBonus ? `<span class="token">${tl('Faldones parciales +1', 'Partial skirts +1')}</span>` : ''}${side.pendingFix ? `<span class="token fix">${tl('Reparando', 'Repairing')} ${COMPS[side.pendingFix].toLowerCase()}</span>` : ''}
@@ -1844,7 +1848,7 @@ async function fire() {
   if (S.tut && !S.tutPostDone) { S.tutPostDone = true; await sleep(600); await new Promise(res => tutShow(TUT_POST, res)); }
   else await sleep(1500);
   S.discard.push(...p.formation, ...ai.formation); p.formation = []; ai.formation = [];
-  for (const [side, nm] of [[p, tl('Tu ingeniero', 'Your engineer')], [ai, tl('El ingeniero del rival', 'The enemy engineer')]]) if (side.pendingFix) { side.dmg[side.pendingFix] = false; log(tl(`${nm} termina de reparar ${COMPS[side.pendingFix].toLowerCase()}.`, `${nm} finishes repairing the ${COMPS[side.pendingFix].toLowerCase()}.`)); side.pendingFix = null; }
+  for (const [side, nm] of [[p, tl('Tu ingeniero', 'Your engineer')], [ai, tl('El ingeniero del rival', 'The enemy engineer')]]) if (side.pendingFix) { side.dmg[side.pendingFix] = false; log(tl(`${nm} termina de reparar ${laPieza(side.pendingFix)}.`, `${nm} finishes repairing the ${COMPS[side.pendingFix].toLowerCase()}.`)); side.pendingFix = null; }
   S.scoutHalf = false;
   drawTo(p); drawTo(ai);
   S.round++;
@@ -1891,8 +1895,8 @@ async function impact(side, who, ignoreArmor) {
   await shoot(shooter, who, comp, 'pen', ignoreArmor);
   if (side.dmg[comp] && !(comp === 'optica' && side.veh.id === 'tiger')) SFX.boom(); // segundo impacto en pieza rota: explosión
   S.st[who === 'p' ? 'penTaken' : 'penDealt']++;
-  if (side.dmg[comp]) { side.destroyed = true; text = pre + tl(`Impacto en ${COMPS[comp].toLowerCase()}, que ya estaba averiada: ${target.toLowerCase()} queda fuera de combate.`, `Hit on the ${COMPS[comp].toLowerCase()}, already damaged: ${target.toLowerCase()} is knocked out.`); }
-  else { side.dmg[comp] = true; text = pre + tl(`Impacto en ${COMPS[comp].toLowerCase()}: ${who === 'p' ? 'tu vehículo' : 'el rival'} ${EFFECT[comp]}.`, `Hit on the ${COMPS[comp].toLowerCase()}: ${who === 'p' ? 'your vehicle' : 'the enemy'} ${EFFECT[comp]}.`); }
+  if (side.dmg[comp]) { side.destroyed = true; text = pre + tl(`Impacto en ${laPieza(comp)}, que ya estaba ${gA(comp, 'averiada')}: ${target.toLowerCase()} queda fuera de combate.`, `Hit on the ${COMPS[comp].toLowerCase()}, already damaged: ${target.toLowerCase()} is knocked out.`); }
+  else { side.dmg[comp] = true; text = pre + tl(`Impacto en ${laPieza(comp)}: ${who === 'p' ? 'tu vehículo' : 'el rival'} ${EFFECT[comp]}.`, `Hit on the ${COMPS[comp].toLowerCase()}: ${who === 'p' ? 'your vehicle' : 'the enemy'} ${EFFECT[comp]}.`); }
   box.innerHTML = `<span>${text}</span>`;
   log(text);
   hitFx();
@@ -1988,7 +1992,7 @@ let fichaOpen = false;
 function showFicha(who) {
   if (!S || !$('overlay').hidden) return;
   const side = S[who], v = side.veh, d = DIMS[v.id], h = SPECS[v.id], otherWho = who === 'p' ? 'ai' : 'p', ov = S[otherWho].veh, od = DIMS[ov.id];
-  const state = Object.entries(COMPS).map(([k, l]) => `<span>${l}</span><span class="v ${side.dmg[k] ? 'bad' : 'good'}">${side.dmg[k] ? tl('averiada', 'damaged') : tl('bien', 'OK')}</span>`).join('');
+  const state = Object.entries(COMPS).map(([k, l]) => `<span>${l}</span><span class="v ${side.dmg[k] ? 'bad' : 'good'}">${side.dmg[k] ? tl(gA(k, 'averiada'), 'damaged') : tl('bien', 'OK')}</span>`).join('');
   const broken = Object.keys(COMPS).filter(k => side.dmg[k]).map(k => `${COMPS[k]}: ${EFFECT[k]}.`).join(' ');
   const o = $('overlay');
   o.innerHTML = `<div class="dialog ficha" role="dialog" aria-modal="true" aria-labelledby="f-t">
@@ -2033,7 +2037,7 @@ function ofeEnd(won, sc) {
   const mult = 1 + 0.1 * (OFE.n - 1), gained = Math.round(sc.total * mult);
   OFE.points += gained; OFE.beaten.push(S.ai.veh.name); OFE.last = { gained, mult, base: sc.total };
   // El mecánico de campaña: 1d6 por pieza averiada; con 5 o 6 la repara.
-  OFE.mech = Object.keys(COMPS).filter(k => S.p.dmg[k]).map(k => { const r = rnd(6); if (r >= 5) S.p.dmg[k] = false; return [COMPS[k], r, r >= 5]; });
+  OFE.mech = Object.keys(COMPS).filter(k => S.p.dmg[k]).map(k => { const r = rnd(6); if (r >= 5) S.p.dmg[k] = false; return [COMPS[k], r, r >= 5, k]; });
   OFE.carry = { dmg: { ...S.p.dmg }, support: S.p.support.map(x => ({ id: x.id })), faldones: S.p.faldones };
   OFE.pick = null; ofeShop();
 }
@@ -2053,7 +2057,7 @@ function ofeShop() {
     </div>
     <div class="f-grid">
       <div class="f-box"><h3>${tl('Mecánico de campaña', 'Field mechanic')}</h3>
-        <div class="f-rows">${OFE.mech.length ? OFE.mech.map(([n, r, okk]) => `<span>${n}: ${tl('sale', 'rolled')} ${r}</span><span class="v ${okk ? 'good' : 'bad'}">${okk ? tl('reparada', 'repaired') : tl('sigue averiada', 'still damaged')}</span>`).join('') : `<span>${tl('Tu tanque terminó intacto.', 'Your tank came out intact.')}</span><span></span>`}</div>
+        <div class="f-rows">${OFE.mech.length ? OFE.mech.map(([n, r, okk, kk]) => `<span>${n}: ${tl('sale', 'rolled')} ${r}</span><span class="v ${okk ? 'good' : 'bad'}">${okk ? tl(gA(kk, 'reparada'), 'repaired') : tl('sigue ' + gA(kk, 'averiada'), 'still damaged')}</span>`).join('') : `<span>${tl('Tu tanque terminó intacto.', 'Your tank came out intact.')}</span><span></span>`}</div>
         <h3>${tl('Estado para el siguiente combate', 'State for the next battle')}</h3>
         <div class="comps ocomps">${Object.entries(COMPS).map(([k, l]) => `<button type="button" class="comp ${c.dmg[k] ? 'broken' : ''} ${OFE.pick === k ? 'fixable' : ''}" data-ok="${k}" ${c.dmg[k] ? '' : 'disabled'}>${l}</button>`).join('')}</div>
         <p class="credit">${c.support.length} ${tl('órdenes de apoyo', 'support orders')}${c.faldones ? tl(' · faldones montados', ' · skirts fitted') : ''}. ${tl('Toca una pieza averiada para pagar su reparación.', 'Tap a damaged part to pay for its repair.')}</p></div>
@@ -2807,8 +2811,8 @@ $('support').addEventListener('click', e => {
   }
   if (SUPPORT_DEFS[s.id].kind === 'inst') S.st.supportsUsed++;
   const ing = SUPPORT_DEFS.ing.name;
-  const fix = k => { if (q === 'full') { p.dmg[k] = false; log(tl(`Tu ingeniero repara ${COMPS[k].toLowerCase()}.`, `Your engineer repairs the ${COMPS[k].toLowerCase()}.`)); toast(tl(`${ing}: ${roll}${COMPS[k].toLowerCase()} reparada.`, `${ing}: ${roll}${COMPS[k].toLowerCase()} repaired.`)); }
-                     else { p.pendingFix = k; log(tl(`Tu ingeniero repara ${COMPS[k].toLowerCase()} al final de la ronda.`, `Your engineer repairs the ${COMPS[k].toLowerCase()} at the end of the round.`)); toast(tl(`${ing}: ${roll}${COMPS[k].toLowerCase()} estará reparada al final de la ronda.`, `${ing}: ${roll}the ${COMPS[k].toLowerCase()} will be repaired at the end of the round.`)); } };
+  const fix = k => { if (q === 'full') { p.dmg[k] = false; log(tl(`Tu ingeniero repara ${laPieza(k)}.`, `Your engineer repairs the ${COMPS[k].toLowerCase()}.`)); toast(tl(`${ing}: ${roll}${COMPS[k].toLowerCase()} ${gA(k, 'reparada')}.`, `${ing}: ${roll}${COMPS[k].toLowerCase()} repaired.`)); }
+                     else { p.pendingFix = k; log(tl(`Tu ingeniero repara ${laPieza(k)} al final de la ronda.`, `Your engineer repairs the ${COMPS[k].toLowerCase()} at the end of the round.`)); toast(tl(`${ing}: ${roll}${laPieza(k)} estará ${gA(k, 'reparada')} al final de la ronda.`, `${ing}: ${roll}the ${COMPS[k].toLowerCase()} will be repaired at the end of the round.`)); } };
   if (s.id === 'ing') {
     const broken = Object.keys(COMPS).filter(k => p.dmg[k]);
     if (broken.length === 1) { p.support.splice(i, 1); fixSel(i); fix(broken[0]); render(); }
@@ -2849,7 +2853,7 @@ $('zone-p').addEventListener('click', e => {
   const b = e.target.closest('.comp'); if (!b || !S.repairMode || !S.p.dmg[b.dataset.comp]) return;
   const k = b.dataset.comp;
   const rm = S.repairMode; S.p.support.splice(rm.idx, 1); fixSel(rm.idx); S.repairMode = false;
-  if (rm.fix) rm.fix(k); else { S.p.dmg[k] = false; log(tl(`Tu ingeniero repara ${COMPS[k].toLowerCase()}.`, `Your engineer repairs the ${COMPS[k].toLowerCase()}.`)); }
+  if (rm.fix) rm.fix(k); else { S.p.dmg[k] = false; log(tl(`Tu ingeniero repara ${laPieza(k)}.`, `Your engineer repairs the ${COMPS[k].toLowerCase()}.`)); }
   render();
 });
 // Modo cambio: devuelve la formación a la mano, marcas hasta 3 cartas y confirmas.

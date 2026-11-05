@@ -79,7 +79,6 @@ En la sección de créditos, cada vehículo muestra una captura tres cuartos del
    - **Cómo funciona:** `tl(es, en)` para los textos del código; las tablas de datos (batallas, manos, vehículos, órdenes, niveles, ficha, tutorial) se sobrescriben en inglés justo después de definirse; el manual tiene `MAN_ES` y `MAN_EN`; los textos fijos de la página llevan `data-en`. Idioma por defecto: el del navegador (español si empieza por `es`); el selector ES/EN del menú lo guarda en `ldf-lang` y recarga.
    - **Al añadir o cambiar un texto:** escribir las dos versiones a la vez. Nunca comparar con un texto visible en la lógica del juego (antes `ofeFinal` comprobaba «Te retiras»; ahora recibe un indicador).
    - **Falta:** las capturas del manual (`img/manual/`) siguen en español; README y CREDITS solo en español; la tarjeta Open Graph es la misma en los dos idiomas.
-   - **Fallo antiguo del español encontrado al traducir:** «Impacto en cañón, que ya estaba averiada» usa siempre el femenino; cañón y motor son masculinos.
 3. **Probar el equilibrio de los seis nuevos** (jugables desde el 4 de noviembre de 2026; datos de la ficha sacados de cifras públicas, revisarlos):
 
    | Vehículo | Dados | Blindaje | Palo | Rasgo | Batallas |
