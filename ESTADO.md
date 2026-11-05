@@ -75,9 +75,11 @@ En la sección de créditos, cada vehículo muestra una captura tres cuartos del
    - Panther: +2 dados, blindaje 2, Motor; «Cañón largo»: la Munición perforante le da 1 dado más. Villers-Bocage, Cota 112 y Remagen (también estuvo en Berlín; se puede añadir).
    - Panzer IV H: +1 dado, blindaje 1, Radio; «Caballo de batalla»: roba hasta 8 cartas. Las cuatro batallas.
    - Vistas: `panther` con `--rotY 180`; `panzer4` sin girar. En Ofensiva van primero en `CHRONO` por fecha de servicio (Panzer IV, Tiger, Panther, IS-2, Jumbo, Jagdtiger).
-2. **Versión en inglés.** El rebranding a «TANKING... FIRE!» (lema «Tactical Card War Game»; *tanking* es pensarse mucho la mano en el póker) está hecho desde el 5 de noviembre de 2026: título, menú con el logo (`img/logo.webp`), tablero, metas, README, CREDITS, `jugar.bat`, imagen Open Graph, favicon e iconos. Originales del arte en `img/art/`. Falta poner `img/art/logo-escudo.png` como avatar donde se quiera (redes, perfil).
-   - **Inglés:** sacar todos los textos a un diccionario `ES`/`EN` dentro de `index.html`, sin compilación. Selector de idioma en el menú: por defecto, el idioma del navegador; si no es español, inglés; y recordar la elección. Traducir con criterio de juego: decidir los nombres en inglés de las manos («Ofensiva general»…) y de los palos. Las frases que se generan con código, como la de los rivales con los números en letras, hay que reescribirlas, no solo traducirlas.
-   - **Antes de empezar, decidir:** el alcance (todo, o primero la interfaz y el manual en una segunda fase) y en qué idioma nace el juego.
+2. **Versión en inglés: hecha** (5 de noviembre de 2026, después de la etiqueta `v1.0-beta`). El rebranding a «TANKING... FIRE!» también está hecho; los originales del arte están en `img/art/`.
+   - **Cómo funciona:** `tl(es, en)` para los textos del código; las tablas de datos (batallas, manos, vehículos, órdenes, niveles, ficha, tutorial) se sobrescriben en inglés justo después de definirse; el manual tiene `MAN_ES` y `MAN_EN`; los textos fijos de la página llevan `data-en`. Idioma por defecto: el del navegador (español si empieza por `es`); el selector ES/EN del menú lo guarda en `ldf-lang` y recarga.
+   - **Al añadir o cambiar un texto:** escribir las dos versiones a la vez. Nunca comparar con un texto visible en la lógica del juego (antes `ofeFinal` comprobaba «Te retiras»; ahora recibe un indicador).
+   - **Falta:** las capturas del manual (`img/manual/`) siguen en español; README y CREDITS solo en español; la tarjeta Open Graph es la misma en los dos idiomas.
+   - **Fallo antiguo del español encontrado al traducir:** «Impacto en cañón, que ya estaba averiada» usa siempre el femenino; cañón y motor son masculinos.
 3. **Probar el equilibrio de los seis nuevos** (jugables desde el 4 de noviembre de 2026; datos de la ficha sacados de cifras públicas, revisarlos):
 
    | Vehículo | Dados | Blindaje | Palo | Rasgo | Batallas |

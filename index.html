@@ -132,6 +132,7 @@ details:not([open]) > summary .shead::after{transform:rotate(-90deg)}
 @media (max-width:700px){.menu-logo{max-width:520px}}
 .menu-logo img{display:block;width:100%;height:auto}
 .fire-word{color:var(--hit)}
+.langseg{margin-right:8px} .langseg button{padding:4px 10px;font-size:12px}
 /* Sello de beta sobre la esquina del banner, como el de «INFORME HISTÓRICO» de las batallas. */
 .menu-logo{position:relative}
 .beta-stamp{position:absolute;right:2%;bottom:6%;line-height:1;font-family:var(--f-display);font-size:clamp(13px,2.2vw,20px);letter-spacing:.12em;text-transform:uppercase;color:var(--hit);border:2px solid var(--hit);border-radius:4px;padding:3px 9px;background:#141912d9;transform:rotate(-8deg)}
@@ -655,60 +656,60 @@ html.rm *,html.rm *::before,html.rm *::after{animation:none!important;transition
       <div class="brand-row"><span class="lvchip" id="lvchip">Nivel 1 · Recluta</span><span class="lvchip rulechip" id="rulechip" tabindex="0">Regla</span></div>
     </div>
     <div class="map">
-      <div class="map-head"><span class="side"><i class="sw p"></i><span class="long">Tú: empujas hacia <span id="goal-name">la Cota 112</span></span><span class="short">Tú →</span></span><span class="mid">Frente en <b id="front-name">Granja</b></span><span class="side"><span class="long"><b id="rival-name">Rival</b>: empuja hacia <span id="home-name">la playa</span></span><span class="short">← Rival</span><i class="sw ai"></i></span></div>
+      <div class="map-head"><span class="side"><i class="sw p"></i><span class="long"><span data-en="You: push towards">Tú: empujas hacia</span> <span id="goal-name">la Cota 112</span></span><span class="short" data-en="You →">Tú →</span></span><span class="mid"><span data-en="Front at">Frente en</span> <b id="front-name">Granja</b></span><span class="side"><span class="long"><b id="rival-name">Rival</b><span data-en=": pushes towards">: empuja hacia</span> <span id="home-name">la playa</span></span><span class="short" data-en="← Enemy">← Rival</span><i class="sw ai"></i></span></div>
       <div class="track" id="track"></div>
     </div>
   </header>
 
   <div class="main">
-    <main class="board" aria-label="Tablero">
+    <main class="board" aria-label="Tablero" data-en-label="Board">
       <div class="zone" id="zone-ai"></div>
       <div class="tray" aria-live="polite">
         <div class="range"><span id="range-txt">Distancia de combate</span><div class="rbar" aria-hidden="true"><span class="rtank p"></span><i id="range-bar"></i><span class="rtank ai"></span></div></div>
-        <div class="lane" id="lane-ai"><span class="lane-who">Rival</span><div class="dice"></div><span class="lane-total"></span><span class="lane-break"></span></div>
+        <div class="lane" id="lane-ai"><span class="lane-who" data-en="Enemy">Rival</span><div class="dice"></div><span class="lane-total"></span><span class="lane-break"></span></div>
         <div class="tray-msg" id="tray-msg"></div>
         <div class="tray-note" id="tray-note" role="status" hidden></div>
-        <div class="lane" id="lane-p"><span class="lane-who">Tú</span><div class="dice"></div><span class="lane-total"></span><span class="lane-break"></span></div>
+        <div class="lane" id="lane-p"><span class="lane-who" data-en="You">Tú</span><div class="dice"></div><span class="lane-total"></span><span class="lane-break"></span></div>
         <div class="tray-impact" id="tray-impact"></div>
       </div>
       <div class="zone" id="zone-p"></div>
     </main>
 
-    <aside class="panel" aria-label="Panel de mando">
+    <aside class="panel" aria-label="Panel de mando" data-en-label="Command panel">
       <section class="intend-sec">
         <details class="intend" id="intend">
-          <summary><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="1.5"/><path d="M3 11h18M8 7V5h8v2M10 14.5h4"/></g></svg></span><span class="sht">Intendencia</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">01</span></span></summary>
+          <summary><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="1.5"/><path d="M3 11h18M8 7V5h8v2M10 14.5h4"/></g></svg></span><span class="sht" data-en="Quartermaster">Intendencia</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">01</span></span></summary>
           <div class="intend-body">
-            <div class="irow"><span class="ilbl">Música</span>
-              <span class="musctl"><button type="button" class="sortbtn" data-mus="menu" aria-pressed="true">Menú: sí</button><button type="button" class="sortbtn" data-mus="battle" aria-pressed="true">Batalla: sí</button><input type="range" id="mus-vol" min="0" max="100" step="5" value="50" aria-label="Volumen de la música"></span></div>
-            <div class="irow"><span class="ilbl">Efectos de sonido</span>
-              <span class="musctl"><button type="button" class="sortbtn" id="sfx-btn" aria-pressed="true">Sí</button><input type="range" id="sfx-vol" min="0" max="100" step="5" value="70" aria-label="Volumen de los efectos"></span></div>
-            <div class="irow"><span class="ilbl">Clics al seleccionar cartas</span><button type="button" class="sortbtn" id="ui-btn" aria-pressed="true">Sí</button></div>
-            <div class="irow"><span class="ilbl">Animaciones</span>
-              <div class="seg" role="group" aria-label="Animaciones" id="motion-seg"><button type="button" data-motion="full">Completas</button><button type="button" data-motion="reduced">Reducidas</button></div></div>
-            <div class="irow"><span class="ilbl">Ritmo de las animaciones</span>
-              <div class="seg" role="group" aria-label="Ritmo de las animaciones" id="pace-seg"><button type="button" data-pace="0">Pausado</button><button type="button" data-pace="1">Normal</button><button type="button" data-pace="2">Rápido</button></div></div>
-            <div class="irow"><span class="ilbl">Reglas y puntuación</span><button type="button" class="sortbtn" data-manual>Manual de campaña</button></div>
-            <div class="irow"><span class="ilbl">Hoja de servicio</span><button type="button" class="sortbtn" id="stats-btn">Ver estadísticas</button></div>
-            <div class="irow"><span class="ilbl">Batalla en curso</span><button type="button" class="sortbtn" id="quit-btn">Volver al menú</button></div>
+            <div class="irow"><span class="ilbl" data-en="Music">Música</span>
+              <span class="musctl"><button type="button" class="sortbtn" data-mus="menu" aria-pressed="true">Menú: sí</button><button type="button" class="sortbtn" data-mus="battle" aria-pressed="true">Batalla: sí</button><input type="range" id="mus-vol" min="0" max="100" step="5" value="50" aria-label="Volumen de la música" data-en-label="Music volume"></span></div>
+            <div class="irow"><span class="ilbl" data-en="Sound effects">Efectos de sonido</span>
+              <span class="musctl"><button type="button" class="sortbtn" id="sfx-btn" aria-pressed="true">Sí</button><input type="range" id="sfx-vol" min="0" max="100" step="5" value="70" aria-label="Volumen de los efectos" data-en-label="Effects volume"></span></div>
+            <div class="irow"><span class="ilbl" data-en="Clicks when selecting cards">Clics al seleccionar cartas</span><button type="button" class="sortbtn" id="ui-btn" aria-pressed="true">Sí</button></div>
+            <div class="irow"><span class="ilbl" data-en="Animations">Animaciones</span>
+              <div class="seg" role="group" aria-label="Animaciones" data-en-label="Animations" id="motion-seg"><button type="button" data-motion="full" data-en="Full">Completas</button><button type="button" data-motion="reduced" data-en="Reduced">Reducidas</button></div></div>
+            <div class="irow"><span class="ilbl" data-en="Animation pace">Ritmo de las animaciones</span>
+              <div class="seg" role="group" aria-label="Ritmo de las animaciones" data-en-label="Animation pace" id="pace-seg"><button type="button" data-pace="0" data-en="Slow">Pausado</button><button type="button" data-pace="1">Normal</button><button type="button" data-pace="2" data-en="Fast">Rápido</button></div></div>
+            <div class="irow"><span class="ilbl" data-en="Rules and scoring">Reglas y puntuación</span><button type="button" class="sortbtn" data-manual data-en="Field manual">Manual de campaña</button></div>
+            <div class="irow"><span class="ilbl" data-en="Service record">Hoja de servicio</span><button type="button" class="sortbtn" id="stats-btn" data-en="View stats">Ver estadísticas</button></div>
+            <div class="irow"><span class="ilbl" data-en="Current battle">Batalla en curso</span><button type="button" class="sortbtn" id="quit-btn" data-en="Back to menu">Volver al menú</button></div>
           </div>
         </details>
       </section>
-      <section><h2 class="shwrap"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V3"/><path d="M5 4h12l-3 4 3 4H5"/><path d="M9 21h-6"/></g></svg></span><span class="sht">Marcador</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">02</span></span></h2><div class="score" id="score"></div></section>
-      <section class="tele-sec"><details class="tele" id="tele" open><summary><span class="tele-h"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="10" rx="1.5"/><path d="M7 9V4h10v5M6 13h1M9 13h1M12 13h1M15 13h1M7 16h10"/></g></svg></span><span class="sht">Parte de guerra</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">03</span></span></span><span class="tele-line" id="tele-line"></span></summary><ul class="log" id="log"></ul></details></section>
-      <section><button type="button" class="btn manual-btn" data-manual>Manual de campaña</button></section>
+      <section><h2 class="shwrap"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V3"/><path d="M5 4h12l-3 4 3 4H5"/><path d="M9 21h-6"/></g></svg></span><span class="sht" data-en="Scoreboard">Marcador</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">02</span></span></h2><div class="score" id="score"></div></section>
+      <section class="tele-sec"><details class="tele" id="tele" open><summary><span class="tele-h"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="10" rx="1.5"/><path d="M7 9V4h10v5M6 13h1M9 13h1M12 13h1M15 13h1M7 16h10"/></g></svg></span><span class="sht" data-en="War dispatch">Parte de guerra</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">03</span></span></span><span class="tele-line" id="tele-line"></span></summary><ul class="log" id="log"></ul></details></section>
+      <section><button type="button" class="btn manual-btn" data-manual data-en="Field manual">Manual de campaña</button></section>
     </aside>
 
     <!-- Segunda fila: la mano y las órdenes, alineadas -->
-    <section class="board handbox" aria-label="Tu mano">
-      <div class="hand-head"><span class="shwrap shgrow"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="9" height="13" rx="1.5" transform="rotate(-12 8.5 12.5)"/><rect x="11" y="5" width="9" height="13" rx="1.5" transform="rotate(10 15.5 11.5)"/></g></svg></span><span class="sht">Tu mano</span><small class="shs">toca para cargar · arrastra para ordenar</small><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">05</span></span></span>
-        <button type="button" class="sortbtn" data-sort="rank">Por número</button><button type="button" class="sortbtn" data-sort="suit">Por palo</button></div>
+    <section class="board handbox" aria-label="Tu mano" data-en-label="Your hand">
+      <div class="hand-head"><span class="shwrap shgrow"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="9" height="13" rx="1.5" transform="rotate(-12 8.5 12.5)"/><rect x="11" y="5" width="9" height="13" rx="1.5" transform="rotate(10 15.5 11.5)"/></g></svg></span><span class="sht" data-en="Your hand">Tu mano</span><small class="shs" data-en="tap to load · drag to sort">toca para cargar · arrastra para ordenar</small><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">05</span></span></span>
+        <button type="button" class="sortbtn" data-sort="rank" data-en="By number">Por número</button><button type="button" class="sortbtn" data-sort="suit" data-en="By suit">Por palo</button></div>
       <div class="hand" id="hand"></div>
-      <div class="controls"><span class="hint" id="hint"></span><button class="btn" id="btn-swap" type="button">Cambiar cartas</button></div>
-      <div class="combos-row"><span class="shwrap"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="10" rx="1.2"/><rect x="8" y="9" width="7" height="10" rx="1.2"/><path d="M17 12h4M19 10l2 2-2 2"/></g></svg></span><span class="sht">Combinaciones posibles</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">06</span></span></span><div class="combos" id="combos"></div></div>
+      <div class="controls"><span class="hint" id="hint"></span><button class="btn" id="btn-swap" type="button" data-en="Swap cards">Cambiar cartas</button></div>
+      <div class="combos-row"><span class="shwrap"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="10" rx="1.2"/><rect x="8" y="9" width="7" height="10" rx="1.2"/><path d="M17 12h4M19 10l2 2-2 2"/></g></svg></span><span class="sht" data-en="Possible hands">Combinaciones posibles</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">06</span></span></span><div class="combos" id="combos"></div></div>
     </section>
-    <aside class="panel supbox" aria-label="Órdenes de apoyo">
-      <section><h2 class="shwrap"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h13v18H4V6z"/><path d="M8 7h2M12 7h1M15 7h2M8 10h1M11 10h3M16 10h1M8 15h9M8 18h6"/></g></svg></span><span class="sht">Órdenes de apoyo</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">04</span></span></h2><div id="support"></div></section>
+    <aside class="panel supbox" aria-label="Órdenes de apoyo" data-en-label="Support orders">
+      <section><h2 class="shwrap"><span class="shead"><span class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h13v18H4V6z"/><path d="M8 7h2M12 7h1M15 7h2M8 10h1M11 10h3M16 10h1M8 15h9M8 18h6"/></g></svg></span><span class="sht" data-en="Support orders">Órdenes de apoyo</span><span class="shr" aria-hidden="true"></span><span class="shn" aria-hidden="true">04</span></span></h2><div id="support"></div></section>
     </aside>
   </div>
 </div>
@@ -716,15 +717,33 @@ html.rm *,html.rm *::before,html.rm *::after{animation:none!important;transition
 <canvas id="fx" aria-hidden="true"></canvas>
 <div class="coach at-bottom" id="coach" role="dialog" aria-live="polite" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-<div class="zoombar" role="group" aria-label="Zoom de la página">
-  <button type="button" id="z-in" aria-label="Acercar">+</button>
-  <input type="range" id="z-range" min="70" max="150" step="10" value="100" aria-label="Zoom de la página">
-  <button type="button" id="z-out" aria-label="Alejar">−</button>
-  <button type="button" id="z-reset" class="zval" title="Volver al 100 %">100%</button>
+<div class="zoombar" role="group" aria-label="Zoom de la página" data-en-label="Page zoom">
+  <button type="button" id="z-in" aria-label="Acercar" data-en-label="Zoom in">+</button>
+  <input type="range" id="z-range" min="70" max="150" step="10" value="100" aria-label="Zoom de la página" data-en-label="Page zoom">
+  <button type="button" id="z-out" aria-label="Alejar" data-en-label="Zoom out">−</button>
+  <button type="button" id="z-reset" class="zval" title="Volver al 100 %" data-en-title="Reset to 100%">100%</button>
 </div>
 <div class="overlay" id="overlay" hidden></div>
 
 <script>
+/* ---------- Idioma ----------
+   Español o inglés. Por defecto, el del navegador (español si empieza por "es"); la elección del menú se recuerda y recarga la página.
+   tl(es, en) elige el texto; las tablas de datos se sobrescriben en inglés justo después de definirse, así sus lectores no cambian. */
+let LANG = 'es';
+try { const l = localStorage.getItem('ldf-lang'); LANG = (l === 'es' || l === 'en') ? l : (((navigator.languages && navigator.languages[0]) || navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en'); }
+catch (e) { LANG = (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en'; }
+const EN = LANG === 'en';
+const tl = (es, en) => EN ? en : es;
+const LOC = EN ? 'en-GB' : 'es-ES';
+document.documentElement.lang = LANG;
+if (EN) {
+  document.querySelectorAll('[data-en]').forEach(el => { el.innerHTML = el.dataset.en; });
+  document.querySelectorAll('[data-en-label]').forEach(el => el.setAttribute('aria-label', el.dataset.enLabel));
+  document.querySelectorAll('[data-en-title]').forEach(el => el.setAttribute('title', el.dataset.enTitle));
+  const md = document.querySelector('meta[name=description]');
+  if (md) md.content = 'Tactical card game with Second World War tanks: build poker hands, roll dice and push the front line with the Tiger, the Sherman, the T-34 and nine more armoured vehicles. Free, in your browser.';
+}
+function setLang(l) { try { localStorage.setItem('ldf-lang', l); } catch (e) {} location.reload(); }
 // Animaciones reducidas: por defecto según el sistema, pero se puede cambiar en Intendencia.
 // Solo quitan movimiento (vuelo del proyectil, dados que ruedan, sacudidas); las pausas siguen el ritmo elegido.
 let RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -760,6 +779,7 @@ const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.f
 const $ = id => document.getElementById(id);
 
 const SUITS = { B: 'Blindaje', M: 'Munición', E: 'Motor', R: 'Radio' };
+if (EN) Object.assign(SUITS, { B: 'Armor', M: 'Ammo', E: 'Engine', R: 'Radio' });
 const RL = r => ({ 11: 'J', 12: 'Q', 13: 'K', 14: 'A' })[r] || String(r);
 /* ---------- Batallas ----------
    Cada batalla tiene 7 sectores con su terreno y su horquilla de distancia de combate, contexto histórico
@@ -803,6 +823,35 @@ const BATTLES = [
            { n: 'Calles', t: 'calles con barricadas', r: [50, 200] }, { n: 'Estación', t: 'estación de ferrocarril', r: [80, 250] }, { n: 'Tiergarten', t: 'parque del Tiergarten', r: [150, 400] },
            { n: 'Reichstag', t: 'el Reichstag', r: [50, 200] }] }
 ];
+// Batallas en inglés: mismos campos, mismo orden de sectores.
+if (EN) {
+  const B = id => BATTLES.find(b => b.id === id);
+  const secs = (id, list) => B(id).secs.forEach((x, i) => { x.n = list[i][0]; x.t = list[i][1]; });
+  Object.assign(B('villers'), { date: '13 June 1944', place: 'Normandy, France', sub: 'Normandy · June 1944', tag: 'village streets',
+    text: ['A week after the landings, the British 7th Armoured Division tried to outflank Caen from the west. Its leading column drove into the village of Villers-Bocage along the main road.',
+           'There it was ambushed by a company of Tigers from the 101st SS Heavy Panzer Battalion under Michael Wittmann, which destroyed much of the column in a single attack. After a day of street fighting, the British withdrew.'],
+    verify: 'Casualty figures vary widely between sources; the game does not use them.' });
+  Object.assign(B('villers').rule, { name: 'Ambush', text: 'In the first round the enemy already has an AP round ready and you cannot swap cards.' });
+  secs('villers', [['Road', 'road between hedgerows'], ['Farms', 'farms and orchards'], ['Village edge', 'edge of the village'], ['Square', 'village square'], ['High street', 'main street'], ['Station', 'station and tracks'], ['Point 213', 'high ground east of the village']]);
+  Object.assign(B('cota'), { name: 'Hill 112', date: '10–11 July 1944', place: 'Normandy, south-west of Caen', sub: 'Normandy · July 1944', tag: 'high ground',
+    text: ['In Operation Jupiter, the British 43rd (Wessex) Division attacked Hill 112, a ridge overlooking the Odon valley and the approaches to Caen.',
+           'It was held by units of the II SS Panzer Corps with the Tigers of the 102nd SS Heavy Panzer Battalion. The summit changed hands several times without either side being able to hold it; the Germans did not abandon it until early August.'],
+    verify: 'Sources disagree on the number of Tigers present; the game does not use it.' });
+  Object.assign(B('cota').rule, { name: 'High ground', text: 'In the last two sectors (Bridge and Hill 112) the enemy defends from the heights: their armor counts 1 more.' });
+  secs('cota', [['Beachhead', 'open ground'], ['Dunes', 'open ground'], ['Hedgerows', 'bocage, dense hedgerows'], ['Farm', 'mixed terrain'], ['Crossroads', 'mixed terrain'], ['Bridge', 'narrow crossing'], ['Hill 112', 'high ground']]);
+  Object.assign(B('remagen'), { date: 'March 1945', place: 'Banks of the Rhine, Germany', sub: 'Rhineland · March 1945', tag: 'bridgehead',
+    text: ['On 7 March 1945 American troops captured the Ludendorff Bridge at Remagen intact, the first crossing over the Rhine. For days they held the east bank while reinforcements crossed.',
+           'Among the German forces that tried to crush the bridgehead were the Jagdtigers of the 512th Battalion, the heaviest tank destroyer of the war. They arrived in small groups and failed to break it; the battalion surrendered in the Ruhr Pocket in April.'],
+    verify: 'Sources disagree on the exact day the 512th Battalion went into action.' });
+  Object.assign(B('remagen').rule, { name: 'River at your back', text: 'If the enemy pushes you back to the bridge, you lose a support order.' });
+  secs('remagen', [['West bank', 'banks of the Rhine'], ['Bridge', 'Ludendorff Bridge'], ['Erpel', 'village of Erpel'], ['Woods', 'wooded hillside'], ['Road', 'riverside road'], ['Hills', 'Westerwald hills'], ['Autobahn', 'Cologne–Frankfurt autobahn']]);
+  Object.assign(B('berlin'), { name: 'Berlin', date: 'April 1945', place: 'Germany', sub: 'Berlin · April 1945', tag: 'urban combat',
+    text: ['The final Soviet offensive began on 16 April 1945 with the assault on the Seelow Heights, the last line of defence before Berlin.',
+           'In the city, IS-2 heavy tank regiments advanced street by street alongside infantry and sappers, using their 122 mm guns to blast through barricades and fortified buildings.'],
+    verify: 'Hard facts about the IS-2 at Seelow are scarce; the text sticks to what is well documented.' });
+  Object.assign(B('berlin').rule, { name: 'Barricades', text: 'The HE shell always has full effect, for both sides.' });
+  secs('berlin', [['Seelow', 'Seelow Heights'], ['Outskirts', 'city outskirts'], ['Canal', 'canal and bridges'], ['Streets', 'barricaded streets'], ['Station', 'railway station'], ['Tiergarten', 'Tiergarten park'], ['Reichstag', 'the Reichstag']]);
+}
 const battleById = id => BATTLES.find(b => b.id === id) || BATTLES[1];
 let SECTORS = battleById('cota').secs;
 // Batallas ganadas en campaña (desbloquean las siguientes); en partida libre todas están abiertas.
@@ -817,6 +866,8 @@ let OFE = null;
 const ofeRival = (veh, n) => { const pool = CHRONO.filter(v => SIDE[v] !== SIDE[veh]); return pool[(n - 1) % pool.length]; };
 const COMPS = { oruga: 'Oruga', canon: 'Cañón', motor: 'Motor', optica: 'Óptica' };
 const EFFECT = { oruga: 'no puede perseguir ni replegarse', canon: 'tira 1 dado menos', motor: 'roba 2 cartas menos', optica: 'resta 2 a su potencia' };
+if (EN) { Object.assign(COMPS, { oruga: 'Tracks', canon: 'Gun', motor: 'Engine', optica: 'Optics' });
+  Object.assign(EFFECT, { oruga: 'cannot pursue or fall back', canon: 'rolls 1 die fewer', motor: 'draws 2 fewer cards', optica: 'loses 2 firepower' }); }
 
 const COMBOS = {
   high:     { name: 'Carta alta',        alias: 'Disparo suelto',     base: 0,  dice: 1, rank: 0 },
@@ -829,6 +880,9 @@ const COMBOS = {
   quads:    { name: 'Póker',             alias: 'Compañía completa',  base: 14, dice: 4, rank: 7 },
   sflush:   { name: 'Escalera de color', alias: 'Ofensiva general',   base: 18, dice: 5, rank: 8 }
 };
+if (EN) for (const [k, n, a] of [['high', 'High card', 'Stray shot'], ['pair', 'Pair', 'Crossfire'], ['two', 'Two pair', 'Two sections'], ['trips', 'Three of a kind', 'Platoon'],
+  ['straight', 'Straight', 'Column advance'], ['flush', 'Flush', 'Same unit'], ['full', 'Full house', 'Combined assault'], ['quads', 'Four of a kind', 'Full company'], ['sflush', 'Straight flush', 'General offensive']])
+  Object.assign(COMBOS[k], { name: n, alias: a });
 
 const VEHICLES = [
   { id: 'sherman', name: 'M4A3E2 Jumbo', nation: 'EE. UU.', pot: 1, arm: 2, afin: 'E', trait: 'Fiable', traitText: 'Empieza con 3 cartas de apoyo.',
@@ -871,6 +925,19 @@ const VEHICLES = [
     left: { img: 'img/pershing_left.webp', ratio: 640 / 356, pts: { gun: [.03, .58], canon: [.25, .58], optica: [.5, .5], motor: [.94, .77], oruga: [.5, .92] } }, pts: { gun: [.97, .58], canon: [.75, .58], optica: [.5, .5], motor: [.06, .77], oruga: [.5, .92] } }
 ];
 
+if (EN) {
+  const NAT = { 'EE. UU.': 'USA', 'URSS': 'USSR', 'Alemania': 'Germany', 'Reino Unido': 'UK' };
+  const TR = {
+    sherman: ['Reliable', 'Starts with 3 support cards.'], is2: ['Sturdy', 'With a damaged engine it still draws up to 7.'],
+    tiger: ['Zeiss optics', 'Hits on its optics bounce off.'], jagdtiger: ['Heavy', 'Draws up to 6 cards and cannot swap cards.'],
+    panther: ['Long gun', 'AP rounds give it 1 extra die (+3 instead of +2).'], panzer4: ['Workhorse', 'Draws up to 8 cards.'],
+    churchill: ['All-terrain', 'With damaged tracks it can still pursue and fall back.'], t34: ['Agile', 'Swaps up to 5 cards instead of 3.'],
+    cromwell: ['Fast', 'Beyond 1000 m its armor counts 1 more.'], firefly: ['17-pounder', 'The enemy’s armor counts 1 less against its hits.'],
+    tiger2: ['Delicate mechanics', 'With a damaged engine it draws 3 fewer cards instead of 2.'], pershing: ['HVAP ammo', 'One of its starting orders is always an AP round.']
+  };
+  for (const v of VEHICLES) { v.nation = NAT[v.nation] || v.nation; [v.trait, v.traitText] = TR[v.id]; }
+}
+
 const SUPPORT_DEFS = {
   ing:   { name: 'Ingeniero',             kind: 'inst', n: 4, text: 'Repara una pieza averiada de tu vehículo.' },
   exp:   { name: 'Explorador',            kind: 'inst', n: 2, text: 'Descubre la formación que prepara el rival y sus órdenes de apoyo.' },
@@ -880,6 +947,10 @@ const SUPPORT_DEFS = {
   art:   { name: 'Artillero veterano',    kind: 'comb', n: 2, text: 'Vuelve a tirar tus dados de 1 y 2.' },
   radio: { name: 'Apoyo de artillería',   kind: 'comb', n: 3, text: '+4 a tu potencia en esta ronda.' }
 };
+if (EN) for (const [k, n, t] of [['ing', 'Engineer', 'Repairs a damaged part of your vehicle.'], ['exp', 'Scout', 'Reveals the formation the enemy is preparing and their support orders.'],
+  ['fald', 'Armor skirts', 'Absorb the next hit you take.'], ['apcr', 'AP round', '+2 dice this round.'], ['he', 'HE shell', 'If you win, your hit ignores armor.'],
+  ['art', 'Veteran gunner', 'Reroll your 1s and 2s.'], ['radio', 'Artillery support', '+4 to your firepower this round.']])
+  Object.assign(SUPPORT_DEFS[k], { name: n, text: t });
 
 /* ---------- Iconos ---------- */
 function suitIcon(s) {
@@ -923,7 +994,7 @@ function artHTML(side, who) {
   if (!v.img) return tankSVG(v, side.dmg, who === 'ai', side.destroyed);
   const sv = sideView(v, who), flip = sv.flip;
   const pos = k => { const [x, y] = sv.pts[k]; return `left:${(flip ? 1 - x : x) * 100}%;top:${y * 100}%`; };
-  let marks = Object.keys(COMPS).filter(k => side.dmg[k]).map(k => `<span class="dmg-mark" style="${pos(k)}" title="${COMPS[k]} averiada"></span>`).join('');
+  let marks = Object.keys(COMPS).filter(k => side.dmg[k]).map(k => `<span class="dmg-mark" style="${pos(k)}" title="${COMPS[k]} ${tl('averiada', 'damaged')}"></span>`).join('');
   if (side.dmg.motor || side.destroyed) marks += `<span class="puff" style="${pos('motor')}"></span><span class="puff p2" style="${pos('motor')}"></span>`;
   return `<div class="wire ${flip ? 'flip' : ''}" style="aspect-ratio:${sv.ratio};width:min(100%, calc(var(--art-h, 9999px) * ${sv.ratio}))" role="img" aria-label="${v.name}"><span class="wire-img" style="--src:url('${sv.img}')"></span>${marks}</div>`;
 }
@@ -955,7 +1026,7 @@ const VIEWS = {
   pershing: { top: { img: 'img/pershing_top.webp', ratio: 640 / 274 }, front: { img: 'img/pershing_front.webp', ratio: 640 / 833 },
              pts: { canon: ['top', .2, .5], motor: ['top', .88, .5], oruga: ['front', .1, .92], optica: ['front', .5, .56] } }
 };
-const VIEW_NAME = { top: 'Vista superior', front: 'Vista frontal', side: 'Vista lateral' };
+const VIEW_NAME = EN ? { top: 'Top view', front: 'Front view', side: 'Side view' } : { top: 'Vista superior', front: 'Vista frontal', side: 'Vista lateral' };
 async function showZoom(who, comp, outcome, detail) {
   const v = S[who].veh, vs = VIEWS[v.id];
   let view, img, ratio, x, y, flip = false;
@@ -966,7 +1037,7 @@ async function showZoom(who, comp, outcome, detail) {
   const z = document.createElement('div');
   z.className = `zoom ${who} ${outcome === 'pen' ? 'pen' : 'bounce'}`;
   z.innerHTML = `<div class="zv ${flip ? 'flip' : ''}" style="aspect-ratio:${ratio}"><span class="wire-img" style="--src:url('${img}')"></span><span class="ztarget" style="left:${x * 100}%;top:${y * 100}%"></span></div>
-    <div class="ztext"><span class="zk">${VIEW_NAME[view]} · ${v.name}</span><span class="zc">${COMPS[comp]}</span><span class="zd">${detail}</span>${S.lastShot ? `<span class="zb">${nf(S.lastShot.d)} m · ${nf(S.lastShot.T, 2)} s de vuelo · llega a ${nf(S.lastShot.vi)} m/s</span>` : ''}</div>`;
+    <div class="ztext"><span class="zk">${VIEW_NAME[view]} · ${v.name}</span><span class="zc">${COMPS[comp]}</span><span class="zd">${detail}</span>${S.lastShot ? `<span class="zb">${nf(S.lastShot.d)} m · ${nf(S.lastShot.T, 2)} s ${tl('de vuelo', 'flight')} · ${tl('llega a', 'arrives at')} ${nf(S.lastShot.vi)} m/s</span>` : ''}</div>`;
   tray.appendChild(z);
   const zv = z.querySelector('.zv'), H = z.clientHeight - 24, W = Math.min(z.clientWidth * 0.58, H * ratio);
   zv.style.width = W + 'px'; zv.style.height = (W / ratio) + 'px';
@@ -1011,7 +1082,7 @@ function ballistics(vehId, d, he) {
   const elev = Math.atan(G * T * T / (2 * d)) * 180 / Math.PI; // ángulo de alza
   return { v0, T, vi, apex, elev, d, he };
 }
-const nf = (x, dec = 0) => x.toLocaleString('es-ES', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+const nf = (x, dec = 0) => x.toLocaleString(LOC, { minimumFractionDigits: dec, maximumFractionDigits: dec });
 async function shoot(from, to, comp, outcome, he) {
   const B = ballistics(S[from].veh.id, S.dist || 1000, he);
   S.lastShot = B;
@@ -1038,13 +1109,13 @@ async function shoot(from, to, comp, outcome, he) {
     g.fillStyle = panel; g.strokeStyle = line; g.lineWidth = 1; g.globalAlpha = 0.6;
     g.beginPath(); g.roundRect ? g.roundRect(hx, hy, 190, 88, 6) : g.rect(hx, hy, 190, 88); g.fill(); g.stroke(); g.globalAlpha = 1;
     g.font = '600 10px "Barlow Condensed", sans-serif'; g.fillStyle = muted;
-    g.fillText(`${BALL[S[from].veh.id].cal} · ${he ? 'granada HE' : BALL[S[from].veh.id].ap} · ${nf(B.d)} m`.toUpperCase(), hx + 10, hy + 15);
+    g.fillText(`${BALL[S[from].veh.id].cal} · ${he ? tl('granada HE', 'HE shell') : BALL[S[from].veh.id].ap} · ${nf(B.d)} m`.toUpperCase(), hx + 10, hy + 15);
     g.font = '500 12px "IBM Plex Mono", monospace'; g.fillStyle = fg;
-    g.fillText(`Tiempo   ${nf(tt, 2)} s`, hx + 10, hy + 33);
-    g.fillText(`Veloc.   ${nf(v)} m/s`, hx + 10, hy + 49);
+    g.fillText(`${tl('Tiempo  ', 'Time    ')} ${nf(tt, 2)} s`, hx + 10, hy + 33);
+    g.fillText(`${tl('Veloc.  ', 'Speed   ')} ${nf(v)} m/s`, hx + 10, hy + 49);
     g.fillStyle = done ? sig : fg;
-    g.fillText(done ? `Alza     ${nf(B.elev, 2)}°` : `Quedan   ${nf(rest)} m`, hx + 10, hy + 65);
-    g.font = '500 9.5px "IBM Plex Mono", monospace'; g.fillStyle = muted; g.fillText(`curva con escala vertical ×${V_EXAG}`, hx + 10, hy + 80);
+    g.fillText(done ? `${tl('Alza    ', 'Elev.   ')} ${nf(B.elev, 2)}°` : `${tl('Quedan  ', 'Left    ')} ${nf(rest)} m`, hx + 10, hy + 65);
+    g.font = '500 9.5px "IBM Plex Mono", monospace'; g.fillStyle = muted; g.fillText(`${tl('curva con escala vertical', 'curve with vertical scale')} ×${V_EXAG}`, hx + 10, hy + 80);
   };
   // El vuelo dura su tiempo real (multiplicado por el ritmo elegido): un 128 mm llega antes que un 75 mm.
   const dur = Math.min(Math.max(B.T * 1000, 700), 2800) * pace();
@@ -1144,14 +1215,14 @@ function possibleCombos(side, sup) {
 }
 function draws(hand) {
   const out = [];
-  for (const s of 'BMER') if (hand.filter(c => c.s === s).length === 4) out.push(`Color: te falta 1 carta de ${SUITS[s]}.`);
+  for (const s of 'BMER') if (hand.filter(c => c.s === s).length === 4) out.push(tl(`Color: te falta 1 carta de ${SUITS[s]}.`, `Flush: you need 1 more ${SUITS[s]} card.`));
   const rs = new Set(hand.map(c => c.r)); if (rs.has(14)) rs.add(1);
   let made = false, miss = null;
   for (let lo = 1; lo <= 10; lo++) {
     let have = 0, m = null; for (let r = lo; r < lo + 5; r++) rs.has(r) ? have++ : (m = r);
     if (have === 5) made = true; else if (have === 4 && miss === null) miss = m;
   }
-  if (!made && miss !== null) out.push(`Escalera: te falta un ${RL(miss === 1 ? 14 : miss)}.`);
+  if (!made && miss !== null) out.push(tl(`Escalera: te falta un ${RL(miss === 1 ? 14 : miss)}.`, `Straight: you need a ${RL(miss === 1 ? 14 : miss)}.`));
   return out;
 }
 
@@ -1198,8 +1269,8 @@ function newGame(vehId, opts = {}) {
     // En la Ofensiva tu tanque llega con las averías, órdenes y faldones del combate anterior.
     if (opts.carry) { S.p.dmg = { ...opts.carry.dmg }; S.p.support = opts.carry.support.map(x => ({ id: x.id })); S.p.faldones = opts.carry.faldones || 0; S.p.hand = []; drawTo(S.p); }
   }
-  log(`${S.battle.name}: tu ${pv.name} contra un ${av.name}.`);
-  if (S.mode === 'ofensiva' && OFE) log(`Ofensiva · rival ${OFE.n}, nivel ${S.level} · ${LV().rank}.`);
+  log(tl(`${S.battle.name}: tu ${pv.name} contra un ${av.name}.`, `${S.battle.name}: your ${pv.name} against the ${av.name}.`));
+  if (S.mode === 'ofensiva' && OFE) log(tl(`Ofensiva · rival ${OFE.n}, nivel ${S.level} · ${LV().rank}.`, `Offensive · enemy ${OFE.n}, level ${S.level} · ${LV().rank}.`));
   buildTrack();
   startRound();
 }
@@ -1218,7 +1289,7 @@ function startRound() {
   S.phase = 'choose'; S.pendInst = null; S.swapped = false; S.swapMode = false; S.marks = new Set(); S.loadOrder = []; S.scouted = false; S.supportSel = null; S.repairMode = false; S.sel.clear();
   if (S.battle.rule.id === 'ambush' && S.round === 1 && !S.tut) {
     S.swapped = true; if (!S.aiPlan.sup) S.aiPlan.sup = 'apcr';
-    log('Emboscada: el rival tiene preparada munición perforante y tú no puedes cambiar cartas esta ronda.');
+    log(tl('Emboscada: el rival tiene preparada munición perforante y tú no puedes cambiar cartas esta ronda.', 'Ambush: the enemy has an AP round ready and you cannot swap cards this round.'));
   }
   resetTray();
   render();
@@ -1233,6 +1304,12 @@ const LEVELS = {
   4: { rank: 'Teniente', desc: 'Sin ayudas para elegir. Las órdenes de apoyo dependen de una tirada (también las del rival).', combos: 'none', preview: 'full', roll: true, sup: 2, aiErr: 0, aiSup: 1, dist: false },
   5: { rank: 'Capitán',  desc: 'Sin puntos en tu formación y empiezas con 1 orden. La distancia cuenta para el blindaje: de cerca se perfora mejor.', combos: 'none', preview: 'name', roll: true, sup: 1, aiErr: 0, aiSup: 1, dist: true }
 };
+if (EN) for (const [k, r, d] of [[1, 'Recruit', 'You see every possible hand with its points. The machine often makes mistakes and you start with 3 orders.'],
+  [2, 'Corporal', 'You only see your best hand. The machine plays sensibly.'],
+  [3, 'Sergeant', 'You only see hints about almost-made hands. The machine plays well and uses its support.'],
+  [4, 'Lieutenant', 'No help choosing. Support orders depend on a roll (the enemy’s too).'],
+  [5, 'Captain', 'No points shown for your formation and you start with 1 order. Range affects armor: up close it is easier to penetrate.']])
+  Object.assign(LEVELS[k], { rank: r, desc: d });
 const LV = () => LEVELS[(S && S.level) || 1];
 let CAMP = 1; try { CAMP = Math.min(5, Math.max(1, +localStorage.getItem('ldf-campaign') || 1)); } catch (e) {}
 let MODE = 'campaign', PICK = CAMP;
@@ -1245,7 +1322,7 @@ const blankStats = () => ({ games: 0, wins: 0, losses: 0, roundsWon: 0, roundsLo
 function loadStats() { try { return Object.assign(blankStats(), JSON.parse(localStorage.getItem(STAT_KEY)) || {}); } catch (e) { return blankStats(); } }
 function saveStats(st) { try { localStorage.setItem(STAT_KEY, JSON.stringify(st)); } catch (e) {} }
 const newGameStats = () => ({ roundsWon: 0, roundsLost: 0, ties: 0, advances: 0, retreats: 0, hitsTaken: 0, penTaken: 0, hitsDealt: 0, penDealt: 0, supportsUsed: 0, bestHand: 0 });
-const today = () => new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+const today = () => new Date().toLocaleDateString(LOC, { day: 'numeric', month: 'short', year: 'numeric' });
 function noteHand(total, ev) {
   if (S.tut) return;
   S.st.bestHand = Math.max(S.st.bestHand, total);
@@ -1255,9 +1332,9 @@ function noteHand(total, ev) {
 function battleScore(won) {
   const intact = S.p.destroyed ? 0 : Object.values(S.p.dmg).filter(x => !x).length;
   const adv = Math.max(0, S.front - 3);
-  const parts = [[`${S.st.roundsWon} rondas ganadas × 100`, 100 * S.st.roundsWon], [`${adv} sectores de ventaja × 150`, 150 * adv]];
-  if (won) { parts.unshift([`Victoria en nivel ${S.level} × 1000`, 1000 * S.level]);
-             parts.push([`${intact} piezas intactas × 50`, 50 * intact], [`${S.round} rondas jugadas × −50`, -50 * S.round]); }
+  const parts = [[tl(`${S.st.roundsWon} rondas ganadas × 100`, `${S.st.roundsWon} rounds won × 100`), 100 * S.st.roundsWon], [tl(`${adv} sectores de ventaja × 150`, `${adv} sectors ahead × 150`), 150 * adv]];
+  if (won) { parts.unshift([tl(`Victoria en nivel ${S.level} × 1000`, `Victory at level ${S.level} × 1000`), 1000 * S.level]);
+             parts.push([tl(`${intact} piezas intactas × 50`, `${intact} intact parts × 50`), 50 * intact], [tl(`${S.round} rondas jugadas × −50`, `${S.round} rounds played × −50`), -50 * S.round]); }
   return { total: Math.max(0, parts.reduce((a, [, v]) => a + v, 0)), parts };
 }
 function recordGame(won, score, noTop) {
@@ -1310,63 +1387,65 @@ function showStats() {
   if (!$('overlay').hidden && !fichaOpen) return;
   const st = loadStats(), pct = (a, b) => b ? Math.round(100 * a / b) + ' %' : '—';
   const row = (k, v) => `<span>${k}</span><span class="v">${v}</span>`;
-  const vehRows = VEHICLES.map(v => { const x = st.byVeh[v.id]; return row(v.name, x ? `${x.wins} de ${x.games}` : '—'); }).join('');
-  const top = st.top.length ? `<div class="stat-top"><table><thead><tr><th>#</th><th>Puntos</th><th>Resultado</th><th>Vehículo</th><th>Nivel</th><th>Rondas</th><th>Fecha</th></tr></thead><tbody>${
-    st.top.map((e, i) => `<tr><td>${i + 1}</td><td class="n">${nf(e.score)}</td><td>${e.won ? 'Victoria' : 'Derrota'}</td><td>${e.veh}</td><td>${e.level} · ${LEVELS[e.level].rank}</td><td class="n">${e.rounds}</td><td>${e.date}</td></tr>`).join('')}</tbody></table></div>`
-    : '<p class="empty">Todavía no hay batallas terminadas. La puntuación se guarda al acabar cada batalla (la instrucción no cuenta).</p>';
+  const vehRows = VEHICLES.map(v => { const x = st.byVeh[v.id]; return row(v.name, x ? `${x.wins} ${tl('de', 'of')} ${x.games}` : '—'); }).join('');
+  const top = st.top.length ? `<div class="stat-top"><table><thead><tr><th>#</th><th>${tl('Puntos', 'Points')}</th><th>${tl('Resultado', 'Result')}</th><th>${tl('Vehículo', 'Vehicle')}</th><th>${tl('Nivel', 'Level')}</th><th>${tl('Rondas', 'Rounds')}</th><th>${tl('Fecha', 'Date')}</th></tr></thead><tbody>${
+    st.top.map((e, i) => `<tr><td>${i + 1}</td><td class="n">${nf(e.score)}</td><td>${e.won ? tl('Victoria', 'Victory') : tl('Derrota', 'Defeat')}</td><td>${e.veh}</td><td>${e.level} · ${LEVELS[e.level].rank}</td><td class="n">${e.rounds}</td><td>${e.date}</td></tr>`).join('')}</tbody></table></div>`
+    : `<p class="empty">${tl('Todavía no hay batallas terminadas. La puntuación se guarda al acabar cada batalla (la instrucción no cuenta).', 'No finished battles yet. The score is saved at the end of each battle (the tutorial does not count).')}</p>`;
   const o = $('overlay');
   o.innerHTML = `<div class="dialog ficha" role="dialog" aria-modal="true" aria-labelledby="st-t">
-    <div class="f-head"><div><span class="zk">Hoja de servicio · este navegador</span><h2 id="st-t">Estadísticas</h2></div><button type="button" class="btn" id="st-close">Cerrar</button></div>
+    <div class="f-head"><div><span class="zk">${tl('Hoja de servicio · este navegador', 'Service record · this browser')}</span><h2 id="st-t">${tl('Estadísticas', 'Statistics')}</h2></div><button type="button" class="btn" id="st-close">${tl('Cerrar', 'Close')}</button></div>
     <div class="stat-tiles">
-      <div><b>${st.top.length ? nf(st.top[0].score) : '—'}</b><span>Mejor puntuación</span></div>
-      <div><b>${st.bestHand ? st.bestHand.total : '—'}</b><span>Mejor mano${st.bestHand ? ` · ${st.bestHand.combo}, ${st.bestHand.veh}` : ''}</span></div>
-      <div><b>${st.wins}–${st.losses}</b><span>Batallas ganadas y perdidas</span></div>
-      <div><b>${pct(st.roundsWon, st.roundsWon + st.roundsLost + st.ties)}</b><span>Rondas ganadas</span></div>
+      <div><b>${st.top.length ? nf(st.top[0].score) : '—'}</b><span>${tl('Mejor puntuación', 'Best score')}</span></div>
+      <div><b>${st.bestHand ? st.bestHand.total : '—'}</b><span>${tl('Mejor mano', 'Best hand')}${st.bestHand ? ` · ${st.bestHand.combo}, ${st.bestHand.veh}` : ''}</span></div>
+      <div><b>${st.wins}–${st.losses}</b><span>${tl('Batallas ganadas y perdidas', 'Battles won and lost')}</span></div>
+      <div><b>${pct(st.roundsWon, st.roundsWon + st.roundsLost + st.ties)}</b><span>${tl('Rondas ganadas', 'Rounds won')}</span></div>
     </div>
     <div class="f-grid">
-      <div class="f-box"><h3>Rondas y frente</h3><div class="f-rows">${row('Rondas ganadas', st.roundsWon)}${row('Rondas perdidas', st.roundsLost)}${row('Empates', st.ties)}${row('Avances del frente', st.advances)}${row('Retrocesos del frente', st.retreats)}</div></div>
-      <div class="f-box"><h3>Impactos</h3><div class="f-rows">${row('Impactos recibidos', st.hitsTaken)}${row('…que penetraron', st.penTaken)}${row('Impactos causados', st.hitsDealt)}${row('…que penetraron', st.penDealt)}${row('Rivales fuera de combate', st.kills)}${row('Veces fuera de combate', st.deaths)}</div></div>
-      <div class="f-box"><h3>Victorias por vehículo</h3><div class="f-rows">${vehRows}</div></div>
-      <div class="f-box"><h3>Otros</h3><div class="f-rows">${row('Batallas jugadas', st.games)}${row('Ofensivas jugadas', st.ofeRuns || 0)}${row('Mejor ofensiva', st.ofeBest ? `${nf(st.ofeBest.points)} pts · ${st.ofeBest.beaten} rivales` : '—')}${row('Órdenes de apoyo usadas', st.supportsUsed)}${row('Mejor mano', st.bestHand ? `${st.bestHand.total} (${st.bestHand.date})` : '—')}</div></div>
+      <div class="f-box"><h3>${tl('Rondas y frente', 'Rounds and front')}</h3><div class="f-rows">${row(tl('Rondas ganadas', 'Rounds won'), st.roundsWon)}${row(tl('Rondas perdidas', 'Rounds lost'), st.roundsLost)}${row(tl('Empates', 'Ties'), st.ties)}${row(tl('Avances del frente', 'Front advances'), st.advances)}${row(tl('Retrocesos del frente', 'Front retreats'), st.retreats)}</div></div>
+      <div class="f-box"><h3>${tl('Impactos', 'Hits')}</h3><div class="f-rows">${row(tl('Impactos recibidos', 'Hits taken'), st.hitsTaken)}${row(tl('…que penetraron', '…that penetrated'), st.penTaken)}${row(tl('Impactos causados', 'Hits dealt'), st.hitsDealt)}${row(tl('…que penetraron', '…that penetrated'), st.penDealt)}${row(tl('Rivales fuera de combate', 'Enemies knocked out'), st.kills)}${row(tl('Veces fuera de combate', 'Times knocked out'), st.deaths)}</div></div>
+      <div class="f-box"><h3>${tl('Victorias por vehículo', 'Wins by vehicle')}</h3><div class="f-rows">${vehRows}</div></div>
+      <div class="f-box"><h3>${tl('Otros', 'Other')}</h3><div class="f-rows">${row(tl('Batallas jugadas', 'Battles played'), st.games)}${row(tl('Ofensivas jugadas', 'Offensives played'), st.ofeRuns || 0)}${row(tl('Mejor ofensiva', 'Best offensive'), st.ofeBest ? `${nf(st.ofeBest.points)} pts · ${st.ofeBest.beaten} ${tl('rivales', 'enemies')}` : '—')}${row(tl('Órdenes de apoyo usadas', 'Support orders used'), st.supportsUsed)}${row(tl('Mejor mano', 'Best hand'), st.bestHand ? `${st.bestHand.total} (${st.bestHand.date})` : '—')}</div></div>
     </div>
-    <div class="f-scale-wrap"><h3>Mejores puntuaciones</h3>${top}
-      <p class="credit">Puntuación por batalla: victoria = 1000 × nivel; +100 por ronda ganada; +150 por sector de ventaja; +50 por pieza intacta; −50 por ronda jugada. En derrota solo cuentan rondas ganadas y sectores de ventaja. Se guarda solo en este navegador.</p></div>
-    <div class="controls"><button type="button" class="btn" id="st-export">Exportar progreso</button><button type="button" class="btn" id="st-import">Importar progreso</button><input type="file" id="st-file" accept=".json,application/json" hidden><button type="button" class="btn" id="st-clear">Borrar estadísticas</button></div><p class="credit" id="st-msg" role="status">El archivo lleva la hoja de servicio, el nivel de campaña y las batallas ganadas, para seguir en otro navegador o guardar una copia.</p>
+    <div class="f-scale-wrap"><h3>${tl('Mejores puntuaciones', 'High scores')}</h3>${top}
+      <p class="credit">${tl('Puntuación por batalla: victoria = 1000 × nivel; +100 por ronda ganada; +150 por sector de ventaja; +50 por pieza intacta; −50 por ronda jugada. En derrota solo cuentan rondas ganadas y sectores de ventaja. Se guarda solo en este navegador.', 'Score per battle: victory = 1000 × level; +100 per round won; +150 per sector ahead; +50 per intact part; −50 per round played. In defeat only rounds won and sectors ahead count. Saved only in this browser.')}</p></div>
+    <div class="controls"><button type="button" class="btn" id="st-export">${tl('Exportar progreso', 'Export progress')}</button><button type="button" class="btn" id="st-import">${tl('Importar progreso', 'Import progress')}</button><input type="file" id="st-file" accept=".json,application/json" hidden><button type="button" class="btn" id="st-clear">${tl('Borrar estadísticas', 'Clear statistics')}</button></div><p class="credit" id="st-msg" role="status">${tl('El archivo lleva la hoja de servicio, el nivel de campaña y las batallas ganadas, para seguir en otro navegador o guardar una copia.', 'The file holds your service record, campaign level and battles won, so you can carry on in another browser or keep a backup.')}</p>
   </div>`;
   o.hidden = false; fichaOpen = true; statsClearArmed = false;
   $('st-close').onclick = closeFicha; $('st-close').focus();
   let pending = null;
-  $('st-export').onclick = () => { exportProgress(); $('st-msg').textContent = 'Archivo de progreso descargado.'; };
+  $('st-export').onclick = () => { exportProgress(); $('st-msg').textContent = tl('Archivo de progreso descargado.', 'Progress file downloaded.'); };
   $('st-import').onclick = () => {
-    if (pending) { applySave(pending); fichaOpen = false; $('overlay').hidden = true; showStats(); $('st-msg').textContent = 'Progreso importado.'; return; }
+    if (pending) { applySave(pending); fichaOpen = false; $('overlay').hidden = true; showStats(); $('st-msg').textContent = tl('Progreso importado.', 'Progress imported.'); return; }
     $('st-file').click();
   };
   $('st-file').onchange = async () => {
     const f = $('st-file').files[0]; $('st-file').value = ''; if (!f) return;
     let sv = null;
     try { if (f.size < 200000) sv = cleanSave(JSON.parse(await f.text())); } catch (e) {}
-    if (!sv) { $('st-msg').textContent = 'Ese archivo no es un progreso de TANKING... FIRE! No se ha cambiado nada.'; return; }
+    if (!sv) { $('st-msg').textContent = tl('Ese archivo no es un progreso de TANKING... FIRE! No se ha cambiado nada.', 'That file is not a TANKING... FIRE! progress file. Nothing has changed.'); return; }
     pending = sv;
-    $('st-msg').textContent = `En el archivo: campaña nivel ${sv.campaign} · ${sv.stats.games} batallas (${sv.stats.wins} ganadas) · mejor puntuación ${sv.stats.top.length ? nf(sv.stats.top[0].score) : '—'}. Sustituye a tu progreso actual.`;
-    $('st-import').textContent = 'Toca otra vez para importarlo'; $('st-import').classList.add('fire');
+    const best = sv.stats.top.length ? nf(sv.stats.top[0].score) : '—';
+    $('st-msg').textContent = tl(`En el archivo: campaña nivel ${sv.campaign} · ${sv.stats.games} batallas (${sv.stats.wins} ganadas) · mejor puntuación ${best}. Sustituye a tu progreso actual.`,
+      `In the file: campaign level ${sv.campaign} · ${sv.stats.games} battles (${sv.stats.wins} won) · best score ${best}. It replaces your current progress.`);
+    $('st-import').textContent = tl('Toca otra vez para importarlo', 'Tap again to import it'); $('st-import').classList.add('fire');
   };
   $('st-clear').onclick = () => {
-    if (!statsClearArmed) { statsClearArmed = true; $('st-clear').textContent = 'Toca otra vez para borrarlo todo'; $('st-clear').classList.add('fire'); return; }
+    if (!statsClearArmed) { statsClearArmed = true; $('st-clear').textContent = tl('Toca otra vez para borrarlo todo', 'Tap again to clear everything'); $('st-clear').classList.add('fire'); return; }
     try { localStorage.removeItem(STAT_KEY); } catch (e) {} fichaOpen = false; $('overlay').hidden = true; showStats();
   };
 }
 const baseSup = id => id ? id.replace('_h', '') : id;
 function supRoll() { const r = rnd(6); return { r, q: r >= 5 ? 'full' : r >= 2 ? 'half' : 'fail' }; }
-const Q_TXT = { full: 'efecto completo', half: 'efecto a medias', fail: 'falla y vuelve a la mano' };
+const Q_TXT = EN ? { full: 'full effect', half: 'half effect', fail: 'fails and returns to the hand' } : { full: 'efecto completo', half: 'efecto a medias', fail: 'falla y vuelve a la mano' };
 function armorMods(side) {
   let m = 0; const notes = [];
-  if (side.armorBonus) { m += 1; notes.push('+1 faldones parciales'); }
-  if (LV().dist && S.dist < 700) { m -= 1; notes.push('−1 por distancia corta'); }
-  if (LV().dist && S.dist > 1300) { m += 1; notes.push('+1 por distancia larga'); }
-  if (S.battle.rule.id === 'height' && side === S.ai && S.front >= 4) { m += 1; notes.push('+1 altura dominante'); }
-  if (S.pointBlank && side === S[S.pointBlank]) { m -= 1; notes.push('−1 a quemarropa, no puede replegarse'); }
-  if (side.veh.id === 'cromwell' && S.dist > 1000) { m += 1; notes.push('+1 Cromwell rápido a distancia'); }
-  if ((side === S.p ? S.ai : S.p).veh.id === 'firefly') { m -= 1; notes.push('−1 cañón de 17 libras'); }
+  if (side.armorBonus) { m += 1; notes.push(tl('+1 faldones parciales', '+1 partial skirts')); }
+  if (LV().dist && S.dist < 700) { m -= 1; notes.push(tl('−1 por distancia corta', '−1 short range')); }
+  if (LV().dist && S.dist > 1300) { m += 1; notes.push(tl('+1 por distancia larga', '+1 long range')); }
+  if (S.battle.rule.id === 'height' && side === S.ai && S.front >= 4) { m += 1; notes.push(tl('+1 altura dominante', '+1 high ground')); }
+  if (S.pointBlank && side === S[S.pointBlank]) { m -= 1; notes.push(tl('−1 a quemarropa, no puede replegarse', '−1 point-blank, cannot fall back')); }
+  if (side.veh.id === 'cromwell' && S.dist > 1000) { m += 1; notes.push(tl('+1 Cromwell rápido a distancia', '+1 fast Cromwell at range')); }
+  if ((side === S.p ? S.ai : S.p).veh.id === 'firefly') { m -= 1; notes.push(tl('−1 cañón de 17 libras', '−1 17-pounder gun')); }
   return { m, notes };
 }
 
@@ -1377,15 +1456,15 @@ function aiInstants() {
   if (broken.length && ing >= 0) {
     const k = ['oruga', 'canon', 'motor', 'optica'].find(x => ai.dmg[x]);
     const q = LV().roll ? supRoll().q : 'full';
-    if (q === 'fail') log('El ingeniero del rival no consigue reparar nada esta ronda.');
+    if (q === 'fail') log(tl('El ingeniero del rival no consigue reparar nada esta ronda.', 'The enemy engineer fails to repair anything this round.'));
     else { ai.support.splice(ing, 1);
-      if (q === 'full') { ai.dmg[k] = false; log(`El rival manda a su ingeniero: repara ${COMPS[k].toLowerCase()}.`); }
-      else { ai.pendingFix = k; log(`El ingeniero del rival repara ${COMPS[k].toLowerCase()} al final de la ronda.`); } }
+      if (q === 'full') { ai.dmg[k] = false; log(tl(`El rival manda a su ingeniero: repara ${COMPS[k].toLowerCase()}.`, `The enemy sends in their engineer: repairs the ${COMPS[k].toLowerCase()}.`)); }
+      else { ai.pendingFix = k; log(tl(`El ingeniero del rival repara ${COMPS[k].toLowerCase()} al final de la ronda.`, `The enemy engineer repairs the ${COMPS[k].toLowerCase()} at the end of the round.`)); } }
   }
   const f = ai.support.findIndex(x => x.id === 'fald');
   if (f >= 0 && !ai.faldones && !ai.armorBonus && Math.random() < 0.6) {
     const q = LV().roll ? supRoll().q : 'full';
-    if (q !== 'fail') { ai.support.splice(f, 1); if (q === 'full') { ai.faldones++; log('El rival monta faldones de blindaje.'); } else { ai.armorBonus = 1; log('El rival monta faldones a medias: +1 de blindaje en el próximo impacto.'); } }
+    if (q !== 'fail') { ai.support.splice(f, 1); if (q === 'full') { ai.faldones++; log(tl('El rival monta faldones de blindaje.', 'The enemy fits armor skirts.')); } else { ai.armorBonus = 1; log(tl('El rival monta faldones a medias: +1 de blindaje en el próximo impacto.', 'The enemy half-fits skirts: +1 armor on the next hit.')); } }
   }
   const e = ai.support.findIndex(x => x.id === 'exp');
   if (e >= 0 && ai.support.length > 3) ai.support.splice(e, 1);
@@ -1412,7 +1491,7 @@ function aiPlan() {
 function buildTrack() {
   const t = $('track');
   // Una sola línea de frente: tu tanque a la izquierda y el del rival a la derecha, morro con morro en el sector disputado.
-  t.innerHTML = `<div class="rail"><div class="fill" id="rail-fill"></div><div class="fill-ai" id="rail-fill-ai"></div><div class="marker" id="marker" title="Línea del frente"><span class="mt p" id="mt-p"></span><span class="mt-line"></span><span class="mt ai" id="mt-ai"></span></div></div>` +
+  t.innerHTML = `<div class="rail"><div class="fill" id="rail-fill"></div><div class="fill-ai" id="rail-fill-ai"></div><div class="marker" id="marker" title="${tl('Línea del frente', 'Front line')}"><span class="mt p" id="mt-p"></span><span class="mt-line"></span><span class="mt ai" id="mt-ai"></span></div></div>` +
     SECTORS.map((s, i) => `<div class="sector ${i === 0 ? 'home' : ''} ${i === 6 ? 'goal' : ''}" data-i="${i}"><span class="node"></span><span class="lbl">${s.n}</span><span class="km">${s.r[0]}–${s.r[1]} m</span></div>`).join('');
 }
 function renderTrack() {
@@ -1426,30 +1505,30 @@ function renderTrack() {
   const pv = S.p.veh, av = S.ai.veh, al = av.left || { img: av.img, ratio: av.ratio };
   $('mt-p').style.cssText = `--src:url('${pv.img}');--r:${pv.ratio}`;
   $('mt-ai').style.cssText = `--src:url('${al.img}');--r:${al.ratio}` + (av.left ? '' : ';transform:scaleX(-1)');
-  $('marker').title = `Frente en ${SECTORS[S.front].n}: tu ${pv.name} contra el ${av.name}`;
+  $('marker').title = tl(`Frente en ${SECTORS[S.front].n}: tu ${pv.name} contra el ${av.name}`, `Front at ${SECTORS[S.front].n}: your ${pv.name} against the ${av.name}`);
   $('front-name').textContent = SECTORS[S.front].n;
   $('goal-name').textContent = SECTORS[6].n; $('home-name').textContent = SECTORS[0].n;
   $('subtitle').textContent = S.battle.sub.includes(S.battle.name) ? S.battle.sub : `${S.battle.sub} · ${S.battle.name}`;
-  $('rulechip').textContent = `Regla: ${S.battle.rule.name}`; $('rulechip').title = S.battle.rule.text;
+  $('rulechip').textContent = `${tl('Regla', 'Rule')}: ${S.battle.rule.name}`; $('rulechip').title = S.battle.rule.text;
 }
 
 function cardHTML(c, o = {}) {
   const tag = o.button ? 'button' : 'div';
   const attrs = o.button ? `type="button" data-id="${c.id}" aria-pressed="${S.sel.has(c.id)}" ${o.disabled ? 'disabled' : ''}` : '';
-  return `<${tag} class="card s-${c.s} ${o.cls || ''}" ${attrs} style="--d:${o.delay || 0}ms" aria-label="${RL(c.r)} de ${SUITS[c.s]}">
-    <span class="c-rank">${RL(c.r)}${CVAL(c.r) ? `<small class="cval" title="En una combinación suma +${CVAL(c.r)} de valor">+${CVAL(c.r)}</small>` : ''}</span><span class="c-big">${suitIcon(c.s)}</span><span class="c-name">${SUITS[c.s]}</span></${tag}>`;
+  return `<${tag} class="card s-${c.s} ${o.cls || ''}" ${attrs} style="--d:${o.delay || 0}ms" aria-label="${RL(c.r)} ${tl('de', 'of')} ${SUITS[c.s]}">
+    <span class="c-rank">${RL(c.r)}${CVAL(c.r) ? `<small class="cval" title="${tl(`En una combinación suma +${CVAL(c.r)} de valor`, `Adds +${CVAL(c.r)} value in a hand`)}">+${CVAL(c.r)}</small>` : ''}</span><span class="c-big">${suitIcon(c.s)}</span><span class="c-name">${SUITS[c.s]}</span></${tag}>`;
 }
 function vehHTML(side, who) {
   const v = side.veh;
   const comps = Object.entries(COMPS).map(([k, l]) => {
     const fix = who === 'p' && S.repairMode && side.dmg[k];
-    return `<button type="button" class="comp ${side.dmg[k] ? 'broken' : ''} ${fix ? 'fixable' : ''}" data-comp="${k}" ${fix ? '' : 'tabindex="-1"'} title="${side.dmg[k] ? COMPS[k] + ' averiada: ' + EFFECT[k] : COMPS[k] + ' en buen estado'}">${l}</button>`;
+    return `<button type="button" class="comp ${side.dmg[k] ? 'broken' : ''} ${fix ? 'fixable' : ''}" data-comp="${k}" ${fix ? '' : 'tabindex="-1"'} title="${side.dmg[k] ? COMPS[k] + tl(' averiada: ', ' damaged: ') + EFFECT[k] : COMPS[k] + tl(' en buen estado', ' in good order')}">${l}</button>`;
   }).join('');
   return `<div class="veh ${who} ${side.destroyed ? 'down' : ''}" id="veh-${who}">
-    ${side.faldones ? `<span class="token">Faldones ×${side.faldones}</span>` : side.armorBonus ? '<span class="token">Faldones parciales +1</span>' : ''}${side.pendingFix ? `<span class="token fix">Reparando ${COMPS[side.pendingFix].toLowerCase()}</span>` : ''}
-    <div class="veh-head"><span class="veh-name">${v.name}</span><button type="button" class="info-btn" data-ficha="${who}" aria-label="Ver la ficha del ${v.name}">Ficha</button></div>
-    <div class="veh-art" data-ficha="${who}" title="Ver ficha técnica">${artHTML(side, who)}</div>
-    <div class="veh-stats"><span><b>+${v.pot}</b> dado</span><span><b>${v.arm}</b> blindaje</span><span class="afin s-${v.afin}" style="color:var(--fg)">${suitIcon(v.afin)}${SUITS[v.afin]}</span></div>
+    ${side.faldones ? `<span class="token">${tl('Faldones', 'Skirts')} ×${side.faldones}</span>` : side.armorBonus ? `<span class="token">${tl('Faldones parciales +1', 'Partial skirts +1')}</span>` : ''}${side.pendingFix ? `<span class="token fix">${tl('Reparando', 'Repairing')} ${COMPS[side.pendingFix].toLowerCase()}</span>` : ''}
+    <div class="veh-head"><span class="veh-name">${v.name}</span><button type="button" class="info-btn" data-ficha="${who}" aria-label="${tl('Ver la ficha del', 'View the spec sheet of the')} ${v.name}">${tl('Ficha', 'Specs')}</button></div>
+    <div class="veh-art" data-ficha="${who}" title="${tl('Ver ficha técnica', 'View spec sheet')}">${artHTML(side, who)}</div>
+    <div class="veh-stats"><span><b>+${v.pot}</b> ${tl('dado', 'die')}</span><span><b>${v.arm}</b> ${tl('blindaje', 'armor')}</span><span class="afin s-${v.afin}" style="color:var(--fg)">${suitIcon(v.afin)}${SUITS[v.afin]}</span></div>
     <div class="comps">${comps}</div>
   </div>`;
 }
@@ -1471,26 +1550,26 @@ function renderZones() {
   const aSup = S.aiPlan && S.aiPlan.sup;
   $('zone-ai').innerHTML = vehHTML(ai, 'ai') + `
     <div class="formation">
-      <span class="zone-label">Formación del rival</span>
+      <span class="zone-label">${tl('Formación del rival', 'Enemy formation')}</span>
       <div class="slots">${slotsHTML(ai.formation, { hidden: !aiRevealed, deal: S.anim.dealAI, anim: S.anim.flipAI ? 'flip' : '', afin: ai.veh.afin })}${aiOrderSlot(aSup, aiRevealed)}</div>
-      <div class="form-name">${nameKnown && aEv ? `${aEv.name} <span>· ${aEv.alias}${aSup ? ' · con ' + SUPPORT_DEFS[baseSup(aSup)].name : ''}</span>` : `<span>${ai.formation.length} carta${ai.formation.length === 1 ? '' : 's'} boca abajo${aSup ? ' · ha preparado apoyo' : ''}</span>`}</div>
+      <div class="form-name">${nameKnown && aEv ? `${aEv.name} <span>· ${aEv.alias}${aSup ? tl(' · con ', ' · with ') + SUPPORT_DEFS[baseSup(aSup)].name : ''}</span>` : `<span>${ai.formation.length} ${tl('carta', 'card')}${ai.formation.length === 1 ? '' : 's'} ${tl('boca abajo', 'face down')}${aSup ? tl(' · ha preparado apoyo', ' · support ready') : ''}</span>`}</div>
     </div>
-    <div class="ai-orders"><span class="zone-label">Órdenes del rival · ${ai.support.length}</span>
-      <div class="aords">${ai.support.length ? ai.support.map(o => aiOrderCard(o.id, S.scouted)).join('') : '<span class="empty">ninguna</span>'}</div>
-      <span class="chip">Mano <b>${ai.hand.length}</b></span></div>`;
+    <div class="ai-orders"><span class="zone-label">${tl('Órdenes del rival', 'Enemy orders')} · ${ai.support.length}</span>
+      <div class="aords">${ai.support.length ? ai.support.map(o => aiOrderCard(o.id, S.scouted)).join('') : `<span class="empty">${tl('ninguna', 'none')}</span>`}</div>
+      <span class="chip">${tl('Mano', 'Hand')} <b>${ai.hand.length}</b></span></div>`;
   renderPZone();
 }
 // Órdenes del rival: boca abajo (cartulina perforada) salvo que el Explorador las haya descubierto.
 function aiOrderCard(id, open) {
-  if (!open) return `<span class="aord back" title="Orden del rival, boca abajo">${holesHTML('rival')}<span class="ac">ORD</span></span>`;
+  if (!open) return `<span class="aord back" title="${tl('Orden del rival, boca abajo', 'Enemy order, face down')}">${holesHTML('rival')}<span class="ac">ORD</span></span>`;
   const d = SUPPORT_DEFS[id];
   return `<span class="aord ${d.kind}" title="${d.name}: ${d.text}"><span class="pico">${supIcon(id)}</span><span class="an">${d.name}</span></span>`;
 }
 function aiOrderSlot(aSup, open) {
-  if (!aSup) return `<span class="slot oslot"><span>Orden de combate</span></span>`;
+  if (!aSup) return `<span class="slot oslot"><span>${tl('Orden de combate', 'Combat order')}</span></span>`;
   const id = baseSup(aSup);
   return open ? `<span class="slot oslot loaded ai flip"><span class="pico">${supIcon(id)}</span><span>${SUPPORT_DEFS[id].name}</span></span>`
-              : `<span class="slot oslot aiback">${holesHTML('rival')}<span>Orden preparada</span></span>`;
+              : `<span class="slot oslot aiback">${holesHTML('rival')}<span>${tl('Orden preparada', 'Order ready')}</span></span>`;
 }
 // Tu formación: en la fase de elegir muestra lo cargado (toca para devolver a la mano); al disparar, lo jugado.
 function renderPZone() {
@@ -1502,15 +1581,15 @@ function renderPZone() {
     for (let i = cards.length; i < 5; i++) slots += `<span class="slot"><i>${i + 1}</i></span>`;
   } else slots = slotsHTML(p.formation, { anim: S.anim.dealP ? 'deal' : '', afin: p.veh.afin });
   const sid = choose ? supId() : p.roundSup ? baseSup(p.roundSup) : null;
-  const oslot = sid ? `<button type="button" class="slot oslot loaded" data-unorder ${choose ? '' : 'disabled'} title="${choose ? 'Toca para quitar la orden' : ''}"><span class="pico">${supIcon(sid)}</span><span>${SUPPORT_DEFS[sid].name}</span></button>`
-                    : `<span class="slot oslot"><span>Orden de combate</span></span>`;
+  const oslot = sid ? `<button type="button" class="slot oslot loaded" data-unorder ${choose ? '' : 'disabled'} title="${choose ? tl('Toca para quitar la orden', 'Tap to remove the order') : ''}"><span class="pico">${supIcon(sid)}</span><span>${SUPPORT_DEFS[sid].name}</span></button>`
+                    : `<span class="slot oslot"><span>${tl('Orden de combate', 'Combat order')}</span></span>`;
   $('zone-p').innerHTML = vehHTML(p, 'p') + `
     <div class="formation">
-      <span class="zone-label">Tu formación</span>
+      <span class="zone-label">${tl('Tu formación', 'Your formation')}</span>
       <div class="slots">${slots}${oslot}</div>
       <div class="calc preview" id="preview"></div>
     </div>
-    <button class="btn fire bigfire" id="btn-fire" type="button">¡Fuego!<small id="fire-sub"></small></button>`;
+    <button class="btn fire bigfire" id="btn-fire" type="button">${tl('¡Fuego!', 'Fire!')}<small id="fire-sub"></small></button>`;
   renderPreview();
 }
 function renderHand() {
@@ -1534,30 +1613,30 @@ function supId() { return S.supportSel != null ? S.p.support[S.supportSel].id : 
 
 function renderScore() {
   $('score').innerHTML = `
-    <div><b>${S.round}</b><span>Ronda</span></div>
-    <div><b>${S.p.wins}–${S.ai.wins}</b><span>Rondas ganadas</span></div>
-    <div><b>${6 - S.front}</b><span>Sectores al objetivo</span></div>`;
+    <div><b>${S.round}</b><span>${tl('Ronda', 'Round')}</span></div>
+    <div><b>${S.p.wins}–${S.ai.wins}</b><span>${tl('Rondas ganadas', 'Rounds won')}</span></div>
+    <div><b>${6 - S.front}</b><span>${tl('Sectores al objetivo', 'Sectors to objective')}</span></div>`;
 }
 function renderPreview() {
   const p = S.p, el = $('preview'); if (!el) return;
   if (S.phase !== 'choose') { const ev = evaluate(p.formation); el.innerHTML = ev ? `<b class="pvn">${ev.name}</b> · ${ev.alias}` : ''; return; }
   const cards = selCards();
-  if (!cards.length) { el.innerHTML = `<span class="pv-note">${S.swapMode ? 'Modo cambio: marca en tu mano las cartas que quieres cambiar.' : 'Toca cartas de tu mano para cargarlas aquí.'}</span>`; return; }
+  if (!cards.length) { el.innerHTML = `<span class="pv-note">${S.swapMode ? tl('Modo cambio: marca en tu mano las cartas que quieres cambiar.', 'Swap mode: mark the cards in your hand you want to swap.') : tl('Toca cartas de tu mano para cargarlas aquí.', 'Tap cards in your hand to load them here.')}</span>`; return; }
   const sup = supId(), ev = evaluate(cards), b = bonuses(p, cards, sup), d = diceCount(p, ev, sup);
   const loose = cards.length - ev.core.length;
-  const looseNote = loose > 0 ? ` <span class="warn">Las atenuadas no forman parte de la combinación: no cuentan y vuelven a tu mano.</span>` : '';
-  if (LV().preview === 'name') { el.innerHTML = `<b class="pvn">${ev.name}</b> · ${ev.alias}. <span class="pv-note">Nivel ${S.level}: la potencia la calculas tú.${looseNote}</span>`; return; }
+  const looseNote = loose > 0 ? ` <span class="warn">${tl('Las atenuadas no forman parte de la combinación: no cuentan y vuelven a tu mano.', 'The dimmed cards are not part of the hand: they do not count and go back to your hand.')}</span>` : '';
+  if (LV().preview === 'name') { el.innerHTML = `<b class="pvn">${ev.name}</b> · ${ev.alias}. <span class="pv-note">${tl(`Nivel ${S.level}: la potencia la calculas tú.`, `Level ${S.level}: you work out the firepower yourself.`)}${looseNote}</span>`; return; }
   const exp = ev.base + b.val + d * 3.5 + b.syn + b.radio + b.opt;
-  const parts = [`<b>${ev.base}</b> base`, `<b>${b.val}</b> valor`, `<b>${d}</b> dado${d > 1 ? 's' : ''}`, `<b>${b.syn}</b> sinergia`];
-  if (b.radio) parts.push(`<b>${b.radio}</b> artillería`);
-  const neg = b.opt ? ` − <b>2</b> óptica` : '';
-  const extra = [sup === 'art' ? 'repites los 1 y 2' : '', sup === 'he' ? 'si ganas, el impacto ignora el blindaje' : '', LV().roll && sup ? 'la orden depende de una tirada' : ''].filter(Boolean).join(' · ');
+  const parts = [`<b>${ev.base}</b> base`, `<b>${b.val}</b> ${tl('valor', 'value')}`, `<b>${d}</b> ${tl('dado', 'di')}${d > 1 ? tl('s', 'ce') : tl('', 'e')}`, `<b>${b.syn}</b> ${tl('sinergia', 'synergy')}`];
+  if (b.radio) parts.push(`<b>${b.radio}</b> ${tl('artillería', 'artillery')}`);
+  const neg = b.opt ? ` − <b>2</b> ${tl('óptica', 'optics')}` : '';
+  const extra = [sup === 'art' ? tl('repites los 1 y 2', 'reroll 1s and 2s') : '', sup === 'he' ? tl('si ganas, el impacto ignora el blindaje', 'if you win, the hit ignores armor') : '', LV().roll && sup ? tl('la orden depende de una tirada', 'the order depends on a roll') : ''].filter(Boolean).join(' · ');
   el.innerHTML = `<b class="pvn">${ev.name}</b> · ${ev.alias}: ${parts.join(' + ')}${neg} ≈ <span class="tot">${Math.round(exp)}</span>
-    <span class="pv-note">${extra ? extra + '. ' : ''}${stuck(p) ? 'Con la oruga rota no puedes perseguir.' : ''}${looseNote}</span>`;
+    <span class="pv-note">${extra ? extra + '. ' : ''}${stuck(p) ? tl('Con la oruga rota no puedes perseguir.', 'With broken tracks you cannot pursue.') : ''}${looseNote}</span>`;
 }
 function renderCombos() {
   const mode = LV().combos;
-  if (mode === 'none') { $('combos').innerHTML = `<p class="empty">Nivel ${S.level} · ${LV().rank}: lees la mano sin ayudas.</p>`; return; }
+  if (mode === 'none') { $('combos').innerHTML = `<p class="empty">${tl(`Nivel ${S.level} · ${LV().rank}: lees la mano sin ayudas.`, `Level ${S.level} · ${LV().rank}: you read your hand without help.`)}</p>`; return; }
   const p = S.p, selKey = [...S.sel].sort().join();
   // Las combinaciones se buscan en toda tu mano, incluidas las cartas ya cargadas.
   let list = possibleCombos(p, supId());
@@ -1565,18 +1644,18 @@ function renderCombos() {
   const h = list.map(o => {
     const ids = o.cards.map(c => c.id);
     const on = ids.slice().sort().join() === selKey;
-    return `<button type="button" class="combo ${on ? 'on' : ''}" data-ids="${ids.join(',')}" ${S.phase !== 'choose' || S.repairMode || S.swapMode ? 'disabled' : ''} title="${o.ev.alias} · ${diceCount(p, o.ev, supId())} dados">
+    return `<button type="button" class="combo ${on ? 'on' : ''}" data-ids="${ids.join(',')}" ${S.phase !== 'choose' || S.repairMode || S.swapMode ? 'disabled' : ''} title="${o.ev.alias} · ${diceCount(p, o.ev, supId())} ${tl('dados', 'dice')}">
       <span class="cn">${o.ev.name}</span>
       <span class="mini">${o.cards.map(c => `<span class="s-${c.s}">${RL(c.r)}${suitIcon(c.s)}</span>`).join('')}</span>
       <span class="ce">≈ ${Math.round(o.e)}</span>
     </button>`;
   }).join('');
   const dr = draws(p.hand).map(t => `<span class="draw">${t}</span>`).join('');
-  $('combos').innerHTML = (h + dr) || '<p class="empty">Ninguna jugada a medias en esta mano.</p>';
+  $('combos').innerHTML = (h + dr) || `<p class="empty">${tl('Ninguna jugada a medias en esta mano.', 'No almost-made hands in this hand.')}</p>`;
 }
 function renderSupport() {
   const p = S.p, el = $('support');
-  if (!p.support.length) { el.innerHTML = '<p class="empty">Sin cartas de apoyo. Robas una cada vez que pierdes una ronda.</p>'; return; }
+  if (!p.support.length) { el.innerHTML = `<p class="empty">${tl('Sin cartas de apoyo. Robas una cada vez que pierdes una ronda.', 'No support cards. You draw one each time you lose a round.')}</p>`; return; }
   const anyBroken = Object.values(p.dmg).some(Boolean);
   el.innerHTML = `<div class="supports">${p.support.map((s, i) => {
     const d = SUPPORT_DEFS[s.id];
@@ -1586,9 +1665,9 @@ function renderSupport() {
     const pend = S.pendInst === i;
     return `<button type="button" class="sup punch ${d.kind} ${S.supportSel === i || pend ? 'armed' : ''}" data-idx="${i}" ${dis ? 'disabled' : ''} aria-pressed="${S.supportSel === i || pend}">
       ${holesHTML(s.id)}
-      <span class="ptop"><span class="sk ${d.kind === 'inst' ? 'inst' : ''}">${d.kind === 'inst' ? (pend ? '¿Usar ahora?' : 'Inmediata') : (S.supportSel === i ? 'Preparada' : 'Combate')}</span><span class="pcode">ORD·${SUP_CODE[s.id]}</span></span>
+      <span class="ptop"><span class="sk ${d.kind === 'inst' ? 'inst' : ''}">${d.kind === 'inst' ? (pend ? tl('¿Usar ahora?', 'Use now?') : tl('Inmediata', 'Instant')) : (S.supportSel === i ? tl('Preparada', 'Ready') : tl('Combate', 'Combat'))}</span><span class="pcode">ORD·${SUP_CODE[s.id]}</span></span>
       <span class="pico">${supIcon(s.id)}</span>
-      <span class="sn">${d.name}</span><span class="st">${pend ? '<b>Toca otra vez para usarla.</b> Se gasta al usarla.' : d.kind === 'inst' ? d.text + ' Se gasta al usarla.' : d.text}</span>${LV().roll ? '<span class="proll">1d6 · 5–6 completa · 2–4 a medias · 1 vuelve</span>' : ''}</button>`;
+      <span class="sn">${d.name}</span><span class="st">${pend ? tl('<b>Toca otra vez para usarla.</b> Se gasta al usarla.', '<b>Tap again to use it.</b> Spent when used.') : d.kind === 'inst' ? d.text + tl(' Se gasta al usarla.', ' Spent when used.') : d.text}</span>${LV().roll ? `<span class="proll">${tl('1d6 · 5–6 completa · 2–4 a medias · 1 vuelve', '1d6 · 5–6 full · 2–4 half · 1 returns')}</span>` : ''}</button>`;
   }).join('')}</div>`;
 }
 // Parte de guerra como teletipo: la última entrada se escribe letra a letra; al desplegarlo se ve todo.
@@ -1608,24 +1687,24 @@ function renderControls() {
   const heavy = S.p.veh.id === 'jagdtiger';
   sw.disabled = heavy || !choose || S.swapped;
   sw.classList.toggle('on', !!S.swapMode);
-  sw.textContent = heavy ? 'Sin cambios (Pesado)' : S.swapped ? 'Cambio usado' : S.swapMode ? (S.marks.size ? `Cambiar ${S.marks.size} carta${S.marks.size > 1 ? 's' : ''}` : 'Cancelar cambio') : 'Cambiar cartas';
+  sw.textContent = heavy ? tl('Sin cambios (Pesado)', 'No swaps (Heavy)') : S.swapped ? tl('Cambio usado', 'Swap used') : S.swapMode ? (S.marks.size ? tl(`Cambiar ${S.marks.size} carta${S.marks.size > 1 ? 's' : ''}`, `Swap ${S.marks.size} card${S.marks.size > 1 ? 's' : ''}`) : tl('Cancelar cambio', 'Cancel swap')) : tl('Cambiar cartas', 'Swap cards');
   if (fi) {
     fi.disabled = !choose || n < 1 || !!S.swapMode;
-    fi.firstChild.textContent = S.phase === 'resolving' ? 'Fuego' : '¡Fuego!';
+    fi.firstChild.textContent = S.phase === 'resolving' ? tl('Fuego', 'Fire') : tl('¡Fuego!', 'Fire!');
     const ev = n ? evaluate(selCards()) : null;
-    $('fire-sub').textContent = S.phase === 'resolving' ? 'resolviendo…' : !n ? 'carga cartas' : LV().preview === 'name' ? ev.name : `potencia ≈ ${Math.round(expected(S.p, selCards(), supId()))}`;
+    $('fire-sub').textContent = S.phase === 'resolving' ? tl('resolviendo…', 'resolving…') : !n ? tl('carga cartas', 'load cards') : LV().preview === 'name' ? ev.name : `${tl('potencia', 'firepower')} ≈ ${Math.round(expected(S.p, selCards(), supId()))}`;
   }
   let hint;
-  if (S.repairMode) hint = 'El ingeniero espera: toca la pieza averiada de tu vehículo que quieres reparar.';
-  else if (S.phase === 'resolving') hint = 'Combate en curso.';
-  else if (S.phase === 'over') hint = 'La batalla ha terminado.';
-  else if (S.swapMode) hint = `Modo cambio: marca hasta ${swapMax(S.p)} cartas y pulsa «Cambiar». Una vez por ronda.`;
-  else if (!n) hint = `Carga de 1 a 5 cartas en tu formación. ${S.swapped ? '' : `Puedes cambiar hasta ${swapMax(S.p)} una vez por ronda.`}`;
-  else hint = `${n} carta${n > 1 ? 's' : ''} cargada${n > 1 ? 's' : ''}. Tócalas en la formación para devolverlas.`;
+  if (S.repairMode) hint = tl('El ingeniero espera: toca la pieza averiada de tu vehículo que quieres reparar.', 'The engineer is waiting: tap the damaged part of your vehicle you want to repair.');
+  else if (S.phase === 'resolving') hint = tl('Combate en curso.', 'Combat in progress.');
+  else if (S.phase === 'over') hint = tl('La batalla ha terminado.', 'The battle is over.');
+  else if (S.swapMode) hint = tl(`Modo cambio: marca hasta ${swapMax(S.p)} cartas y pulsa «Cambiar». Una vez por ronda.`, `Swap mode: mark up to ${swapMax(S.p)} cards and press “Swap”. Once per round.`);
+  else if (!n) hint = tl(`Carga de 1 a 5 cartas en tu formación. ${S.swapped ? '' : `Puedes cambiar hasta ${swapMax(S.p)} una vez por ronda.`}`, `Load 1 to 5 cards into your formation. ${S.swapped ? '' : `You can swap up to ${swapMax(S.p)} once per round.`}`);
+  else hint = tl(`${n} carta${n > 1 ? 's' : ''} cargada${n > 1 ? 's' : ''}. Tócalas en la formación para devolverlas.`, `${n} card${n > 1 ? 's' : ''} loaded. Tap ${n > 1 ? 'them' : 'it'} in the formation to return ${n > 1 ? 'them' : 'it'}.`);
   $('hint').textContent = hint;
 }
 function renderSide() { renderScore(); renderCombos(); renderSupport(); renderLog(); }
-function render() { $('lvchip').textContent = S.tut ? 'Nivel 0 · Instrucción' : S.mode === 'ofensiva' && OFE ? `Ofensiva · rival ${OFE.n} · ${nf(OFE.points)} pts · ${LV().rank}` : `Nivel ${S.level} · ${LV().rank}${S.mode === 'campaign' ? ' · campaña' : ''}`; renderTrack(); renderZones(); renderHand(); renderSide(); renderControls(); S.anim = {}; }
+function render() { $('lvchip').textContent = S.tut ? tl('Nivel 0 · Instrucción', 'Level 0 · Training') : S.mode === 'ofensiva' && OFE ? `${tl('Ofensiva · rival', 'Offensive · enemy')} ${OFE.n} · ${nf(OFE.points)} pts · ${LV().rank}` : `${tl('Nivel', 'Level')} ${S.level} · ${LV().rank}${S.mode === 'campaign' ? tl(' · campaña', ' · campaign') : ''}`; renderTrack(); renderZones(); renderHand(); renderSide(); renderControls(); S.anim = {}; }
 function markLoose() {
   const sel = selCards(), core = new Set(sel.length ? evaluate(sel).core.map(c => c.id) : []);
   document.querySelectorAll('#hand .card').forEach(el => el.classList.toggle('loose', S.sel.has(el.dataset.id) && !core.has(el.dataset.id)));
@@ -1639,9 +1718,9 @@ function resetTray() {
     const l = $(id); l.classList.remove('won');
     l.querySelector('.dice').innerHTML = ''; l.querySelector('.lane-total').textContent = ''; l.querySelector('.lane-break').textContent = '';
   }
-  const m = $('tray-msg'); m.className = 'tray-msg'; m.textContent = `Ronda ${S.round}: el rival ya tiene su formación. Elige la tuya y abre fuego.`;
+  const m = $('tray-msg'); m.className = 'tray-msg'; m.textContent = tl(`Ronda ${S.round}: el rival ya tiene su formación. Elige la tuya y abre fuego.`, `Round ${S.round}: the enemy has set their formation. Choose yours and open fire.`);
   const sec = SECTORS[S.front], k = Math.min(1, Math.max(0, (S.dist - 150) / (1800 - 150)));
-  $('range-txt').innerHTML = `Distancia de combate <b>${nf(S.dist)} m</b> · ${sec.n}, ${sec.t}`;
+  $('range-txt').innerHTML = `${tl('Distancia de combate', 'Combat range')} <b>${nf(S.dist)} m</b> · ${sec.n}, ${sec.t}`;
   $('range-bar').style.width = (6 + k * 94) + '%';
   document.querySelector('.board').style.setProperty('--close', (1 - k).toFixed(3));
   $('tray-impact').innerHTML = '';
@@ -1672,7 +1751,7 @@ async function fire() {
   S.phase = 'resolving'; S.repairMode = false;
   const pc = evaluate(selCards()).core, pcIds = new Set(pc.map(c => c.id));
   const loose = S.sel.size - pc.length;
-  if (loose > 0) log(`${loose} carta${loose > 1 ? 's' : ''} sin combinación se queda${loose > 1 ? 'n' : ''} en tu mano.`);
+  if (loose > 0) log(tl(`${loose} carta${loose > 1 ? 's' : ''} sin combinación se queda${loose > 1 ? 'n' : ''} en tu mano.`, `${loose} card${loose > 1 ? 's' : ''} outside the hand stay${loose > 1 ? '' : 's'} in your hand.`));
   p.hand = p.hand.filter(c => !pcIds.has(c.id)); p.formation = pc; S.sel.clear();
   $('tray-note').hidden = true;
   let pSup = null; if (S.supportSel != null) { pSup = p.support.splice(S.supportSel, 1)[0].id; S.supportSel = null; S.st.supportsUsed++; }
@@ -1680,10 +1759,10 @@ async function fire() {
   let aSup = S.aiPlan.sup;
   if (LV().roll) {
     if (pSup) { const { r, q } = supRoll(), nm = SUPPORT_DEFS[pSup].name;
-      toast(`${nm}: sale ${r}, ${Q_TXT[q]}.`); log(`Tirada de ${nm}: ${r} (${Q_TXT[q]}).`);
+      toast(tl(`${nm}: sale ${r}, ${Q_TXT[q]}.`, `${nm}: rolled ${r}, ${Q_TXT[q]}.`)); log(tl(`Tirada de ${nm}: ${r} (${Q_TXT[q]}).`, `${nm} roll: ${r} (${Q_TXT[q]}).`));
       if (q === 'fail') { p.support.push({ id: pSup }); pSup = null; } else if (q === 'half') pSup += '_h'; }
     if (aSup) { const { r, q } = supRoll(), nm = SUPPORT_DEFS[aSup].name;
-      log(`El rival tira por ${nm}: ${r} (${Q_TXT[q]}).`);
+      log(tl(`El rival tira por ${nm}: ${r} (${Q_TXT[q]}).`, `The enemy rolls for ${nm}: ${r} (${Q_TXT[q]}).`));
       if (q === 'fail') { ai.support.push({ id: aSup }); aSup = null; } else if (q === 'half') aSup += '_h'; }
   }
   S.aiPlan.sup = aSup;   // tras la tirada: puede haber fallado (vuelve a su mano) o quedar a medias
@@ -1697,7 +1776,7 @@ async function fire() {
   let pd = Array.from({ length: diceCount(p, pEv, pSup) }, (_, i) => (rig && rig.pd[i]) || rnd(6));
   let ad = Array.from({ length: diceCount(ai, aEv, aSup) }, (_, i) => (rig && rig.ad[i]) || rnd(6));
   const lp = $('lane-p'), la = $('lane-ai');
-  $('tray-msg').textContent = `${pEv.name} contra ${aEv.name}: potencia de fuego`;
+  $('tray-msg').textContent = tl(`${pEv.name} contra ${aEv.name}: potencia de fuego`, `${pEv.name} against ${aEv.name}: firepower`);
   await Promise.all([animateDice(lp.querySelector('.dice'), pd), animateDice(la.querySelector('.dice'), ad, 'ai')]);
   if (baseSup(pSup) === 'art' || baseSup(aSup) === 'art') {
     await sleep(300);
@@ -1710,9 +1789,9 @@ async function fire() {
   const pT = pEv.base + pB.val + sum(pd) + pB.syn + pB.radio + pB.opt;
   const aT = aEv.base + aB.val + sum(ad) + aB.syn + aB.radio + aB.opt;
   noteHand(pT, pEv);
-  const brk = (ev, d, b, T) => [`<span><b>${ev.base}</b> ${ev.name.toLowerCase()}</span>`, b.val ? `<span>+ <b>${b.val}</b> valor</span>` : '', `<span>+ <b>${sum(d)}</b> dados</span>`,
-    b.syn ? `<span>+ <b>${b.syn}</b> sinergia</span>` : '', b.radio ? `<span>+ <b>${b.radio}</b> artillería</span>` : '', b.opt ? '<span>− <b>2</b> óptica rota</span>' : '',
-    `<span class="eqt">= <b>${T}</b> de potencia</span>`].filter(Boolean).join('');
+  const brk = (ev, d, b, T) => [`<span><b>${ev.base}</b> ${ev.name.toLowerCase()}</span>`, b.val ? `<span>+ <b>${b.val}</b> ${tl('valor', 'value')}</span>` : '', `<span>+ <b>${sum(d)}</b> ${tl('dados', 'dice')}</span>`,
+    b.syn ? `<span>+ <b>${b.syn}</b> ${tl('sinergia', 'synergy')}</span>` : '', b.radio ? `<span>+ <b>${b.radio}</b> ${tl('artillería', 'artillery')}</span>` : '', b.opt ? `<span>− <b>2</b> ${tl('óptica rota', 'broken optics')}</span>` : '',
+    `<span class="eqt">= <b>${T}</b> ${tl('de potencia', 'firepower')}</span>`].filter(Boolean).join('');
   lp.querySelector('.lane-total').textContent = pT; lp.querySelector('.lane-break').innerHTML = brk(pEv, pd, pB, pT);
   la.querySelector('.lane-total').textContent = aT; la.querySelector('.lane-break').innerHTML = brk(aEv, ad, aB, aT);
   await sleep(500);
@@ -1723,40 +1802,40 @@ async function fire() {
   else if (pEv.high !== aEv.high) winner = pEv.high > aEv.high ? 'p' : 'ai';
   const msg = $('tray-msg');
   if (!winner) {
-    S.st.ties++; msg.textContent = `Empate a ${pT} de potencia: nadie se mueve.`; log(`Empate a ${pT}. El frente no se mueve.`);
-    trayNote('Empate en potencia, combinación y carta más alta: ninguno gana la ronda y el frente no cambia.', '');
+    S.st.ties++; msg.textContent = tl(`Empate a ${pT} de potencia: nadie se mueve.`, `Tied at ${pT} firepower: nobody moves.`); log(tl(`Empate a ${pT}. El frente no se mueve.`, `Tie at ${pT}. The front does not move.`));
+    trayNote(tl('Empate en potencia, combinación y carta más alta: ninguno gana la ronda y el frente no cambia.', 'Tied on firepower, hand and highest card: nobody wins the round and the front stays put.'), '');
   } else {
     const W = S[winner], L = S[winner === 'p' ? 'ai' : 'p'];
     W.wins++; S.st[winner === 'p' ? 'roundsWon' : 'roundsLost']++;
     (winner === 'p' ? lp : la).classList.add('won');
     msg.className = 'tray-msg ' + (winner === 'p' ? 'win' : 'lose');
-    msg.textContent = winner === 'p' ? `Ganas la ronda: ${pT} de potencia contra ${aT}.` : `El rival gana la ronda: ${aT} de potencia contra ${pT}.`;
-    log(winner === 'p' ? `Ganas con ${pEv.name} (${pT} a ${aT}).` : `El rival gana con ${aEv.name} (${aT} a ${pT}).`);
+    msg.textContent = winner === 'p' ? tl(`Ganas la ronda: ${pT} de potencia contra ${aT}.`, `You win the round: ${pT} firepower against ${aT}.`) : tl(`El rival gana la ronda: ${aT} de potencia contra ${pT}.`, `The enemy wins the round: ${aT} firepower against ${pT}.`);
+    log(winner === 'p' ? tl(`Ganas con ${pEv.name} (${pT} a ${aT}).`, `You win with ${pEv.name} (${pT} to ${aT}).`) : tl(`El rival gana con ${aEv.name} (${aT} a ${pT}).`, `The enemy wins with ${aEv.name} (${aT} to ${pT}).`));
     // Quien gana avanza si puede; quien pierde se repliega si puede. La oruga rota cambia la distancia y el impacto.
     const wStuck = stuck(W), lStuck = stuck(L), youWin = winner === 'p';
     S.pointBlank = lStuck ? (youWin ? 'ai' : 'p') : null;
     if (wStuck && lStuck) {
       S.distMod = null;
-      trayNote('Los dos tenéis la oruga rota: nadie puede moverse y el frente no cambia.' + (youWin ? ' El rival no puede replegarse: recibe el impacto a quemarropa (blindaje −1).' : ' No puedes replegarte: el impacto te llega a quemarropa (blindaje −1).'), 'warn');
+      trayNote(tl('Los dos tenéis la oruga rota: nadie puede moverse y el frente no cambia.', 'Both of you have broken tracks: nobody can move and the front stays put.') + (youWin ? tl(' El rival no puede replegarse: recibe el impacto a quemarropa (blindaje −1).', ' The enemy cannot fall back: they take the hit point-blank (armor −1).') : tl(' No puedes replegarte: el impacto te llega a quemarropa (blindaje −1).', ' You cannot fall back: the hit reaches you point-blank (armor −1).')), 'warn');
     } else { S.front += youWin ? 1 : -1; S.st[youWin ? 'advances' : 'retreats']++; renderTrack();
       const at = SECTORS[S.front].n;
       if (wStuck) { S.distMod = 'far';
-        trayNote(youWin ? `Ganas, pero con la oruga rota no puedes perseguirle: el ${L.veh.name} se repliega y el frente pasa a ${at}. La siguiente ronda se combate más lejos (+400 m).`
-                        : `El ${W.veh.name} gana pero tiene la oruga rota: no te persigue. Te repliegas y el frente pasa a ${at}. La siguiente ronda se combate más lejos (+400 m).`, 'warn'); }
+        trayNote(youWin ? tl(`Ganas, pero con la oruga rota no puedes perseguirle: el ${L.veh.name} se repliega y el frente pasa a ${at}. La siguiente ronda se combate más lejos (+400 m).`, `You win, but with broken tracks you cannot pursue: the ${L.veh.name} falls back and the front moves to ${at}. Next round is fought further out (+400 m).`)
+                        : tl(`El ${W.veh.name} gana pero tiene la oruga rota: no te persigue. Te repliegas y el frente pasa a ${at}. La siguiente ronda se combate más lejos (+400 m).`, `The ${W.veh.name} wins but has broken tracks: it does not pursue. You fall back and the front moves to ${at}. Next round is fought further out (+400 m).`), 'warn'); }
       else if (lStuck) { S.distMod = 'close';
-        trayNote(youWin ? `El ${L.veh.name} tiene la oruga rota y no puede replegarse: lo alcanzas en ${at}. Recibe el impacto a quemarropa (blindaje −1) y la siguiente ronda se combate a la distancia mínima.`
-                        : `Tu oruga está rota y no puedes replegarte: el ${W.veh.name} te alcanza en ${at}. El impacto te llega a quemarropa (blindaje −1) y la siguiente ronda se combate a la distancia mínima.`, 'warn'); }
-      else { S.distMod = null; trayNote(youWin ? `Avanzas: el frente pasa a ${at}.` : `Te repliegas: el frente retrocede a ${at}.`, youWin ? 'good' : ''); }
+        trayNote(youWin ? tl(`El ${L.veh.name} tiene la oruga rota y no puede replegarse: lo alcanzas en ${at}. Recibe el impacto a quemarropa (blindaje −1) y la siguiente ronda se combate a la distancia mínima.`, `The ${L.veh.name} has broken tracks and cannot fall back: you catch it at ${at}. It takes the hit point-blank (armor −1) and next round is fought at minimum range.`)
+                        : tl(`Tu oruga está rota y no puedes replegarte: el ${W.veh.name} te alcanza en ${at}. El impacto te llega a quemarropa (blindaje −1) y la siguiente ronda se combate a la distancia mínima.`, `Your tracks are broken and you cannot fall back: the ${W.veh.name} catches you at ${at}. The hit reaches you point-blank (armor −1) and next round is fought at minimum range.`), 'warn'); }
+      else { S.distMod = null; trayNote(youWin ? tl(`Avanzas: el frente pasa a ${at}.`, `You advance: the front moves to ${at}.`) : tl(`Te repliegas: el frente retrocede a ${at}.`, `You fall back: the front retreats to ${at}.`), youWin ? 'good' : ''); }
       if (S.battle.rule.id === 'river' && winner === 'ai' && S.front === 1 && p.support.length) {
         const lost = p.support.splice(Math.floor(Math.random() * p.support.length), 1)[0]; S.supportSel = null;
-        log(`Río a la espalda: pierdes ${SUPPORT_DEFS[lost.id].name}.`); toast(`Río a la espalda: pierdes ${SUPPORT_DEFS[lost.id].name}.`); } }
+        const riverTxt = tl(`Río a la espalda: pierdes ${SUPPORT_DEFS[lost.id].name}.`, `River at your back: you lose ${SUPPORT_DEFS[lost.id].name}.`); log(riverTxt); toast(riverTxt); } }
     await sleep(700);
     const heS = winner === 'p' ? pSup : aSup;
     const heFull = heS === 'he' || (heS === 'he_h' && S.battle.rule.id === 'barricades');
     await impact(L, winner === 'p' ? 'ai' : 'p', heFull ? 'full' : heS === 'he_h' ? 'half' : false);
     if (!L.destroyed && S.front > 0 && S.front < 6 && L.support.length < 4) {
       L.support.push(drawSupport());
-      log(winner === 'p' ? 'El rival recibe una carta de apoyo.' : `Recibes apoyo: ${SUPPORT_DEFS[L.support[L.support.length - 1].id].name}.`);
+      log(winner === 'p' ? tl('El rival recibe una carta de apoyo.', 'The enemy receives a support card.') : tl(`Recibes apoyo: ${SUPPORT_DEFS[L.support[L.support.length - 1].id].name}.`, `You receive support: ${SUPPORT_DEFS[L.support[L.support.length - 1].id].name}.`));
     }
   }
   renderSide();
@@ -1765,7 +1844,7 @@ async function fire() {
   if (S.tut && !S.tutPostDone) { S.tutPostDone = true; await sleep(600); await new Promise(res => tutShow(TUT_POST, res)); }
   else await sleep(1500);
   S.discard.push(...p.formation, ...ai.formation); p.formation = []; ai.formation = [];
-  for (const [side, nm] of [[p, 'Tu ingeniero'], [ai, 'El ingeniero del rival']]) if (side.pendingFix) { side.dmg[side.pendingFix] = false; log(`${nm} termina de reparar ${COMPS[side.pendingFix].toLowerCase()}.`); side.pendingFix = null; }
+  for (const [side, nm] of [[p, tl('Tu ingeniero', 'Your engineer')], [ai, tl('El ingeniero del rival', 'The enemy engineer')]]) if (side.pendingFix) { side.dmg[side.pendingFix] = false; log(tl(`${nm} termina de reparar ${COMPS[side.pendingFix].toLowerCase()}.`, `${nm} finishes repairing the ${COMPS[side.pendingFix].toLowerCase()}.`)); side.pendingFix = null; }
   S.scoutHalf = false;
   drawTo(p); drawTo(ai);
   S.round++;
@@ -1775,49 +1854,49 @@ async function fire() {
 
 async function impact(side, who, ignoreArmor) {
   const box = $('tray-impact'), shooter = who === 'p' ? 'ai' : 'p';
-  const target = who === 'p' ? 'Tu vehículo' : 'El vehículo rival';
+  const target = who === 'p' ? tl('Tu vehículo', 'Your vehicle') : tl('El vehículo rival', 'The enemy vehicle');
   const hitFx = () => { renderZones(); const el = $('veh-' + who); if (el) { el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); } };
   S.st[who === 'p' ? 'hitsTaken' : 'hitsDealt']++;
   const comp = (S.rig && S.rig.comp) || ['oruga', 'canon', 'motor', 'optica'][rnd(4) - 1];
   if (side.faldones > 0) {
     await shoot(shooter, who, 'oruga', 'skirt', ignoreArmor);
-    side.faldones--; box.textContent = `${target} recibe el impacto en los faldones: sin daños.`;
-    log(`Los faldones ${who === 'p' ? 'te' : 'le'} salvan del impacto.`); hitFx(); return;
+    side.faldones--; box.textContent = tl(`${target} recibe el impacto en los faldones: sin daños.`, `${target} takes the hit on its skirts: no damage.`);
+    log(tl(`Los faldones ${who === 'p' ? 'te' : 'le'} salvan del impacto.`, `The skirts save ${who === 'p' ? 'you' : 'the enemy'} from the hit.`)); hitFx(); return;
   }
   let pre = '';
-  if (ignoreArmor === 'full') { pre = 'Proyectil HE: ignora el blindaje. '; box.innerHTML = `<span>${pre}</span>`; side.armorBonus = 0; }
+  if (ignoreArmor === 'full') { pre = tl('Proyectil HE: ignora el blindaje. ', 'HE shell: ignores armor. '); box.innerHTML = `<span>${pre}</span>`; side.armorBonus = 0; }
   else {
     const r = (S.rig && S.rig.armor) || rnd(6);
-    const mods = armorMods(side); if (ignoreArmor === 'half') { mods.m -= 1; mods.notes.push('−1 Proyectil HE a medias'); }
+    const mods = armorMods(side); if (ignoreArmor === 'half') { mods.m -= 1; mods.notes.push(tl('−1 Proyectil HE a medias', '−1 half-effect HE shell')); }
     const effArm = Math.max(0, side.veh.arm + mods.m); side.armorBonus = 0;
-    box.innerHTML = `<span>Tirada de blindaje (${effArm ? effArm + ' o menos rebota' : 'no puede rebotar'}${mods.notes.length ? ': ' + side.veh.arm + ' ' + mods.notes.join(', ') : ''}):</span><span class="die sm" id="armor-die"></span>`;
+    box.innerHTML = `<span>${tl('Tirada de blindaje', 'Armor roll')} (${effArm ? effArm + tl(' o menos rebota', ' or less bounces') : tl('no puede rebotar', 'cannot bounce')}${mods.notes.length ? ': ' + side.veh.arm + ' ' + mods.notes.join(', ') : ''}):</span><span class="die sm" id="armor-die"></span>`;
     const holder = document.createElement('span'); holder.style.display = 'contents';
     box.replaceChild(holder, $('armor-die'));
     await animateDice(holder, [r], 'sm');
     await sleep(250);
     if (r <= effArm) {
       await shoot(shooter, who, comp, 'bounce', ignoreArmor);
-      box.innerHTML += `<b>Sale ${r}: ¡rebote!</b>`;
-      await showZoom(who, comp, 'bounce', `Sale ${r} en el dado: el blindaje lo desvía.`); log(`El disparo rebota en el blindaje ${who === 'p' ? 'de tu' : 'del'} ${side.veh.name}.`); return;
+      box.innerHTML += `<b>${tl(`Sale ${r}: ¡rebote!`, `Rolled ${r}: it bounces!`)}</b>`;
+      await showZoom(who, comp, 'bounce', tl(`Sale ${r} en el dado: el blindaje lo desvía.`, `Rolled ${r}: the armor deflects it.`)); log(tl(`El disparo rebota en el blindaje ${who === 'p' ? 'de tu' : 'del'} ${side.veh.name}.`, `The shot bounces off ${who === 'p' ? 'your' : 'the enemy'} ${side.veh.name}’s armor.`)); return;
     }
-    pre = `Sale ${r}: penetra. `;
+    pre = tl(`Sale ${r}: penetra. `, `Rolled ${r}: it penetrates. `);
   }
   let text;
   if (comp === 'optica' && side.veh.id === 'tiger') {
     await shoot(shooter, who, comp, 'bounce', ignoreArmor);
-    text = `${pre}Golpe en la óptica, pero la óptica Zeiss aguanta.`; log(text);
+    text = pre + tl('Golpe en la óptica, pero la óptica Zeiss aguanta.', 'Hit on the optics, but the Zeiss optics hold.'); log(text);
     box.innerHTML = `<span>${text}</span>`; hitFx();
-    await showZoom(who, comp, 'bounce', 'La óptica Zeiss aguanta el golpe.'); return;
+    await showZoom(who, comp, 'bounce', tl('La óptica Zeiss aguanta el golpe.', 'The Zeiss optics withstand the hit.')); return;
   }
   await shoot(shooter, who, comp, 'pen', ignoreArmor);
   if (side.dmg[comp] && !(comp === 'optica' && side.veh.id === 'tiger')) SFX.boom(); // segundo impacto en pieza rota: explosión
   S.st[who === 'p' ? 'penTaken' : 'penDealt']++;
-  if (side.dmg[comp]) { side.destroyed = true; text = `${pre}Impacto en ${COMPS[comp].toLowerCase()}, que ya estaba averiada: ${target.toLowerCase()} queda fuera de combate.`; }
-  else { side.dmg[comp] = true; text = `${pre}Impacto en ${COMPS[comp].toLowerCase()}: ${who === 'p' ? 'tu vehículo' : 'el rival'} ${EFFECT[comp]}.`; }
+  if (side.dmg[comp]) { side.destroyed = true; text = pre + tl(`Impacto en ${COMPS[comp].toLowerCase()}, que ya estaba averiada: ${target.toLowerCase()} queda fuera de combate.`, `Hit on the ${COMPS[comp].toLowerCase()}, already damaged: ${target.toLowerCase()} is knocked out.`); }
+  else { side.dmg[comp] = true; text = pre + tl(`Impacto en ${COMPS[comp].toLowerCase()}: ${who === 'p' ? 'tu vehículo' : 'el rival'} ${EFFECT[comp]}.`, `Hit on the ${COMPS[comp].toLowerCase()}: ${who === 'p' ? 'your vehicle' : 'the enemy'} ${EFFECT[comp]}.`); }
   box.innerHTML = `<span>${text}</span>`;
   log(text);
   hitFx();
-  await showZoom(who, comp, 'pen', side.destroyed ? 'Pieza ya averiada: fuera de combate.' : `Penetra: ${who === 'p' ? 'tu vehículo' : 'el rival'} ${EFFECT[comp]}.`);
+  await showZoom(who, comp, 'pen', side.destroyed ? tl('Pieza ya averiada: fuera de combate.', 'Part already damaged: knocked out.') : tl(`Penetra: ${who === 'p' ? 'tu vehículo' : 'el rival'} ${EFFECT[comp]}.`, `Penetrates: ${who === 'p' ? 'your vehicle' : 'the enemy'} ${EFFECT[comp]}.`));
 }
 
 /* ---------- Ficha técnica (medidas reales, de las cifras públicas más citadas) ---------- */
@@ -1835,7 +1914,7 @@ const DIMS = {
   tiger2:    { total: 10.29, hull: 7.38, width: 3.75 },
   pershing:  { total: 8.65, hull: 6.33, width: 3.51 }
 };
-const fmtM = x => x.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' m';
+const fmtM = x => x.toLocaleString(LOC, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' m';
 const SPECS = {
   sherman:   { peso: '≈ 38 t', canon: '75 mm M3', blindaje: 'casco 102 mm · torre 152 mm', trip: '5', vel: '≈ 35 km/h', anio: '1944',
                nota: 'Sherman M4A3 con blindaje añadido; solo se fabricaron 254. Algunos recibieron después el cañón de 76 mm.' },
@@ -1862,28 +1941,46 @@ const SPECS = {
   pershing:  { peso: '≈ 42 t', canon: '90 mm M3', blindaje: 'casco 102 mm · torre 102 mm', trip: '5', vel: '≈ 40 km/h', anio: '1945',
                nota: 'Carro pesado estadounidense que llegó a Europa en los últimos meses de la guerra; los de la 9.ª División Acorazada estuvieron en Remagen.' }
 };
+if (EN) {
+  const SP = {
+    sherman: ['hull 102 mm · turret 152 mm', 'M4A3 Sherman with added armor; only 254 were built. Some later received the 76 mm gun.'],
+    is2: [null, 'Soviet heavy tank designed to take on the Tiger and the Panther; it carried only 28 rounds.'],
+    tiger: ['hull 100 mm · turret 100–120 mm', 'German heavy tank; its 700 hp Maybach engine was barely enough for its weight.'],
+    jagdtiger: ['casemate 250 mm · hull 150 mm', 'Turretless tank destroyer on the Tiger II chassis; the heaviest armoured vehicle to enter service in the war.'],
+    panther: ['hull 80 mm sloped at 55° · turret 110 mm', 'German medium tank with T-34-style sloped armor; the G was the last and most produced version.'],
+    panzer4: ['hull 80 mm · turret 50 mm', 'The most produced German tank of the war; the H version, from 1943, was the most numerous.'],
+    churchill: ['hull 152 mm · turret 152 mm', 'British infantry tank, slow but heavily armoured; the Mk VII had 152 mm of frontal armor and climbed slopes others could not.'],
+    t34: ['hull 45 mm sloped at 60° · turret 90 mm', 'T-34 version with a three-man turret and an 85 mm gun; one of the most produced tanks in history.'],
+    cromwell: ['hull 64 mm · turret 76 mm', 'British cruiser tank, one of the fastest of the war; it traded armor for speed.'],
+    firefly: ['hull 51–76 mm · turret 76 mm', 'British Sherman with the 17-pounder gun, one of the few Allied tanks in Normandy able to penetrate the Tiger and the Panther from the front.'],
+    tiger2: ['hull 150 mm · turret 180 mm', 'German heavy tank, the most heavily armoured to fight in 1944 and 1945; its engine and transmission were at their limit with so much weight.'],
+    pershing: ['hull 102 mm · turret 102 mm', 'American heavy tank that reached Europe in the last months of the war; those of the 9th Armored Division fought at Remagen.']
+  };
+  for (const [id, [b, n]] of Object.entries(SP)) { if (b) SPECS[id].blindaje = b; SPECS[id].nota = n; }
+  SPECS.jagdtiger.peso = '≈ 71.7 t'; SPECS.firefly.canon = '76.2 mm QF 17-pounder';
+}
 // Medidas, datos históricos y reglas del vehículo: lo mismo en la ficha de la partida y en la del menú.
 function fichaBoxes(v, side) {
   const d = DIMS[v.id], h = SPECS[v.id];
-  return `<div class="f-box"><h3>Medidas reales</h3><div class="f-rows">
-        <span>Longitud total, con cañón</span><span class="v">${fmtM(d.total)}</span>
-        <span>Longitud del casco</span><span class="v">${fmtM(d.hull)}</span>
-        <span>Anchura</span><span class="v">${fmtM(d.width)}</span>
-        <span>Cañón por delante del casco</span><span class="v">${fmtM(d.total - d.hull)}</span></div></div>
-      <div class="f-box"><h3>Datos históricos</h3><div class="f-rows">
-        <span>Peso en combate</span><span class="v">${h.peso}</span>
-        <span>Cañón principal</span><span class="v">${h.canon}</span>
-        <span>Perforante · velocidad en boca</span><span class="v">${BALL[v.id].ap} · ${nf(BALL[v.id].v0)} m/s</span>
-        <span>Blindaje frontal</span><span class="v">${h.blindaje}</span>
-        <span>Tripulación</span><span class="v">${h.trip}</span>
-        <span>Velocidad máx. en carretera</span><span class="v">${h.vel}</span>
-        <span>En servicio desde</span><span class="v">${h.anio}</span></div>
-        <p class="f-note">${h.nota} Las cifras de peso, velocidad y blindaje varían entre fuentes; se muestran las más citadas.</p></div>
-      <div class="f-box"><h3>En el juego</h3><div class="f-rows">
-        <span>Dados extra al disparar</span><span class="v">+${v.pot}</span>
-        <span>Blindaje: rebota si sale</span><span class="v">${v.arm === 1 ? '1' : '1 a ' + v.arm}</span>
-        <span>Palo afín (+1 por carta)</span><span class="v s-${v.afin}">${suitIcon(v.afin)} ${SUITS[v.afin]}</span>
-        <span>Cartas en mano</span><span class="v">${handSize(side)}</span></div>
+  return `<div class="f-box"><h3>${tl('Medidas reales', 'Real dimensions')}</h3><div class="f-rows">
+        <span>${tl('Longitud total, con cañón', 'Overall length, with gun')}</span><span class="v">${fmtM(d.total)}</span>
+        <span>${tl('Longitud del casco', 'Hull length')}</span><span class="v">${fmtM(d.hull)}</span>
+        <span>${tl('Anchura', 'Width')}</span><span class="v">${fmtM(d.width)}</span>
+        <span>${tl('Cañón por delante del casco', 'Gun overhang')}</span><span class="v">${fmtM(d.total - d.hull)}</span></div></div>
+      <div class="f-box"><h3>${tl('Datos históricos', 'Historical data')}</h3><div class="f-rows">
+        <span>${tl('Peso en combate', 'Combat weight')}</span><span class="v">${h.peso}</span>
+        <span>${tl('Cañón principal', 'Main gun')}</span><span class="v">${h.canon}</span>
+        <span>${tl('Perforante · velocidad en boca', 'AP round · muzzle velocity')}</span><span class="v">${BALL[v.id].ap} · ${nf(BALL[v.id].v0)} m/s</span>
+        <span>${tl('Blindaje frontal', 'Front armor')}</span><span class="v">${h.blindaje}</span>
+        <span>${tl('Tripulación', 'Crew')}</span><span class="v">${h.trip}</span>
+        <span>${tl('Velocidad máx. en carretera', 'Max road speed')}</span><span class="v">${h.vel}</span>
+        <span>${tl('En servicio desde', 'In service from')}</span><span class="v">${h.anio}</span></div>
+        <p class="f-note">${h.nota} ${tl('Las cifras de peso, velocidad y blindaje varían entre fuentes; se muestran las más citadas.', 'Weight, speed and armor figures vary between sources; the most cited are shown.')}</p></div>
+      <div class="f-box"><h3>${tl('En el juego', 'In the game')}</h3><div class="f-rows">
+        <span>${tl('Dados extra al disparar', 'Extra dice when firing')}</span><span class="v">+${v.pot}</span>
+        <span>${tl('Blindaje: rebota si sale', 'Armor: bounces on a roll of')}</span><span class="v">${v.arm === 1 ? '1' : tl('1 a ', '1 to ') + v.arm}</span>
+        <span>${tl('Palo afín (+1 por carta)', 'Affinity suit (+1 per card)')}</span><span class="v s-${v.afin}">${suitIcon(v.afin)} ${SUITS[v.afin]}</span>
+        <span>${tl('Cartas en mano', 'Cards in hand')}</span><span class="v">${handSize(side)}</span></div>
         <p class="f-trait"><b>${v.trait}.</b> ${v.traitText}</p></div>
 `;
 }
@@ -1891,20 +1988,20 @@ let fichaOpen = false;
 function showFicha(who) {
   if (!S || !$('overlay').hidden) return;
   const side = S[who], v = side.veh, d = DIMS[v.id], h = SPECS[v.id], otherWho = who === 'p' ? 'ai' : 'p', ov = S[otherWho].veh, od = DIMS[ov.id];
-  const state = Object.entries(COMPS).map(([k, l]) => `<span>${l}</span><span class="v ${side.dmg[k] ? 'bad' : 'good'}">${side.dmg[k] ? 'averiada' : 'bien'}</span>`).join('');
+  const state = Object.entries(COMPS).map(([k, l]) => `<span>${l}</span><span class="v ${side.dmg[k] ? 'bad' : 'good'}">${side.dmg[k] ? tl('averiada', 'damaged') : tl('bien', 'OK')}</span>`).join('');
   const broken = Object.keys(COMPS).filter(k => side.dmg[k]).map(k => `${COMPS[k]}: ${EFFECT[k]}.`).join(' ');
   const o = $('overlay');
   o.innerHTML = `<div class="dialog ficha" role="dialog" aria-modal="true" aria-labelledby="f-t">
-    <div class="f-head"><div><span class="zk">Ficha técnica · ${who === 'p' ? 'tu vehículo' : 'vehículo rival'}</span><h2 id="f-t">${v.name}</h2><span class="veh-nation">${v.nation}</span></div>
-      <button type="button" class="btn" id="f-close">Cerrar</button></div>
+    <div class="f-head"><div><span class="zk">${tl('Ficha técnica', 'Spec sheet')} · ${who === 'p' ? tl('tu vehículo', 'your vehicle') : tl('vehículo rival', 'enemy vehicle')}</span><h2 id="f-t">${v.name}</h2><span class="veh-nation">${v.nation}</span></div>
+      <button type="button" class="btn" id="f-close">${tl('Cerrar', 'Close')}</button></div>
     <div class="f-grid">
       ${fichaBoxes(v, side)}
-      <div class="f-box"><h3>Estado ahora</h3><div class="f-rows">${state}
-        ${side.faldones ? `<span>Faldones</span><span class="v good">×${side.faldones}</span>` : ''}</div>
-        <p class="f-trait">${side.destroyed ? 'Fuera de combate.' : broken || 'Sin averías.'}</p></div>
+      <div class="f-box"><h3>${tl('Estado ahora', 'Current state')}</h3><div class="f-rows">${state}
+        ${side.faldones ? `<span>${tl('Faldones', 'Skirts')}</span><span class="v good">×${side.faldones}</span>` : ''}</div>
+        <p class="f-trait">${side.destroyed ? tl('Fuera de combate.', 'Knocked out.') : broken || tl('Sin averías.', 'No damage.')}</p></div>
     </div>
-    <div class="f-scale-wrap"><h3>A escala con el ${ov.name} ${who === 'p' ? 'rival' : '(el tuyo)'}</h3><div class="f-scale" id="f-scale"></div>
-      <p class="credit">Ambos vehículos dibujados a la misma escala, con sus medidas reales. Autores de los modelos 3D: manual de campaña, sección Créditos.</p></div>
+    <div class="f-scale-wrap"><h3>${tl(`A escala con el ${ov.name} ${who === 'p' ? 'rival' : '(el tuyo)'}`, `To scale with the ${who === 'p' ? 'enemy ' : ''}${ov.name}${who === 'p' ? '' : ' (yours)'}`)}</h3><div class="f-scale" id="f-scale"></div>
+      <p class="credit">${tl('Ambos vehículos dibujados a la misma escala, con sus medidas reales. Autores de los modelos 3D: manual de campaña, sección Créditos.', 'Both vehicles drawn to the same scale, with their real dimensions. 3D model authors: field manual, Credits section.')}</p></div>
   </div>`;
   o.hidden = false; fichaOpen = true;
   const box = $('f-scale'), W = box.clientWidth - 24, maxL = Math.ceil(Math.max(d.total, od.total)), k = Math.min(W / maxL, ...[[v, d], [ov, od]].map(([vv, dd]) => 120 * vv.ratio / dd.total));
@@ -1932,7 +2029,7 @@ function startOfensiva(veh) {
   newGame(veh, { battle: BSEL, level: 1, mode: 'ofensiva', ai: ofeRival(veh, 1) });
 }
 function ofeEnd(won, sc) {
-  if (!won) { ofeFinal(`Tu ${S.p.veh.name} ha caído ante el ${S.ai.veh.name} (rival ${OFE.n}).`); return; }
+  if (!won) { ofeFinal(tl(`Tu ${S.p.veh.name} ha caído ante el ${S.ai.veh.name} (rival ${OFE.n}).`, `Your ${S.p.veh.name} has fallen to the ${S.ai.veh.name} (enemy ${OFE.n}).`), false); return; }
   const mult = 1 + 0.1 * (OFE.n - 1), gained = Math.round(sc.total * mult);
   OFE.points += gained; OFE.beaten.push(S.ai.veh.name); OFE.last = { gained, mult, base: sc.total };
   // El mecánico de campaña: 1d6 por pieza averiada; con 5 o 6 la repara.
@@ -1943,30 +2040,30 @@ function ofeEnd(won, sc) {
 function ofeShop() {
   const o = $('overlay'), c = OFE.carry, nextN = OFE.n + 1, nextV = VEHICLES.find(v => v.id === ofeRival(OFE.veh, nextN)), nextL = LEVELS[Math.min(5, nextN)].rank;
   const item = (id, name, desc, ok) => `<div class="oitem"><div><div class="in">${name}</div><div class="id">${desc}</div></div><span class="cost">−${nf(OFE_COST[id])} pts</span>
-    <button type="button" class="buy" data-buy="${id}" ${ok && OFE.points >= OFE_COST[id] ? '' : 'disabled'}>Pagar</button></div>`;
+    <button type="button" class="buy" data-buy="${id}" ${ok && OFE.points >= OFE_COST[id] ? '' : 'disabled'}>${tl('Pagar', 'Pay')}</button></div>`;
   o.innerHTML = `<div class="dialog end ofe" role="dialog" aria-modal="true" aria-labelledby="ofe-t">
-    <span class="zk">Ofensiva · ${battleById(OFE.battle).name} · tu ${VEHICLES.find(v => v.id === OFE.veh).name}</span>
-    <h2 id="ofe-t" class="win">Rival ${OFE.n} fuera de combate</h2>
+    <span class="zk">${tl('Ofensiva', 'Offensive')} · ${battleById(OFE.battle).name} · ${tl('tu', 'your')} ${VEHICLES.find(v => v.id === OFE.veh).name}</span>
+    <h2 id="ofe-t" class="win">${tl(`Rival ${OFE.n} fuera de combate`, `Enemy ${OFE.n} knocked out`)}</h2>
     <div class="ochain">${OFE.beaten.map((n, i) => `<span class="olink done">${i + 1} · ${n}</span>`).join('<span class="oarrow">→</span>')}<span class="oarrow">→</span><span class="olink next">${nextN} · ${nextV.name} · ${nextL}</span><span class="oarrow">→</span><span class="olink fog">?</span></div>
     <div class="stat-tiles">
-      <div><b>${nf(OFE.points)}</b><span>Puntos acumulados</span></div>
-      <div><b>+${nf(OFE.last.gained)}</b><span>Esta batalla (${nf(OFE.last.base)} × ${OFE.last.mult.toFixed(1).replace('.', ',')})</span></div>
-      <div><b>${OFE.beaten.length}</b><span>Rivales derrotados</span></div>
-      <div><b>${nextL}</b><span>Nivel del siguiente rival${nextN > 5 ? ` · +${nextN - 5} orden${nextN - 5 > 1 ? 'es' : ''}` : ''}</span></div>
+      <div><b>${nf(OFE.points)}</b><span>${tl('Puntos acumulados', 'Points so far')}</span></div>
+      <div><b>+${nf(OFE.last.gained)}</b><span>${tl('Esta batalla', 'This battle')} (${nf(OFE.last.base)} × ${nf(OFE.last.mult, 1)})</span></div>
+      <div><b>${OFE.beaten.length}</b><span>${tl('Rivales derrotados', 'Enemies defeated')}</span></div>
+      <div><b>${nextL}</b><span>${tl('Nivel del siguiente rival', 'Next enemy level')}${nextN > 5 ? ` · +${nextN - 5} ${tl('orden', 'order')}${nextN - 5 > 1 ? tl('es', 's') : ''}` : ''}</span></div>
     </div>
     <div class="f-grid">
-      <div class="f-box"><h3>Mecánico de campaña</h3>
-        <div class="f-rows">${OFE.mech.length ? OFE.mech.map(([n, r, okk]) => `<span>${n}: sale ${r}</span><span class="v ${okk ? 'good' : 'bad'}">${okk ? 'reparada' : 'sigue averiada'}</span>`).join('') : '<span>Tu tanque terminó intacto.</span><span></span>'}</div>
-        <h3>Estado para el siguiente combate</h3>
+      <div class="f-box"><h3>${tl('Mecánico de campaña', 'Field mechanic')}</h3>
+        <div class="f-rows">${OFE.mech.length ? OFE.mech.map(([n, r, okk]) => `<span>${n}: ${tl('sale', 'rolled')} ${r}</span><span class="v ${okk ? 'good' : 'bad'}">${okk ? tl('reparada', 'repaired') : tl('sigue averiada', 'still damaged')}</span>`).join('') : `<span>${tl('Tu tanque terminó intacto.', 'Your tank came out intact.')}</span><span></span>`}</div>
+        <h3>${tl('Estado para el siguiente combate', 'State for the next battle')}</h3>
         <div class="comps ocomps">${Object.entries(COMPS).map(([k, l]) => `<button type="button" class="comp ${c.dmg[k] ? 'broken' : ''} ${OFE.pick === k ? 'fixable' : ''}" data-ok="${k}" ${c.dmg[k] ? '' : 'disabled'}>${l}</button>`).join('')}</div>
-        <p class="credit">${c.support.length} órdenes de apoyo${c.faldones ? ' · faldones montados' : ''}. Toca una pieza averiada para pagar su reparación.</p></div>
-      <div class="f-box"><h3>Intendencia · se paga con tus puntos</h3>
-        ${item('fix', 'Reparar la pieza elegida', OFE.pick ? `${COMPS[OFE.pick]}, reparación segura.` : 'Toca primero una pieza averiada.', !!OFE.pick)}
-        ${item('ord', 'Orden de apoyo al azar', c.support.length >= 4 ? 'Ya llevas el máximo de 4.' : 'Hasta un máximo de 4.', c.support.length < 4)}
-        ${item('fald', 'Faldones de blindaje', c.faldones ? 'Ya los llevas montados.' : 'Entras con faldones montados.', !c.faldones)}
+        <p class="credit">${c.support.length} ${tl('órdenes de apoyo', 'support orders')}${c.faldones ? tl(' · faldones montados', ' · skirts fitted') : ''}. ${tl('Toca una pieza averiada para pagar su reparación.', 'Tap a damaged part to pay for its repair.')}</p></div>
+      <div class="f-box"><h3>${tl('Intendencia · se paga con tus puntos', 'Quartermaster · paid with your points')}</h3>
+        ${item('fix', tl('Reparar la pieza elegida', 'Repair the chosen part'), OFE.pick ? tl(`${COMPS[OFE.pick]}, reparación segura.`, `${COMPS[OFE.pick]}, guaranteed repair.`) : tl('Toca primero una pieza averiada.', 'Tap a damaged part first.'), !!OFE.pick)}
+        ${item('ord', tl('Orden de apoyo al azar', 'Random support order'), c.support.length >= 4 ? tl('Ya llevas el máximo de 4.', 'You already have the maximum of 4.') : tl('Hasta un máximo de 4.', 'Up to a maximum of 4.'), c.support.length < 4)}
+        ${item('fald', tl('Faldones de blindaje', 'Armor skirts'), c.faldones ? tl('Ya los llevas montados.', 'Already fitted.') : tl('Entras con faldones montados.', 'You go in with skirts fitted.'), !c.faldones)}
       </div>
     </div>
-    <div class="controls"><button type="button" class="btn" id="ofe-quit">Retirarse con ${nf(OFE.points)} puntos</button><button type="button" class="btn fire" id="ofe-next">Siguiente combate</button></div></div>`;
+    <div class="controls"><button type="button" class="btn" id="ofe-quit">${tl(`Retirarse con ${nf(OFE.points)} puntos`, `Withdraw with ${nf(OFE.points)} points`)}</button><button type="button" class="btn fire" id="ofe-next">${tl('Siguiente combate', 'Next battle')}</button></div></div>`;
   o.hidden = false; $('ofe-next').focus();
   o.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => { OFE.pick = b.dataset.ok; SFX.click(true); ofeShop(); });
   o.querySelectorAll('[data-buy]').forEach(b => b.onclick = () => {
@@ -1976,13 +2073,13 @@ function ofeShop() {
     if (k === 'fald') c.faldones = 1;
     SFX.click(true); ofeShop();
   });
-  $('ofe-quit').onclick = () => ofeFinal('Te retiras de la ofensiva con tus puntos.');
+  $('ofe-quit').onclick = () => ofeFinal(tl('Te retiras de la ofensiva con tus puntos.', 'You withdraw from the offensive with your points.'), true);
   $('ofe-next').onclick = () => {
     OFE.n++; o.hidden = true;
     newGame(OFE.veh, { battle: OFE.battle, level: Math.min(5, OFE.n), mode: 'ofensiva', ai: ofeRival(OFE.veh, OFE.n), aiExtra: Math.max(0, OFE.n - 5), carry: OFE.carry });
   };
 }
-function ofeFinal(reason) {
+function ofeFinal(reason, retired) {
   const st = loadStats(), veh = VEHICLES.find(v => v.id === OFE.veh).name, bn = battleById(OFE.battle).name;
   const entry = { points: OFE.points, beaten: OFE.beaten.length, veh, battle: bn, date: today() };
   st.ofeRuns = (st.ofeRuns || 0) + 1;
@@ -1990,16 +2087,16 @@ function ofeFinal(reason) {
   if (best) st.ofeBest = entry;
   saveStats(st);
   const o = $('overlay');
-  const retired = reason.startsWith('Te retiras'), arch = `OFE-${String(Date.now() % 100000).padStart(5, '0')}`;
+  const arch = `OFE-${String(Date.now() % 100000).padStart(5, '0')}`;
   o.innerHTML = `<div class="dialog end parte" role="dialog" aria-modal="true" aria-labelledby="ofe-end-t">
-    <span class="pstamp ${retired ? 'win' : 'lose'}">${retired ? 'Retirada' : 'Caído'}</span>
-    <h2 id="ofe-end-t">Parte de la ofensiva</h2>
-    <div class="pmeta">${bn} · ${battleById(OFE.battle).date} · tu ${veh}</div>
+    <span class="pstamp ${retired ? 'win' : 'lose'}">${retired ? tl('Retirada', 'Withdrawn') : tl('Caído', 'Fallen')}</span>
+    <h2 id="ofe-end-t">${tl('Parte de la ofensiva', 'Offensive dispatch')}</h2>
+    <div class="pmeta">${bn} · ${battleById(OFE.battle).date} · ${tl('tu', 'your')} ${veh}</div>
     <p>${reason}</p>
-    <div class="end-score"><div><b>${nf(OFE.points)}</b><span>puntos${best && OFE.points > 0 ? ' · tu mejor ofensiva' : ''}</span></div>
-      <div class="f-rows"><span>Rivales derrotados</span><span class="v">${OFE.beaten.length}</span>${OFE.beaten.map((n, i) => `<span>${i + 1}. ${n}</span><span class="v">${LEVELS[Math.min(5, i + 1)].rank}</span>`).join('')}</div></div>
-    <div class="controls"><button class="btn fire" type="button" id="ofe-again">Otra ofensiva</button><button class="btn" type="button" id="ofe-menu">Menú</button></div>
-    <div class="psig"><span>${OFE.beaten.length} rival${OFE.beaten.length === 1 ? '' : 'es'} fuera de combate</span><span>Archivo n.º ${arch}</span></div></div>`;
+    <div class="end-score"><div><b>${nf(OFE.points)}</b><span>${tl('puntos', 'points')}${best && OFE.points > 0 ? tl(' · tu mejor ofensiva', ' · your best offensive') : ''}</span></div>
+      <div class="f-rows"><span>${tl('Rivales derrotados', 'Enemies defeated')}</span><span class="v">${OFE.beaten.length}</span>${OFE.beaten.map((n, i) => `<span>${i + 1}. ${n}</span><span class="v">${LEVELS[Math.min(5, i + 1)].rank}</span>`).join('')}</div></div>
+    <div class="controls"><button class="btn fire" type="button" id="ofe-again">${tl('Otra ofensiva', 'Another offensive')}</button><button class="btn" type="button" id="ofe-menu">${tl('Menú', 'Menu')}</button></div>
+    <div class="psig"><span>${tl(`${OFE.beaten.length} rival${OFE.beaten.length === 1 ? '' : 'es'} fuera de combate`, `${OFE.beaten.length} ${OFE.beaten.length === 1 ? 'enemy' : 'enemies'} knocked out`)}</span><span>${tl('Archivo n.º', 'File no.')} ${arch}</span></div></div>`;
   o.hidden = false; $('ofe-again').focus();
   OFE = null; S.phase = 'over';
   $('ofe-again').onclick = () => { PLAY = 'ofensiva'; showIntro(); };
@@ -2009,7 +2106,7 @@ function ofeFinal(reason) {
    Las tablas se generan con los datos del propio juego, así no se desincronizan. Las capturas están en img/manual/. */
 const HALF = { ing: 'repara al final de la ronda', exp: 'sabes qué combinación prepara el rival, sin ver sus cartas', fald: '+1 de blindaje en el próximo impacto',
   apcr: '+1 dado', he: 'el blindaje del rival cuenta 1 menos', art: 'solo repites los 1', radio: '+2 de potencia' };
-const MAN = [
+const MAN_ES = [
   ['objetivo', 'Objetivo', () => `
     <p>Cada batalla es un duelo entre tu vehículo y el de la máquina sobre una línea de frente de 7 sectores. Empezáis en el centro.</p>
     <p><b>Ganas</b> si llevas el frente hasta el último sector (a la derecha) o si dejas al rival fuera de combate. <b>Pierdes</b> si el rival te hace retroceder hasta el primer sector o te deja fuera de combate a ti.</p>
@@ -2038,7 +2135,7 @@ const MAN = [
     <p><b>Empates:</b> si la potencia es igual, gana la combinación de rango superior; si también coincide, la carta más alta. Si todo coincide, nadie gana la ronda.</p>`],
   ['combos', 'Combinaciones', () => `
     <table class="mtab"><tr><th>Combinación</th><th>Nombre en el juego</th><th>Base</th><th>Dados</th><th>Cartas que la forman</th></tr>
-    ${Object.values(COMBOS).map(c => `<tr><td>${c.name}</td><td>${c.alias}</td><td>${c.base}</td><td>${c.dice}</td><td>${{ 'Carta alta': 'la más alta', 'Pareja': '2 iguales', 'Doble pareja': '2 + 2 iguales', 'Trío': '3 iguales', 'Escalera': '5 seguidas (el as vale 1 o 14)', 'Color': '5 del mismo palo', 'Full': 'trío + pareja', 'Póker': '4 iguales', 'Escalera de color': '5 seguidas del mismo palo' }[c.name]}</td></tr>`).join('')}</table>
+    ${Object.entries(COMBOS).map(([k, c]) => `<tr><td>${c.name}</td><td>${c.alias}</td><td>${c.base}</td><td>${c.dice}</td><td>${{ high: 'la más alta', pair: '2 iguales', two: '2 + 2 iguales', trips: '3 iguales', straight: '5 seguidas (el as vale 1 o 14)', flush: '5 del mismo palo', full: 'trío + pareja', quads: '4 iguales', sflush: '5 seguidas del mismo palo' }[k]}</td></tr>`).join('')}</table>
     <p>Como el valor de las cartas también suma, una combinación de rango inferior con cartas altas puede superar a otra de rango superior con cartas bajas: una doble pareja de reyes y damas (4 + 8 de valor) vale más de base que un trío de doses (6 + 0), aunque el trío tira los mismos dados.</p>`],
   ['frente', 'Ganar y perder', () => `
     <p>Quien gana la ronda avanza el frente un sector y quien pierde se repliega. La <b>oruga rota</b> cambia lo que pasa:</p>
@@ -2092,6 +2189,92 @@ const MAN = [
     <p>Efectos de sonido de Pixabay (freesound_community, floraphonic, Dragon Studio, emand_edroff, liecio). Música generada con Google Flow Music. Textura de papel generada con ChatGPT.</p>
     <div class="mencion"><span class="m-medal" aria-hidden="true"><i></i><b>✠</b></span><div class="m-txt"><span class="m-tit">Cruz al Mérito en Intendencia</span><span>Concedida a <b>Jalapeño</b></span><em>Por su previsión al proponer que ninguna hoja de servicio se perdiera al cambiar de puesto de mando.</em><small>La idea de exportar e importar el progreso.</small></div></div>`]
 ];
+const HALF_EN = { ing: 'repairs at the end of the round', exp: 'you learn which hand the enemy is preparing, without seeing the cards', fald: '+1 armor on the next hit',
+  apcr: '+1 die', he: 'the enemy’s armor counts 1 less', art: 'reroll only 1s', radio: '+2 firepower' };
+const MAN_EN = [
+  ['objetivo', 'Objective', () => `
+    <p>Each battle is a duel between your vehicle and the machine’s along a 7-sector front line. You both start in the middle.</p>
+    <p><b>You win</b> if you push the front to the last sector (on the right) or knock the enemy out. <b>You lose</b> if the enemy pushes you back to the first sector or knocks you out.</p>
+    ${mImg('m-frente', 'The front line: your tank in amber pushes right; the enemy in grey pushes left.')}`],
+  ['ronda', 'A round', () => `
+    <ol><li><b>The enemy sets their formation</b> face down.</li>
+      <li><b>You load 1 to 5 cards</b> into your formation, next to your tank: tap a card in your hand to load it and tap it in the formation to return it. The possible hands strip loads a play with one tap.</li>
+      <li>If you like, you use <b>support orders</b>: instant ones act right away; a combat order goes into the order slot, next to your cards.</li>
+      <li>Once per round, <b>Swap cards</b>: mark up to 3 cards in your hand and swap them.</li>
+      <li>Press <b>Fire!</b>: you both roll dice and each side’s <b>firepower</b> is worked out. The highest wins.</li>
+      <li>The front moves and the loser takes a <b>hit</b>.</li>
+      <li>The loser draws a support order (4 at most) and both of you draw back up to a full hand.</li></ol>
+    ${mImg('m-bandeja', 'The tray after a shot: each row shows the full count and, below, a note on what happened to the front.')}`],
+  ['potencia', 'Firepower', () => `
+    <p class="mformula">Firepower = hand base + value of its cards + dice + synergy ± orders and damage</p>
+    <ul><li><b>Base:</b> depends on the hand (table in the next section).</li>
+      <li><b>Card value:</b> each card <i>in the hand</i> adds according to its number: 2 to 5, nothing; 6 to 10, +1; J, Q, K and A, +2. It is shown in small print under each card’s number.</li>
+      <li><b>Dice:</b> the hand gives 1 to 5 six-sided dice, and your vehicle adds its own. Each die adds 3.5 on average.</li>
+      <li><b>Synergy:</b> +1 for each card in the hand of your vehicle’s affinity suit (marked +1 in amber).</li>
+      <li>Cards you select that are not part of the hand <b>do not count</b> and stay in your hand.</li></ul>
+    <div class="mex"><b>Example.</b> With the M4A3E2 Jumbo (1 extra die, Engine affinity) you play three nines: Engine, Ammo and Radio.
+      <table><tr><td>Three of a kind base</td><td>6</td></tr><tr><td>Value: three nines × 1</td><td>+3</td></tr><tr><td>Dice: 2 from the hand + 1 from the Jumbo, rolling 5, 4 and 6</td><td>+15</td></tr>
+      <tr><td>Synergy: the Engine 9</td><td>+1</td></tr><tr class="t"><td>Firepower</td><td>25</td></tr></table></div>
+    ${mImg('m-formacion', 'Your formation, next to your tank: loaded cards, order slot and, below, the count (levels 1 to 4). The Fire! button shows the expected firepower.')}
+    ${mImg('m-cartas', 'Under the number, each card’s value in a hand. The amber +1 marks your affinity suit.')}
+    <p><b>Ties:</b> if firepower is equal, the higher-ranked hand wins; if that also matches, the highest card. If everything matches, nobody wins the round.</p>`],
+  ['combos', 'Hands', () => `
+    <table class="mtab"><tr><th>Hand</th><th>Name in the game</th><th>Base</th><th>Dice</th><th>Cards that make it</th></tr>
+    ${Object.entries(COMBOS).map(([k, c]) => `<tr><td>${c.name}</td><td>${c.alias}</td><td>${c.base}</td><td>${c.dice}</td><td>${{ high: 'the highest', pair: '2 of a kind', two: '2 + 2 of a kind', trips: '3 of a kind', straight: '5 in a row (ace counts as 1 or 14)', flush: '5 of the same suit', full: 'three of a kind + pair', quads: '4 of a kind', sflush: '5 in a row of the same suit' }[k]}</td></tr>`).join('')}</table>
+    <p>Since card value also counts, a lower-ranked hand with high cards can beat a higher-ranked one with low cards: two pair of kings and queens (4 + 8 value) has more base than three twos (6 + 0), although three of a kind rolls the same dice.</p>`],
+  ['frente', 'Winning and losing', () => `
+    <p>The round winner pushes the front one sector and the loser falls back. <b>Broken tracks</b> change what happens:</p>
+    <table class="mtab"><tr><th>Winner</th><th>Loser</th><th>Front</th><th>What else happens</th></tr>
+      <tr><td>tracks OK</td><td>tracks OK</td><td>moves 1</td><td>—</td></tr>
+      <tr><td>tracks broken</td><td>tracks OK</td><td>moves 1</td><td>the winner does not pursue: next round is fought 400 m further out</td></tr>
+      <tr><td>tracks OK</td><td>tracks broken</td><td>moves 1</td><td>the loser cannot fall back: takes the hit point-blank (armor −1) and next round is fought at minimum range</td></tr>
+      <tr><td>tracks broken</td><td>tracks broken</td><td>does not move</td><td>the loser takes the hit point-blank</td></tr></table>
+    <h3>The hit</h3>
+    <p>The loser rolls <b>1 armor die</b>: if it rolls equal to or under their armor, the shot bounces. Otherwise a random part is damaged. A hit on a part that was already broken <b>knocks the vehicle out</b>.</p>
+    <table class="mtab"><tr><th>Part</th><th>Effect</th></tr>${Object.entries(COMPS).map(([k, l]) => `<tr><td>${l}</td><td>${EFFECT[k]}</td></tr>`).join('')}</table>
+    <p>Skirts absorb a whole hit. The Engineer repairs one part.</p>`],
+  ['ordenes', 'Support orders', () => `
+    <p><b>Instant</b> orders are used right away with two taps. <b>Combat</b> orders go into the order slot of your formation and are spent when you press Fire!; tap them in the slot to remove them. They carry over between rounds; you can hold 4 at most.</p>
+    <p>The <b>enemy’s</b> orders are shown face down next to their formation: you know how many, not which. If they prepare a combat order, it appears face down in their order slot and is revealed when firing. The Scout reveals them all.</p>
+    ${mImg('m-apoyo', 'Orders are punched cards: blue for instant, red for combat.')}
+    <table class="mtab"><tr><th>Order</th><th>Type</th><th>Effect</th><th>Half effect (levels 4 and 5)</th></tr>
+    ${Object.entries(SUPPORT_DEFS).map(([k, d]) => `<tr><td>${d.name}</td><td>${d.kind === 'inst' ? 'instant' : 'combat'}</td><td>${d.text}</td><td>${HALF_EN[k]}</td></tr>`).join('')}</table>
+    <p>At levels 4 and 5 each order depends on 1 die: on a 5 or 6, full effect; on 2 to 4, half effect; on a 1, it fails and the order returns to your hand.</p>`],
+  ['vehiculos', 'Vehicles', () => `
+    <table class="mtab"><tr><th>Vehicle</th><th>Extra dice</th><th>Armor</th><th>Affinity</th><th>Trait</th></tr>
+    ${VEHICLES.map(v => `<tr><td>${v.name}</td><td>+${v.pot}</td><td>${v.arm}</td><td>${SUITS[v.afin]}</td><td><b>${v.trait}.</b> ${v.traitText}</td></tr>`).join('')}</table>
+    <p>Armor is the highest roll that makes a hit bounce: with armor 2, it bounces on a 1 or 2. During a game, tap a tank’s drawing to see its spec sheet.</p>`],
+  ['modos', 'Game types', () => `
+    <h3>Level 0 · Training</h3><p>A guided round, step by step. It does not count for the campaign or the statistics.</p>
+    <h3>Skirmish</h3><p>A duel on the battlefield of your choice. In <b>campaign</b> you start as a Recruit and, by winning at your highest level, you are promoted; winning a battle unlocks the next one. In <b>free play</b> everything is open and the result does not count for the campaign.</p>
+    <table class="mtab"><tr><th>Level</th><th>What changes</th></tr>${Object.entries(LEVELS).map(([n, l]) => `<tr><td>${n} · ${l.rank}</td><td>${l.desc}</td></tr>`).join('')}</table>
+    <h3>Offensive</h3><p>Enemies one after another until you fall. They come from the opposing side in order of entry into service, each one level harder; from the sixth on, all are Captains and bring extra orders. Your tank <b>carries its damage over</b>.</p>
+    <p>After each victory the field mechanic rolls 1 die for each damaged part and repairs it on a 5 or 6. Then, at the quartermaster, you can spend your points on a guaranteed repair (${OFE_COST.fix}), an order (${OFE_COST.ord}) or skirts (${OFE_COST.fald}). Each enemy defeated is worth 10% more than the last.</p>
+    ${mImg('m-ofensiva', 'The quartermaster between two Offensive battles.')}`],
+  ['batallas', 'Battles', () => `
+    <table class="mtab"><tr><th>Battle</th><th>Date</th><th>Special rule</th><th>Unlocked by</th></tr>
+    ${BATTLES.map(b => `<tr><td>${b.name}</td><td>${b.date}</td><td><b>${b.rule.name}.</b> ${b.rule.text}</td><td>${b.unlock ? `winning at ${battleById(b.unlock).name}` : 'open'}</td></tr>`).join('')}</table>
+    <p>Each sector has its terrain and its <b>combat range</b>: in hedgerows and streets the fighting is point-blank; in open ground, at long range. At level 5, under 700 m armor counts 1 less and over 1300 m, 1 more.</p>
+    ${mImg('m-batallas', 'In the menu, each battle has its historical report, its front and its rule.')}`],
+  ['puntos', 'Scoring and statistics', () => `
+    <p><b>Firepower</b> decides each round. <b>Points</b> are something else: they are worked out at the end of the battle and go to your record.</p>
+    <table class="mtab"><tr><th>Item</th><th>Points</th></tr><tr><td>Victory</td><td>1000 × level</td></tr><tr><td>Each round won</td><td>+100</td></tr>
+      <tr><td>Each sector ahead at the end</td><td>+150</td></tr><tr><td>Each intact part (only if you win)</td><td>+50</td></tr><tr><td>Each round played (only if you win)</td><td>−50</td></tr></table>
+    <p>In the Offensive, battles add up with the streak multiplier, and what you spend at the quartermaster is deducted.</p>
+    <p>The service record (in the menu, or Quartermaster → View stats) keeps your 10 best scores, your best hand, rounds, advances and retreats, hits and your best offensive. Everything is saved in this browser; with <b>Export progress</b> and <b>Import progress</b> you can take it to another one or keep a backup.</p>`],
+  ['creditos', 'Credits', () => `
+    <p>The vehicle wireframes were drawn from 3D models published under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> licence. Changes: each model was converted into 2D wireframe views. On the left, the model as published by its author; on the right, the game’s wireframe.</p>
+    ${CREDIT_MODELS.map(m => `<figure class="mcred">
+      <img src="img/creditos/${m.img}.webp" alt="3D model ${m.title}, by ${m.author}" loading="lazy" onerror="this.closest('figure').classList.add('nocap')">
+      <span class="mcred-arrow" aria-hidden="true">→</span>
+      <div class="mcred-wire" style="--src:url('img/${m.img}.webp');aspect-ratio:${m.ratio}"></div>
+      <figcaption><b>${m.veh}</b> · <a href="${m.url}" target="_blank" rel="noopener">“${m.title}”</a> by <b>${m.author}</b>, on Sketchfab · CC BY 4.0</figcaption>
+    </figure>`).join('')}
+    <p>The M4A3E2 Jumbo wireframe is provisional: we are looking for a 3D model with a clear licence to replace it.</p>
+    <p>Sound effects from Pixabay (freesound_community, floraphonic, Dragon Studio, emand_edroff, liecio). Music generated with Google Flow Music. Paper texture generated with ChatGPT.</p>
+    <div class="mencion"><span class="m-medal" aria-hidden="true"><i></i><b>✠</b></span><div class="m-txt"><span class="m-tit">Quartermaster’s Cross of Merit</span><span>Awarded to <b>Jalapeño</b></span><em>For their foresight in proposing that no service record should be lost when changing command post.</em><small>The idea of exporting and importing progress.</small></div></div>`]
+];
+const MAN = EN ? MAN_EN : MAN_ES;
 const CREDIT_MODELS = [
   { veh: 'IS-2', img: 'is2', ratio: '640/170', title: 'IS2 Heavy Tank', author: 'adrielcz', url: 'https://skfb.ly/6AGwO' },
   { veh: 'Tiger I', img: 'tiger1', ratio: '640/295', title: 'WW2 German Tiger', author: 'gabriel.pronovost09', url: 'https://skfb.ly/pzQxu' },
@@ -2112,9 +2295,9 @@ function showManual(sec) {
   manualFrom = o.hidden ? 'game' : (o.querySelector('#intro-t') ? 'intro' : manualFrom || 'game');
   const cur = sec || 'objetivo', item = MAN.find(m => m[0] === cur) || MAN[0];
   o.innerHTML = `<div class="dialog manual" role="dialog" aria-modal="true" aria-labelledby="man-t">
-    <nav class="mnav" aria-label="Secciones del manual"><span class="mstamp">Manual de campaña</span>
+    <nav class="mnav" aria-label="${tl('Secciones del manual', 'Manual sections')}"><span class="mstamp">${tl('Manual de campaña', 'Field manual')}</span>
       ${MAN.map(([id, t], i) => `<button type="button" data-msec="${id}" aria-current="${id === item[0]}"><span>${i + 1}</span>${t}</button>`).join('')}</nav>
-    <div class="mbody"><div class="mhead"><h2 id="man-t">${item[1]}</h2><button type="button" class="btn" id="man-close">Cerrar</button></div>${item[2]()}</div></div>`;
+    <div class="mbody"><div class="mhead"><h2 id="man-t">${item[1]}</h2><button type="button" class="btn" id="man-close">${tl('Cerrar', 'Close')}</button></div>${item[2]()}</div></div>`;
   o.hidden = false;
   o.querySelectorAll('[data-msec]').forEach(b => b.onclick = () => { showManual(b.dataset.msec); o.querySelector('.mbody').scrollTop = 0; });
   $('man-close').onclick = closeManual; $('man-close').focus();
@@ -2129,35 +2312,35 @@ function gameOver() {
   else setMusic('menu');
   S.phase = 'over'; render();
   const won = S.ai.destroyed || S.front >= 6;
-  const reason = S.ai.destroyed ? `Has dejado fuera de combate al ${S.ai.veh.name}.` :
-                 S.p.destroyed ? `Tu ${S.p.veh.name} ha quedado fuera de combate.` :
-                 S.front >= 6 ? `Has tomado ${SECTORS[6].n}.` : `El rival te ha hecho retroceder hasta ${SECTORS[0].n}.`;
+  const reason = S.ai.destroyed ? tl(`Has dejado fuera de combate al ${S.ai.veh.name}.`, `You have knocked out the ${S.ai.veh.name}.`) :
+                 S.p.destroyed ? tl(`Tu ${S.p.veh.name} ha quedado fuera de combate.`, `Your ${S.p.veh.name} has been knocked out.`) :
+                 S.front >= 6 ? tl(`Has tomado ${SECTORS[6].n}.`, `You have taken ${SECTORS[6].n}.`) : tl(`El rival te ha hecho retroceder hasta ${SECTORS[0].n}.`, `The enemy has pushed you back to ${SECTORS[0].n}.`);
   let promo = '';
   const sc = battleScore(won), rec = S.tut ? null : recordGame(won, sc.total, S.mode === 'ofensiva');
-  const scoreHTML = S.tut ? '' : `<div class="end-score"><div><b>${nf(sc.total)}</b><span>puntos${rec && rec.best ? ' · nuevo récord' : rec && rec.pos >= 0 ? ` · puesto ${rec.pos + 1} de tus 10 mejores` : ''}</span></div>
-      <div class="f-rows">${sc.parts.map(([k, v]) => `<span>${k}</span><span class="v">${v >= 0 ? '+' : '−'}${nf(Math.abs(v))}</span>`).join('')}${S.st.bestHand ? `<span>Tu mejor mano en esta batalla</span><span class="v">${S.st.bestHand}${S.newBestHand ? ' · récord' : ''}</span>` : ''}</div></div>`;
+  const scoreHTML = S.tut ? '' : `<div class="end-score"><div><b>${nf(sc.total)}</b><span>${tl('puntos', 'points')}${rec && rec.best ? tl(' · nuevo récord', ' · new record') : rec && rec.pos >= 0 ? tl(` · puesto ${rec.pos + 1} de tus 10 mejores`, ` · number ${rec.pos + 1} in your top 10`) : ''}</span></div>
+      <div class="f-rows">${sc.parts.map(([k, v]) => `<span>${k}</span><span class="v">${v >= 0 ? '+' : '−'}${nf(Math.abs(v))}</span>`).join('')}${S.st.bestHand ? `<span>${tl('Tu mejor mano en esta batalla', 'Your best hand in this battle')}</span><span class="v">${S.st.bestHand}${S.newBestHand ? tl(' · récord', ' · record') : ''}</span>` : ''}</div></div>`;
   S.newBestHand = false;
   if (S.mode === 'ofensiva' && OFE) { ofeEnd(won, sc); return; }
   let unlocked = '';
   if (won && S.mode === 'campaign' && !S.tut && !BWON.includes(S.battle.id)) {
     BWON.push(S.battle.id); try { localStorage.setItem('ldf-battles', JSON.stringify(BWON)); } catch (e) {}
-    const nb = BATTLES.filter(b => b.unlock === S.battle.id); if (nb.length) unlocked = `Desbloqueas la batalla de ${nb.map(b => b.name).join(' y ')}.`;
+    const nb = BATTLES.filter(b => b.unlock === S.battle.id); if (nb.length) unlocked = tl(`Desbloqueas la batalla de ${nb.map(b => b.name).join(' y ')}.`, `You unlock the battle of ${nb.map(b => b.name).join(' and ')}.`);
   }
-  if (won && S.mode === 'campaign' && !S.tut && S.level === CAMP && CAMP < 5) { CAMP++; saveCamp(); promo = `Ascenso: desbloqueas el nivel ${CAMP} · ${LEVELS[CAMP].rank}.`; }
-  else if (won && S.mode === 'campaign' && S.level === 5) promo = 'Has completado la campaña como Capitán.';
+  if (won && S.mode === 'campaign' && !S.tut && S.level === CAMP && CAMP < 5) { CAMP++; saveCamp(); promo = tl(`Ascenso: desbloqueas el nivel ${CAMP} · ${LEVELS[CAMP].rank}.`, `Promotion: you unlock level ${CAMP} · ${LEVELS[CAMP].rank}.`); }
+  else if (won && S.mode === 'campaign' && S.level === 5) promo = tl('Has completado la campaña como Capitán.', 'You have completed the campaign as Captain.');
   const next = promo && CAMP > S.level;
   const o = $('overlay');
   // Parte de guerra en papel envejecido, con sello de victoria o derrota.
   const arch = `${S.battle.id.slice(0, 3).toUpperCase()}-${String(Date.now() % 100000).padStart(5, '0')}`;
   o.innerHTML = `<div class="dialog end parte" role="dialog" aria-modal="true" aria-labelledby="end-t">
-    <span class="pstamp ${won ? 'win' : 'lose'}">${won ? 'Victoria' : 'Derrota'}</span>
-    <h2 id="end-t">Parte de guerra</h2>
-    <div class="pmeta">${S.battle.name} · ${S.battle.date} · ${S.tut ? 'Instrucción' : `Nivel ${S.level} · ${LV().rank}`}</div>
-    <p>${reason} ${S.round} rondas, ${S.p.wins} ganadas por ti y ${S.ai.wins} por el rival.</p>
+    <span class="pstamp ${won ? 'win' : 'lose'}">${won ? tl('Victoria', 'Victory') : tl('Derrota', 'Defeat')}</span>
+    <h2 id="end-t">${tl('Parte de guerra', 'War dispatch')}</h2>
+    <div class="pmeta">${S.battle.name} · ${S.battle.date} · ${S.tut ? tl('Instrucción', 'Training') : `${tl('Nivel', 'Level')} ${S.level} · ${LV().rank}`}</div>
+    <p>${reason} ${tl(`${S.round} rondas, ${S.p.wins} ganadas por ti y ${S.ai.wins} por el rival.`, `${S.round} rounds, ${S.p.wins} won by you and ${S.ai.wins} by the enemy.`)}</p>
     ${scoreHTML}
     ${promo || unlocked ? `<p class="lv-desc"><b>${[promo, unlocked].filter(Boolean).join(' ')}</b></p>` : ''}
-    <div class="controls">${next ? `<button class="btn fire" type="button" id="next-lv">Jugar nivel ${CAMP} con el ${S.p.veh.name}</button>` : ''}<button class="btn ${next ? '' : 'fire'}" type="button" id="again">Otra batalla</button><button class="btn" type="button" id="end-stats">Estadísticas</button></div>
-    <div class="psig"><span>Tu ${S.p.veh.name} contra ${S.ai.veh.name}</span><span>Archivo n.º ${arch}</span></div></div>`;
+    <div class="controls">${next ? `<button class="btn fire" type="button" id="next-lv">${tl(`Jugar nivel ${CAMP} con el ${S.p.veh.name}`, `Play level ${CAMP} with the ${S.p.veh.name}`)}</button>` : ''}<button class="btn ${next ? '' : 'fire'}" type="button" id="again">${tl('Otra batalla', 'Another battle')}</button><button class="btn" type="button" id="end-stats">${tl('Estadísticas', 'Statistics')}</button></div>
+    <div class="psig"><span>${tl(`Tu ${S.p.veh.name} contra ${S.ai.veh.name}`, `Your ${S.p.veh.name} against the ${S.ai.veh.name}`)}</span><span>${tl('Archivo n.º', 'File no.')} ${arch}</span></div></div>`;
   o.hidden = false; (next ? $('next-lv') : $('again')).focus();
   $('again').onclick = () => { if (next) PICK = CAMP; showIntro(); };
   $('end-stats').onclick = () => { o.hidden = true; showStats(); $('st-close').onclick = () => { fichaOpen = false; gameOverShown(); }; };
@@ -2168,42 +2351,42 @@ function showIntro() {
   const o = $('overlay');
   o.innerHTML = `<div class="dialog menu" role="dialog" aria-modal="true" aria-labelledby="intro-t">
     <div class="menu-top"><h2 id="intro-t" class="menu-logo"><picture><source media="(min-width: 701px)" srcset="img/logo-ancho.webp" width="1800" height="600"><img src="img/logo.webp" width="1040" height="520" alt="TANKING... FIRE! · Tactical Card War Game"></picture><span class="beta-stamp">Beta</span></h2>
-      <span class="musctl"><span class="credit">Música</span><button type="button" class="sortbtn" data-mus="menu" aria-pressed="true">Menú: sí</button><button type="button" class="sortbtn" data-mus="battle" aria-pressed="true">Batalla: sí</button></span></div>
-    <p>Combina cartas como en el póker, tira dados y empuja el frente hasta el último sector. Cada derrota avería una pieza de tu vehículo; los ingenieros y las cartas de apoyo te mantienen en pie.</p>
-    <p class="beta-note"><b>Versión beta:</b> el equilibrio de los tanques está en pruebas y alguna actualización podría reiniciar tu progreso de campaña. Fallos e ideas, en <a href="https://github.com/V0raOnline/tanking-fire/issues" target="_blank" rel="noopener">GitHub</a> o en <a href="mailto:v0raonair@gmail.com">v0raonair@gmail.com</a>.</p>
-    <div class="tut-row"><button type="button" class="btn fire" id="tut-start">Nivel 0 · Aprende a jugar</button><span>Una ronda guiada con el Jumbo contra un Tiger I, paso a paso. Unos 2 minutos.</span><button type="button" class="btn" data-manual>Manual de campaña</button></div>
-    <div class="tut-row"><button type="button" class="btn" id="intro-stats">Hoja de servicio</button><span>Tus mejores puntuaciones, tu mejor mano y las victorias con cada vehículo, guardadas en este navegador.</span></div>
-    <div class="lv-head"><span class="zk">Modo</span>
-      <div class="seg mseg" role="group" aria-label="Modo de juego"><button type="button" data-play="batalla">Batalla suelta</button><button type="button" data-play="ofensiva">Ofensiva</button></div></div>
+      <span class="musctl"><span class="seg langseg" role="group" aria-label="Idioma · Language"><button type="button" data-lang="es" aria-pressed="${!EN}" lang="es">ES</button><button type="button" data-lang="en" aria-pressed="${EN}" lang="en">EN</button></span><span class="credit">${tl('Música', 'Music')}</span><button type="button" class="sortbtn" data-mus="menu" aria-pressed="true">Menú: sí</button><button type="button" class="sortbtn" data-mus="battle" aria-pressed="true">Batalla: sí</button></span></div>
+    <p>${tl('Combina cartas como en el póker, tira dados y empuja el frente hasta el último sector. Cada derrota avería una pieza de tu vehículo; los ingenieros y las cartas de apoyo te mantienen en pie.', 'Build hands as in poker, roll dice and push the front to the last sector. Every defeat damages a part of your vehicle; engineers and support cards keep you in the fight.')}</p>
+    <p class="beta-note">${tl('<b>Versión beta:</b> el equilibrio de los tanques está en pruebas y alguna actualización podría reiniciar tu progreso de campaña. Fallos e ideas, en', '<b>Beta version:</b> tank balance is still being tested and an update could reset your campaign progress. Bugs and ideas on')} <a href="https://github.com/V0raOnline/tanking-fire/issues" target="_blank" rel="noopener">GitHub</a> ${tl('o en', 'or at')} <a href="mailto:v0raonair@gmail.com">v0raonair@gmail.com</a>.</p>
+    <div class="tut-row"><button type="button" class="btn fire" id="tut-start">${tl('Nivel 0 · Aprende a jugar', 'Level 0 · Learn to play')}</button><span>${tl('Una ronda guiada con el Jumbo contra un Tiger I, paso a paso. Unos 2 minutos.', 'A guided round with the Jumbo against a Tiger I, step by step. About 2 minutes.')}</span><button type="button" class="btn" data-manual>${tl('Manual de campaña', 'Field manual')}</button></div>
+    <div class="tut-row"><button type="button" class="btn" id="intro-stats">${tl('Hoja de servicio', 'Service record')}</button><span>${tl('Tus mejores puntuaciones, tu mejor mano y las victorias con cada vehículo, guardadas en este navegador.', 'Your best scores, your best hand and your wins with each vehicle, saved in this browser.')}</span></div>
+    <div class="lv-head"><span class="zk">${tl('Modo', 'Mode')}</span>
+      <div class="seg mseg" role="group" aria-label="${tl('Modo de juego', 'Game mode')}"><button type="button" data-play="batalla">${tl('Batalla suelta', 'Skirmish')}</button><button type="button" data-play="ofensiva">${tl('Ofensiva', 'Offensive')}</button></div></div>
     <div class="bstack" id="play-desc"></div>
-    <section class="step" data-step="1"><button type="button" class="step-h" data-go="1"><span class="sn">1</span><span class="st">Frente</span><span class="ss" id="sum-1"></span></button><div class="step-b">
+    <section class="step" data-step="1"><button type="button" class="step-h" data-go="1"><span class="sn">1</span><span class="st">${tl('Frente', 'Front')}</span><span class="ss" id="sum-1"></span></button><div class="step-b">
     <div class="battles" id="battles"></div>
     <div class="brief"><div class="bstack" id="dossiers"></div><div class="bstack" id="bsides"></div></div>
-    <div class="step-next"><button type="button" class="btn fire" data-go="2" id="next-1">Siguiente: dificultad</button></div></div></section>
-    <section class="step" data-step="2"><button type="button" class="step-h" data-go="2"><span class="sn">2</span><span class="st" id="st-2">Dificultad</span><span class="ss" id="sum-2"></span></button><div class="step-b">
+    <div class="step-next"><button type="button" class="btn fire" data-go="2" id="next-1">${tl('Siguiente: dificultad', 'Next: difficulty')}</button></div></div></section>
+    <section class="step" data-step="2"><button type="button" class="step-h" data-go="2"><span class="sn">2</span><span class="st" id="st-2">${tl('Dificultad', 'Difficulty')}</span><span class="ss" id="sum-2"></span></button><div class="step-b">
     <div class="bstack" id="modebox"><div class="lv-box" id="lv-box">
-      <div class="lv-head"><span class="zk">Dificultad</span>
-        <div class="seg" role="group" aria-label="Campaña o partida libre"><button type="button" data-mode="campaign">Campaña</button><button type="button" data-mode="free">Partida libre</button></div></div>
+      <div class="lv-head"><span class="zk">${tl('Dificultad', 'Difficulty')}</span>
+        <div class="seg" role="group" aria-label="${tl('Campaña o partida libre', 'Campaign or free play')}"><button type="button" data-mode="campaign">${tl('Campaña', 'Campaign')}</button><button type="button" data-mode="free">${tl('Partida libre', 'Free play')}</button></div></div>
       <div class="lv-chips" id="lv-chips"></div>
       <div class="bstack" id="lv-desc"></div>
       <div class="bstack" id="lv-note"></div>
     </div>
     <div class="lv-box" id="ofe-box"></div></div>
-    <div class="step-next"><button type="button" class="btn fire" data-go="3">Siguiente: vehículo</button></div></div></section>
-    <section class="step" data-step="3"><button type="button" class="step-h" data-go="3"><span class="sn">3</span><span class="st">Vehículo</span><span class="ss">toca uno para ver su ficha</span></button><div class="step-b">
+    <div class="step-next"><button type="button" class="btn fire" data-go="3">${tl('Siguiente: vehículo', 'Next: vehicle')}</button></div></div></section>
+    <section class="step" data-step="3"><button type="button" class="step-h" data-go="3"><span class="sn">3</span><span class="st">${tl('Vehículo', 'Vehicle')}</span><span class="ss">${tl('toca uno para ver su ficha', 'tap one to see its spec sheet')}</span></button><div class="step-b">
     <div class="choices">${VEHICLES.map(v => `<button type="button" class="choice" data-veh="${v.id}" aria-pressed="false" aria-controls="veh-info">
       <span class="veh-head"><span class="veh-name">${v.name}</span><span class="veh-nation">${v.nation}</span></span>
       <span class="art">${artHTML({ veh: v, dmg: {} }, 'p')}</span>
-      <span class="veh-stats"><span><b>+${v.pot}</b> dado</span><span><b>${v.arm}</b> blindaje</span><span class="afin">${suitIcon(v.afin)}${SUITS[v.afin]}</span></span>
+      <span class="veh-stats"><span><b>+${v.pot}</b> ${tl('dado', 'die')}</span><span><b>${v.arm}</b> ${tl('blindaje', 'armor')}</span><span class="afin">${suitIcon(v.afin)}${SUITS[v.afin]}</span></span>
       <span class="tr"><b>${v.trait}.</b> ${v.traitText}</span><span class="histtag" data-hist="${v.id}"></span></button>`).join('')}</div>
     <div class="veh-info" id="veh-info" hidden></div>
     <div class="bstack" id="rival-note"></div></div></section>
-    <p class="credit">Esquemas de alambre dibujados a partir de modelos 3D de sus autores; los créditos y licencias están en el manual de campaña.</p></div>`;
+    <p class="credit">${tl('Esquemas de alambre dibujados a partir de modelos 3D de sus autores; los créditos y licencias están en el manual de campaña.', 'Wireframes drawn from 3D models by their authors; credits and licences are in the field manual.')}</p></div>`;
   o.hidden = false;
   // Primer toque: marca el vehículo y enseña su ficha. Segundo toque en la misma tarjeta (o el botón): a combatir.
   let vsel = null;
   const go = id => {
-    const bt = battleById(BSEL); if (!introBattleOpen(bt)) { toast('Esa batalla aún está bloqueada en campaña.'); return; }
+    const bt = battleById(BSEL); if (!introBattleOpen(bt)) { toast(tl('Esa batalla aún está bloqueada en campaña.', 'That battle is still locked in the campaign.')); return; }
     o.hidden = true; tutEnd();
     if (PLAY === 'ofensiva') startOfensiva(id); else newGame(id, { level: PICK, mode: MODE, battle: BSEL });
   };
@@ -2213,8 +2396,8 @@ function showIntro() {
     vsel = id;
     o.querySelectorAll('.choice').forEach(c => c.setAttribute('aria-pressed', c === b ? 'true' : 'false'));
     const v = VEHICLES.find(x => x.id === id), info = $('veh-info');
-    info.innerHTML = `<div class="f-head"><div><span class="zk">Ficha técnica</span><h3 class="vi-name">${v.name}</h3><span class="veh-nation">${v.nation}</span></div>
-      <div class="vi-go"><button type="button" class="btn fire" id="vi-go">¡Al combate con el ${v.name}!</button><span class="credit">o vuelve a tocar su tarjeta</span></div></div>
+    info.innerHTML = `<div class="f-head"><div><span class="zk">${tl('Ficha técnica', 'Spec sheet')}</span><h3 class="vi-name">${v.name}</h3><span class="veh-nation">${v.nation}</span></div>
+      <div class="vi-go"><button type="button" class="btn fire" id="vi-go">${tl(`¡Al combate con el ${v.name}!`, `Into battle with the ${v.name}!`)}</button><span class="credit">${tl('o vuelve a tocar su tarjeta', 'or tap its card again')}</span></div></div>
       <div class="f-grid vi-grid">${fichaBoxes(v, { veh: v, dmg: {} })}</div>`;
     info.hidden = false;
     $('vi-go').onclick = () => go(id);
@@ -2222,6 +2405,7 @@ function showIntro() {
   });
   $('tut-start').onclick = () => { o.hidden = true; startTutorial(); };
   $('intro-stats').onclick = () => { backToIntro = true; o.hidden = true; showStats(); };
+  o.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { if (b.dataset.lang !== LANG) setLang(b.dataset.lang); });
   syncMus();
   o.querySelectorAll('#lv-box .seg button').forEach(b => b.onclick = () => { MODE = b.dataset.mode; if (MODE === 'campaign' && PICK > CAMP) PICK = CAMP; renderLv(); renderBattles(); });
   o.querySelectorAll('.mseg button').forEach(b => b.onclick = () => { PLAY = b.dataset.play; renderBattles(); });
@@ -2246,9 +2430,9 @@ function menuSummary() {
   if (!$('sum-1')) return;
   const b = battleById(BSEL);
   $('sum-1').textContent = `${b.name} · ${b.rule.name.toLowerCase()}`;
-  $('st-2').textContent = PLAY === 'ofensiva' ? 'Ofensiva' : 'Dificultad';
-  $('sum-2').textContent = PLAY === 'ofensiva' ? 'rivales hasta caer, de Recluta a Capitán' : `${MODE === 'campaign' ? 'Campaña' : 'Partida libre'} · nivel ${PICK} · ${LEVELS[PICK].rank}`;
-  $('next-1').textContent = PLAY === 'ofensiva' ? 'Siguiente: la ofensiva' : 'Siguiente: dificultad';
+  $('st-2').textContent = PLAY === 'ofensiva' ? tl('Ofensiva', 'Offensive') : tl('Dificultad', 'Difficulty');
+  $('sum-2').textContent = PLAY === 'ofensiva' ? tl('rivales hasta caer, de Recluta a Capitán', 'enemies until you fall, from Recruit to Captain') : `${MODE === 'campaign' ? tl('Campaña', 'Campaign') : tl('Partida libre', 'Free play')} · ${tl('nivel', 'level')} ${PICK} · ${LEVELS[PICK].rank}`;
+  $('next-1').textContent = PLAY === 'ofensiva' ? tl('Siguiente: la ofensiva', 'Next: the offensive') : tl('Siguiente: dificultad', 'Next: difficulty');
 }
 // En campaña y en la Ofensiva las batallas se desbloquean; en partida libre están todas abiertas.
 const introBattleOpen = b => (PLAY === 'batalla' && MODE === 'free') || battleOpen(b);
@@ -2257,27 +2441,29 @@ function renderBattles() {
   document.querySelectorAll('.mseg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.play === PLAY));
   $('battles').innerHTML = BATTLES.map(b => { const open = introBattleOpen(b);
     return `<button type="button" class="bcard" data-b="${b.id}" aria-pressed="${b.id === BSEL}" ${open ? '' : 'disabled'}>
-      <span class="bt">${b.tag}</span><span class="bn">${b.name}</span><span class="bd">${b.date}</span>${open ? '' : `<span class="block">Gana en ${battleById(b.unlock).name} para desbloquearla</span>`}</button>`; }).join('');
+      <span class="bt">${b.tag}</span><span class="bn">${b.name}</span><span class="bd">${b.date}</span>${open ? '' : `<span class="block">${tl(`Gana en ${battleById(b.unlock).name} para desbloquearla`, `Win at ${battleById(b.unlock).name} to unlock it`)}</span>`}</button>`; }).join('');
   document.querySelectorAll('.bcard').forEach(el => el.onclick = () => { BSEL = el.dataset.b; renderBattles(); });
   const b = battleById(BSEL);
   // Las cuatro fichas se apilan en la misma celda y solo se ve la elegida: el paso mide siempre lo de la más larga.
   $('dossiers').innerHTML = BATTLES.map(x => `<article class="dossier" ${x.id === b.id ? '' : 'aria-hidden="true" inert'} data-on="${x.id === b.id}"><h2>${x.name}</h2><div class="meta">${x.date} · ${x.place}</div>${x.text.map(t => `<p>${t}</p>`).join('')}<p class="verify">${x.verify}</p></article>`).join('');
-  $('bsides').innerHTML = BATTLES.map(x => `<div class="f-box" ${x.id === b.id ? '' : 'aria-hidden="true" inert'} data-on="${x.id === b.id}"><h3>El frente en el juego</h3>
+  $('bsides').innerHTML = BATTLES.map(x => `<div class="f-box" ${x.id === b.id ? '' : 'aria-hidden="true" inert'} data-on="${x.id === b.id}"><h3>${tl('El frente en el juego', 'The front in the game')}</h3>
     <div class="mtrack"><div class="mrail"></div><div class="msecs">${x.secs.map(q => `<span class="msec"><i></i><span>${q.n}</span><small>${q.r[0]}–${q.r[1]} m</small></span>`).join('')}</div></div>
-    <div class="brule"><b>Regla especial: ${x.rule.name}</b>${x.rule.text}</div><h3>Vehículos de la época</h3>
-    <div class="vehs">${VEHICLES.map(v => `<span class="vtag ${x.hist.includes(v.id) ? 'yes' : ''}">${v.name}${x.hist.includes(v.id) ? ' · estuvo allí' : ''}</span>`).join('')}</div>
-    <p class="credit">Puedes jugar con cualquiera; los marcados en verde estuvieron allí.</p></div>`).join('');
+    <div class="brule"><b>${tl('Regla especial', 'Special rule')}: ${x.rule.name}</b>${x.rule.text}</div><h3>${tl('Vehículos de la época', 'Vehicles of the period')}</h3>
+    <div class="vehs">${VEHICLES.map(v => `<span class="vtag ${x.hist.includes(v.id) ? 'yes' : ''}">${v.name}${x.hist.includes(v.id) ? tl(' · estuvo allí', ' · was there') : ''}</span>`).join('')}</div>
+    <p class="credit">${tl('Puedes jugar con cualquiera; los marcados en verde estuvieron allí.', 'You can play with any of them; those marked in green were there.')}</p></div>`).join('');
   // La etiqueta histórica ocupa siempre su línea (invisible si no aplica) para que las fichas no cambien de alto.
-  document.querySelectorAll('.histtag').forEach(t => { const y = b.hist.includes(t.dataset.hist); t.textContent = `Estuvo en ${b.name}`; t.style.visibility = y ? '' : 'hidden'; t.setAttribute('aria-hidden', !y); });
+  document.querySelectorAll('.histtag').forEach(t => { const y = b.hist.includes(t.dataset.hist); t.textContent = tl(`Estuvo en ${b.name}`, `Fought at ${b.name}`); t.style.visibility = y ? '' : 'hidden'; t.setAttribute('aria-hidden', !y); });
   setOn($('lv-box'), PLAY === 'batalla'); setOn($('ofe-box'), PLAY === 'ofensiva');
-  stackText('play-desc', ['Una batalla contra un rival en el escenario que elijas.', 'Encadena rivales hasta caer. Cada uno juega un nivel más alto, tu tanque arrastra las averías y entre combates pasas por intendencia.'], PLAY === 'batalla' ? 0 : 1, 'lv-desc');
+  stackText('play-desc', EN ? ['A battle against one enemy on the battlefield of your choice.', 'Take on enemies one after another until you fall. Each plays one level higher, your tank carries its damage over and between battles you visit the quartermaster.']
+    : ['Una batalla contra un rival en el escenario que elijas.', 'Encadena rivales hasta caer. Cada uno juega un nivel más alto, tu tanque arrastra las averías y entre combates pasas por intendencia.'], PLAY === 'batalla' ? 0 : 1, 'lv-desc');
   const st = loadStats();
-  $('ofe-box').innerHTML = `<div class="lv-head"><span class="zk">Ofensiva</span></div>
-    <p class="lv-desc">El primer rival juega como Recluta y cada uno sube un nivel; del sexto en adelante todos son Capitán y llegan con órdenes de apoyo extra. Tras cada victoria el mecánico de campaña tira por cada pieza averiada (5–6 la repara) y en intendencia puedes pagar reparaciones y órdenes con tus puntos.</p>
-    <p class="credit">${st.ofeBest ? `Tu mejor ofensiva: ${nf(st.ofeBest.points)} puntos, ${st.ofeBest.beaten} rivales derrotados (${st.ofeBest.veh}, ${st.ofeBest.battle}).` : 'Todavía no has completado ninguna ofensiva.'}</p>`;
-  const nOthers = ['', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez', 'once', 'doce', 'trece', 'catorce'][VEHICLES.length - 1] || VEHICLES.length - 1;
+  $('ofe-box').innerHTML = `<div class="lv-head"><span class="zk">${tl('Ofensiva', 'Offensive')}</span></div>
+    <p class="lv-desc">${tl('El primer rival juega como Recluta y cada uno sube un nivel; del sexto en adelante todos son Capitán y llegan con órdenes de apoyo extra. Tras cada victoria el mecánico de campaña tira por cada pieza averiada (5–6 la repara) y en intendencia puedes pagar reparaciones y órdenes con tus puntos.', 'The first enemy plays as a Recruit and each one goes up a level; from the sixth on, all are Captains and bring extra support orders. After each victory the field mechanic rolls for each damaged part (5–6 repairs it) and at the quartermaster you can pay for repairs and orders with your points.')}</p>
+    <p class="credit">${st.ofeBest ? tl(`Tu mejor ofensiva: ${nf(st.ofeBest.points)} puntos, ${st.ofeBest.beaten} rivales derrotados (${st.ofeBest.veh}, ${st.ofeBest.battle}).`, `Your best offensive: ${nf(st.ofeBest.points)} points, ${st.ofeBest.beaten} enemies defeated (${st.ofeBest.veh}, ${st.ofeBest.battle}).`) : tl('Todavía no has completado ninguna ofensiva.', 'You have not completed an offensive yet.')}</p>`;
+  const nOthers = (EN ? ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen'] : ['', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez', 'once', 'doce', 'trece', 'catorce'])[VEHICLES.length - 1] || VEHICLES.length - 1;
   const chrono = CHRONO.map(id => VEHICLES.find(v => v.id === id).name).join(', ');
-  stackText('rival-note', [`El rival es la máquina y lleva uno de los otros ${nOthers} al azar.`, `Tus rivales salen del bando contrario por orden de entrada en servicio (${chrono}), un nivel más difícil cada vez.`], PLAY === 'ofensiva' ? 1 : 0, '');
+  stackText('rival-note', EN ? [`The enemy is the machine and drives one of the other ${nOthers} at random.`, `Your enemies come from the opposing side in order of entry into service (${chrono}), one level harder each time.`]
+    : [`El rival es la máquina y lleva uno de los otros ${nOthers} al azar.`, `Tus rivales salen del bando contrario por orden de entrada en servicio (${chrono}), un nivel más difícil cada vez.`], PLAY === 'ofensiva' ? 1 : 0, '');
   menuSummary();
 }
 
@@ -2285,14 +2471,14 @@ function renderLv() {
   document.querySelectorAll('.lv-box .seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === MODE));
   $('lv-chips').innerHTML = [1, 2, 3, 4, 5].map(n => {
     const locked = MODE === 'campaign' && n > CAMP;
-    return `<button type="button" class="lv" data-lv="${n}" aria-pressed="${n === PICK}" ${locked ? 'disabled' : ''}><b>${n}</b><span>${LEVELS[n].rank}</span><small>${locked ? 'bloqueado' : n <= CAMP ? 'desbloqueado' : 'libre'}</small></button>`;
+    return `<button type="button" class="lv" data-lv="${n}" aria-pressed="${n === PICK}" ${locked ? 'disabled' : ''}><b>${n}</b><span>${LEVELS[n].rank}</span><small>${locked ? tl('bloqueado', 'locked') : n <= CAMP ? tl('desbloqueado', 'unlocked') : tl('libre', 'free')}</small></button>`;
   }).join('');
   document.querySelectorAll('.lv').forEach(b => b.onclick = () => { PICK = +b.dataset.lv; renderLv(); });
   if (!document.getElementById('lv-desc')) return;
-  stackText('lv-desc', [1, 2, 3, 4, 5].map(n => `<b>Nivel ${n} · ${LEVELS[n].rank}.</b> ${LEVELS[n].desc}`), PICK - 1, 'lv-desc');
+  stackText('lv-desc', [1, 2, 3, 4, 5].map(n => `<b>${tl('Nivel', 'Level')} ${n} · ${LEVELS[n].rank}.</b> ${LEVELS[n].desc}`), PICK - 1, 'lv-desc');
   menuSummary();
-  stackText('lv-note', [`Campaña: gana en tu nivel más alto (${CAMP} · ${LEVELS[CAMP].rank}) para desbloquear el siguiente. El progreso se guarda en este navegador.`,
-    'Partida libre: juega cualquier nivel; el resultado no cuenta para la campaña.'], MODE === 'campaign' ? 0 : 1, 'credit');
+  stackText('lv-note', EN ? [`Campaign: win at your highest level (${CAMP} · ${LEVELS[CAMP].rank}) to unlock the next. Progress is saved in this browser.`, 'Free play: play any level; the result does not count for the campaign.']
+    : [`Campaña: gana en tu nivel más alto (${CAMP} · ${LEVELS[CAMP].rank}) para desbloquear el siguiente. El progreso se guarda en este navegador.`, 'Partida libre: juega cualquier nivel; el resultado no cuenta para la campaña.'], MODE === 'campaign' ? 0 : 1, 'credit');
 }
 
 /* ---------- Nivel 0: instrucción guiada ---------- */
@@ -2312,6 +2498,22 @@ const TUT_POST = [
   { sel: '#support', title: 'Apoyo', text: 'Las cartas de apoyo se juegan antes de disparar: el Ingeniero repara, otras suman dados o puntos. Quien pierde una ronda roba una.' },
   { sel: null, title: 'Ya sabes jugar', text: 'Puedes seguir esta partida hasta el final o volver a elegir vehículo.', last: true }
 ];
+if (EN) {
+  const T = (list, txt) => list.forEach((st, i) => { st.title = txt[i][0]; st.text = txt[i][1]; });
+  T(TUT_PRE, [
+    ['Your hand', 'Each card has a number and a suit. The ones marked +1 are Engine, your Jumbo’s affinity suit. Tap a card to load it into your formation, next to your tank; tap it there to send it back to your hand. You can reorder your hand by dragging.'],
+    ['Hands', 'You load 1 to 5 cards and they make a hand, as in poker. This strip shows the ones you can make right now. Tap “Three of a kind”: its cards load by themselves.'],
+    ['Firepower', 'Firepower = hand base + value of its cards + dice + 1 for each card of your affinity suit in the hand. Your three nines: 6 base, +3 value (each 9 adds +1), +1 for the Engine 9, and 3 dice (2 from the hand and 1 from your Jumbo). A die adds 3.5 on average: that is why it shows “≈”.'],
+    ['Card value', 'Under each card’s number you can see how much it adds in a hand: 2 to 5 nothing, 6 to 10 +1, face cards and aces +2. The ones marked +1 in amber are your affinity suit. Only cards that make the hand count: loose ones stay in your hand.'],
+    ['The enemy', 'The machine has already chosen its formation and keeps it face down. You will not know what it has until you fire, unless you use a Scout.'],
+    ['Fire!', 'Open fire. Watch the shell’s trajectory and the impact zoom.']]);
+  T(TUT_POST, [
+    ['The count', 'Each row shows the full count: base + value + dice + synergy = firepower. The highest firepower wins.'],
+    ['The front', 'The winner pushes the front one sector. If you push the front all the way to Hill 112, you win the battle.'],
+    ['Damage', 'The loser takes a hit. If the armor die does not stop it, a part breaks: tracks (cannot pursue or fall back), gun (−1 die), engine (draws 2 fewer cards) or optics (−2 firepower). A hit on a part that is already broken knocks the vehicle out.'],
+    ['Support', 'Support cards are played before firing: the Engineer repairs, others add dice or points. Whoever loses a round draws one.'],
+    ['You know how to play', 'You can keep playing this game to the end or go back and choose a vehicle.']]);
+}
 const tut = { list: null, i: 0, done: null, timer: null };
 function startTutorial() {
   newGame('sherman', { ai: 'tiger', tutorial: true, level: 1 });
@@ -2327,12 +2529,12 @@ function tutStep() {
   if (!st) { box.hidden = true; const d = tut.done; tut.list = null; if (d) d(); return; }
   const el = st.sel ? document.querySelector(st.sel) : null;
   if (el) { el.classList.add('coach-on'); el.scrollIntoView({ block: 'center', behavior: RM ? 'auto' : 'smooth' }); }
-  const n = tut.list === TUT_PRE ? `Paso ${tut.i + 1} de ${TUT_PRE.length + TUT_POST.length}` : `Paso ${TUT_PRE.length + tut.i + 1} de ${TUT_PRE.length + TUT_POST.length}`;
-  box.innerHTML = `<span class="ck">Nivel 0 · ${n}</span><h3>${st.title}</h3><p>${st.text}</p>
-    <div class="cbtns">${st.wait ? '<span class="cwait">Hazlo en el tablero</span>' : ''}
-      <button type="button" class="btn ghost" id="c-exit">Salir de la instrucción</button>
-      ${st.last ? '<button type="button" class="btn ghost" id="c-pick">Elegir vehículo</button><button type="button" class="btn" id="c-next">Seguir jugando</button>'
-        : (!st.wait || st.skippable) ? `<button type="button" class="btn" id="c-next">${st.wait ? 'Saltar' : 'Siguiente'}</button>` : ''}</div>`;
+  const k = tut.list === TUT_PRE ? tut.i + 1 : TUT_PRE.length + tut.i + 1, n = tl(`Paso ${k} de ${TUT_PRE.length + TUT_POST.length}`, `Step ${k} of ${TUT_PRE.length + TUT_POST.length}`);
+  box.innerHTML = `<span class="ck">${tl('Nivel 0', 'Level 0')} · ${n}</span><h3>${st.title}</h3><p>${st.text}</p>
+    <div class="cbtns">${st.wait ? `<span class="cwait">${tl('Hazlo en el tablero', 'Do it on the board')}</span>` : ''}
+      <button type="button" class="btn ghost" id="c-exit">${tl('Salir de la instrucción', 'Leave training')}</button>
+      ${st.last ? `<button type="button" class="btn ghost" id="c-pick">${tl('Elegir vehículo', 'Choose vehicle')}</button><button type="button" class="btn" id="c-next">${tl('Seguir jugando', 'Keep playing')}</button>`
+        : (!st.wait || st.skippable) ? `<button type="button" class="btn" id="c-next">${st.wait ? tl('Saltar', 'Skip') : tl('Siguiente', 'Next')}</button>` : ''}</div>`;
   box.hidden = false;
   const place = () => { const r = el && el.getBoundingClientRect(); const top = r && (r.top + r.height / 2) > innerHeight / 2; box.className = 'coach ' + (top ? 'at-top' : 'at-bottom'); };
   place(); setTimeout(place, 450);
@@ -2393,7 +2595,7 @@ function setMusic(name) {
 function stopMusic() { const old = mus.cur; mus.cur = null; mus.track = null; if (old) fadeTo(old, 0, 800, () => old.pause()); }
 // Los botones [data-mus] están en Intendencia y en la pantalla de elegir vehículo; se sincronizan todos.
 function syncMus() {
-  document.querySelectorAll('[data-mus]').forEach(b => { const on = mus[b.dataset.mus]; b.setAttribute('aria-pressed', on); b.textContent = (b.dataset.mus === 'menu' ? 'Menú' : 'Batalla') + (on ? ': sí' : ': no'); });
+  document.querySelectorAll('[data-mus]').forEach(b => { const on = mus[b.dataset.mus]; b.setAttribute('aria-pressed', on); b.textContent = (b.dataset.mus === 'menu' ? tl('Menú', 'Menu') : tl('Batalla', 'Battle')) + (on ? tl(': sí', ': on') : tl(': no', ': off')); });
   $('mus-vol').value = Math.round(mus.vol * 100);
 }
 document.addEventListener('click', e => {
@@ -2508,8 +2710,8 @@ function duckMusic(ms) {
   const a = mus.cur; if (!a || !sfx.on) return;
   fadeTo(a, mus.vol * 0.35, 150, () => setTimeout(() => { if (mus.cur === a) fadeTo(a, mus.vol, 700); }, ms));
 }
-function syncSfx() { $('sfx-btn').textContent = sfx.on ? 'Sí' : 'No'; $('sfx-btn').setAttribute('aria-pressed', sfx.on); $('sfx-vol').value = Math.round(sfx.vol * 100);
-  $('ui-btn').textContent = sfx.ui ? 'Sí' : 'No'; $('ui-btn').setAttribute('aria-pressed', sfx.ui); }
+function syncSfx() { $('sfx-btn').textContent = sfx.on ? tl('Sí', 'On') : tl('No', 'Off'); $('sfx-btn').setAttribute('aria-pressed', sfx.on); $('sfx-vol').value = Math.round(sfx.vol * 100);
+  $('ui-btn').textContent = sfx.ui ? tl('Sí', 'On') : tl('No', 'Off'); $('ui-btn').setAttribute('aria-pressed', sfx.ui); }
 $('ui-btn').onclick = () => { sfx.ui = !sfx.ui; saveSfx(); syncSfx(); sfxInit(); SFX.click(true); };
 $('sfx-btn').onclick = () => { sfx.on = !sfx.on; saveSfx(); syncSfx(); sfxInit(); if (sfx.on) SFX.ricochet(true); };
 $('sfx-vol').oninput = e => { sfx.vol = +e.target.value / 100; saveSfx(); if (sfx.master) sfx.master.gain.value = sfx.vol; };
@@ -2533,9 +2735,9 @@ $('intend').addEventListener('toggle', () => { try { localStorage.setItem('ldf-i
 let quitT = null;
 $('quit-btn').onclick = () => {
   const b = $('quit-btn');
-  if (S.phase === 'resolving') { toast('Espera a que termine el disparo.'); return; }
-  if (!b.classList.contains('armed')) { b.classList.add('armed'); b.textContent = 'Toca otra vez: se pierde la batalla'; clearTimeout(quitT); quitT = setTimeout(() => { b.classList.remove('armed'); b.textContent = 'Volver al menú'; }, 3500); return; }
-  clearTimeout(quitT); b.classList.remove('armed'); b.textContent = 'Volver al menú';
+  if (S.phase === 'resolving') { toast(tl('Espera a que termine el disparo.', 'Wait for the shot to finish.')); return; }
+  if (!b.classList.contains('armed')) { b.classList.add('armed'); b.textContent = tl('Toca otra vez: se pierde la batalla', 'Tap again: the battle is lost'); clearTimeout(quitT); quitT = setTimeout(() => { b.classList.remove('armed'); b.textContent = tl('Volver al menú', 'Back to menu'); }, 3500); return; }
+  clearTimeout(quitT); b.classList.remove('armed'); b.textContent = tl('Volver al menú', 'Back to menu');
   tutEnd(); S.phase = 'over'; OFE = null; showIntro();
 };
 
@@ -2585,7 +2787,7 @@ $('hand').addEventListener('click', e => {
   const id = b.dataset.id;
   if (S.swapMode) { if (S.marks.has(id)) { S.marks.delete(id); SFX.click(false); } else if (S.marks.size < swapMax(S.p)) { S.marks.add(id); SFX.click(true); } }
   else if (S.sel.size < 5) { S.sel.add(id); S.loadOrder = [...(S.loadOrder || []), id]; SFX.click(true); }
-  else toast('La formación admite 5 cartas como máximo.');
+  else toast(tl('La formación admite 5 cartas como máximo.', 'The formation holds 5 cards at most.'));
   updateSelection();
 });
 $('combos').addEventListener('click', e => {
@@ -2599,30 +2801,32 @@ $('support').addEventListener('click', e => {
   S.pendInst = null;
   let q = 'full', roll = '';
   if (SUPPORT_DEFS[s.id].kind === 'inst' && LV().roll) {
-    const t = supRoll(); q = t.q; roll = `sale ${t.r}, `;
-    log(`Tirada de ${SUPPORT_DEFS[s.id].name}: ${t.r} (${Q_TXT[q]}).`);
+    const t = supRoll(); q = t.q; roll = tl(`sale ${t.r}, `, `rolled ${t.r}, `);
+    log(tl(`Tirada de ${SUPPORT_DEFS[s.id].name}: ${t.r} (${Q_TXT[q]}).`, `${SUPPORT_DEFS[s.id].name} roll: ${t.r} (${Q_TXT[q]}).`));
     if (q === 'fail') { toast(`${SUPPORT_DEFS[s.id].name}: ${roll}${Q_TXT.fail}.`); renderSupport(); return; }
   }
   if (SUPPORT_DEFS[s.id].kind === 'inst') S.st.supportsUsed++;
-  const fix = k => { if (q === 'full') { p.dmg[k] = false; log(`Tu ingeniero repara ${COMPS[k].toLowerCase()}.`); toast(`Ingeniero: ${roll}${COMPS[k].toLowerCase()} reparada.`); }
-                     else { p.pendingFix = k; log(`Tu ingeniero repara ${COMPS[k].toLowerCase()} al final de la ronda.`); toast(`Ingeniero: ${roll}${COMPS[k].toLowerCase()} estará reparada al final de la ronda.`); } };
+  const ing = SUPPORT_DEFS.ing.name;
+  const fix = k => { if (q === 'full') { p.dmg[k] = false; log(tl(`Tu ingeniero repara ${COMPS[k].toLowerCase()}.`, `Your engineer repairs the ${COMPS[k].toLowerCase()}.`)); toast(tl(`${ing}: ${roll}${COMPS[k].toLowerCase()} reparada.`, `${ing}: ${roll}${COMPS[k].toLowerCase()} repaired.`)); }
+                     else { p.pendingFix = k; log(tl(`Tu ingeniero repara ${COMPS[k].toLowerCase()} al final de la ronda.`, `Your engineer repairs the ${COMPS[k].toLowerCase()} at the end of the round.`)); toast(tl(`${ing}: ${roll}${COMPS[k].toLowerCase()} estará reparada al final de la ronda.`, `${ing}: ${roll}the ${COMPS[k].toLowerCase()} will be repaired at the end of the round.`)); } };
   if (s.id === 'ing') {
     const broken = Object.keys(COMPS).filter(k => p.dmg[k]);
     if (broken.length === 1) { p.support.splice(i, 1); fixSel(i); fix(broken[0]); render(); }
-    else { S.repairMode = { idx: i, fix }; render(); toast(`Ingeniero: ${roll}toca la pieza averiada que quieres reparar.`); }
+    else { S.repairMode = { idx: i, fix }; render(); toast(tl(`${ing}: ${roll}toca la pieza averiada que quieres reparar.`, `${ing}: ${roll}tap the damaged part you want to repair.`)); }
     return;
   }
   if (s.id === 'exp') {
     p.support.splice(i, 1); fixSel(i);
     const ev = evaluate(S.ai.formation);
-    if (q === 'full') { S.scouted = true; S.anim = { flipAI: true }; toast(`Explorador: ${roll}el rival prepara ${ev.name}.`); }
-    else { S.scoutHalf = true; toast(`Explorador: ${roll}solo sabe que el rival prepara ${ev.name}; no ve las cartas.`); }
-    log(`Tu explorador informa: el rival prepara ${ev.name}.`); render(); return;
+    const sc = SUPPORT_DEFS.exp.name;
+    if (q === 'full') { S.scouted = true; S.anim = { flipAI: true }; toast(tl(`${sc}: ${roll}el rival prepara ${ev.name}.`, `${sc}: ${roll}the enemy is preparing ${ev.name}.`)); }
+    else { S.scoutHalf = true; toast(tl(`${sc}: ${roll}solo sabe que el rival prepara ${ev.name}; no ve las cartas.`, `${sc}: ${roll}only knows the enemy is preparing ${ev.name}; cannot see the cards.`)); }
+    log(tl(`Tu explorador informa: el rival prepara ${ev.name}.`, `Your scout reports: the enemy is preparing ${ev.name}.`)); render(); return;
   }
   if (s.id === 'fald') {
     p.support.splice(i, 1); fixSel(i);
-    if (q === 'full') { p.faldones++; log('Montas faldones de blindaje.'); toast(`Faldones: ${roll}absorberán el próximo impacto.`); }
-    else { p.armorBonus = 1; log('Montas faldones a medias.'); toast(`Faldones: ${roll}a medias, +1 de blindaje en el próximo impacto.`); }
+    if (q === 'full') { p.faldones++; log(tl('Montas faldones de blindaje.', 'You fit armor skirts.')); toast(tl(`Faldones: ${roll}absorberán el próximo impacto.`, `Skirts: ${roll}they will absorb the next hit.`)); }
+    else { p.armorBonus = 1; log(tl('Montas faldones a medias.', 'You half-fit skirts.')); toast(tl(`Faldones: ${roll}a medias, +1 de blindaje en el próximo impacto.`, `Skirts: ${roll}half-fitted, +1 armor on the next hit.`)); }
     render(); return;
   }
   S.supportSel = S.supportSel === i ? null : i; SFX.click(S.supportSel === i);
@@ -2645,7 +2849,7 @@ $('zone-p').addEventListener('click', e => {
   const b = e.target.closest('.comp'); if (!b || !S.repairMode || !S.p.dmg[b.dataset.comp]) return;
   const k = b.dataset.comp;
   const rm = S.repairMode; S.p.support.splice(rm.idx, 1); fixSel(rm.idx); S.repairMode = false;
-  if (rm.fix) rm.fix(k); else { S.p.dmg[k] = false; log(`Tu ingeniero repara ${COMPS[k].toLowerCase()}.`); }
+  if (rm.fix) rm.fix(k); else { S.p.dmg[k] = false; log(tl(`Tu ingeniero repara ${COMPS[k].toLowerCase()}.`, `Your engineer repairs the ${COMPS[k].toLowerCase()}.`)); }
   render();
 });
 // Modo cambio: devuelve la formación a la mano, marcas hasta 3 cartas y confirmas.
@@ -2657,7 +2861,7 @@ $('btn-swap').addEventListener('click', () => {
     const out = S.p.hand.filter(c => S.marks.has(c.id)); S.p.hand = S.p.hand.filter(c => !S.marks.has(c.id)); S.discard.push(...out);
     for (let k = 0; k < n; k++) { const c = drawCard(); c.fresh = true; S.p.hand.push(c); }
     sortHand(S.p); S.swapped = true; syncSortBtns();
-    log(`Cambias ${n} carta${n > 1 ? 's' : ''}.`);
+    log(tl(`Cambias ${n} carta${n > 1 ? 's' : ''}.`, `You swap ${n} card${n > 1 ? 's' : ''}.`));
   }
   S.swapMode = false; S.marks = new Set();
   updateSelection(); renderSide();
