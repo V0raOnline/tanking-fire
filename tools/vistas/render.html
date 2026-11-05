@@ -1,0 +1,65 @@
+<!doctype html>
+<!--
+  TANKING... FIRE!  ·  https://v0raonline.github.io/tanking-fire/
+  Copyright (c) 2026 V0ra (v0raonline)
+  Licencia PolyForm Noncommercial 1.0.0 — sin fines comerciales.
+-->
+<meta charset="utf-8"><body style="margin:0;background:transparent">
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<script type="module">
+// Dibuja una vista ortográfica de alambre con líneas ocultas y la deja lista como WebP:
+// recortada al contorno, a 640 px de ancho, líneas blancas sobre fondo transparente.
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+const P = new URLSearchParams(location.search);
+const view = P.get('view');            // side (cañón a la derecha), left, front, top
+const mode = P.get('mode') || 'wire';  // wire = todas las aristas; edges = solo aristas marcadas
+const W = +(P.get('w') || 1600), OUT = +(P.get('out') || 640), GAMMA = +(P.get('gamma') || 0.6);
+const rotY = +(P.get('rotY') || 0);    // giro extra en grados si el modelo no mira hacia +Z
+try {
+  const g = await new GLTFLoader().loadAsync(P.get('m'));
+  const root = g.scene; root.rotation.y = rotY * Math.PI / 180; root.updateMatrixWorld(true);
+  // hide: nombres de piezas (o de sus grupos) que no se dibujan, separados por comas. Se quitan antes de medir.
+  const hide = new Set((P.get('hide') || '').split(',').map(s => s.trim()).filter(Boolean));
+  if (hide.size) { const out = []; root.traverse(o => { if (o !== root && hide.has(o.name)) out.push(o); }); out.forEach(o => o.removeFromParent()); root.updateMatrixWorld(true); }
+  // list: en vez de dibujar, devuelve cada pieza con su caja en coordenadas del mundo (ya girada).
+  if (P.get('list')) {
+    const parts = []; root.traverse(o => { if (!o.isMesh) return; const b = new THREE.Box3().setFromObject(o);
+      parts.push({ name: o.name, parent: o.parent && o.parent.name, min: b.min.toArray(), max: b.max.toArray() }); });
+    window.RESULT = { parts }; throw null;
+  }
+  const box = new THREE.Box3().setFromObject(root), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+  const scene = new THREE.Scene();
+  const occ = new THREE.MeshBasicMaterial({colorWrite:false, side:THREE.DoubleSide, polygonOffset:true, polygonOffsetFactor:1, polygonOffsetUnits:1});
+  const lm = new THREE.LineBasicMaterial({color:0xffffff});
+  root.traverse(o => { if (!o.isMesh) return;
+    const geo = o.geometry.clone().applyMatrix4(o.matrixWorld);
+    scene.add(new THREE.Mesh(geo, occ));
+    scene.add(new THREE.LineSegments(mode === 'wire' ? new THREE.WireframeGeometry(geo) : new THREE.EdgesGeometry(geo, +(P.get('thr') || 20)), lm));
+  });
+  // El frente del modelo apunta a +Z. "side" mira desde -X para que el cañón quede a la derecha.
+  const dirs = {side:[-1,0,0], left:[1,0,0], front:[0,0,1], top:[0,1,0]};
+  let w, h;
+  if (view === 'side' || view === 'left') { w = size.z; h = size.y } else if (view === 'front') { w = size.x; h = size.y } else { w = size.z; h = size.x }
+  const H = Math.round(W * h / w), pad = 1.02;
+  const cam = new THREE.OrthographicCamera(-w/2*pad, w/2*pad, h/2*pad, -h/2*pad, 0.001, 1e6);
+  cam.position.copy(c).addScaledVector(new THREE.Vector3(...dirs[view]), Math.max(size.x, size.y, size.z) * 3);
+  if (view === 'top') cam.up.set(-1, 0, 0);   // vista superior con el cañón a la izquierda
+  cam.lookAt(c);
+  const r = new THREE.WebGLRenderer({antialias:true, alpha:true, preserveDrawingBuffer:true});
+  r.setPixelRatio(1); r.setSize(W, H); r.setClearColor(0x000000, 0); r.render(scene, cam);
+  // Recorte al contorno, escalado y refuerzo del trazo (curva gamma sobre la opacidad).
+  const src = document.createElement('canvas'); src.width = W; src.height = H;
+  const sx = src.getContext('2d'); sx.drawImage(r.domElement, 0, 0);
+  const d = sx.getImageData(0, 0, W, H).data;
+  let x0 = W, y0 = H, x1 = -1, y1 = -1;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (d[(y*W + x)*4 + 3] > 8) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+  const cw = x1 - x0 + 1, ch = y1 - y0 + 1, oh = Math.round(OUT * ch / cw);
+  const out = document.createElement('canvas'); out.width = OUT; out.height = oh;
+  const ox = out.getContext('2d'); ox.imageSmoothingQuality = 'high'; ox.drawImage(src, x0, y0, cw, ch, 0, 0, OUT, oh);
+  const id = ox.getImageData(0, 0, OUT, oh), a = id.data;
+  for (let i = 0; i < a.length; i += 4) { a[i] = a[i+1] = a[i+2] = 255; a[i+3] = Math.round(255 * Math.pow(a[i+3] / 255, GAMMA)); }
+  ox.putImageData(id, 0, 0);
+  window.RESULT = {webp: out.toDataURL('image/webp', 0.9), w: OUT, h: oh, size: size.toArray()};
+} catch (e) { if (e !== null) window.RESULT = {error: String(e && e.stack || e)} }
+</script>

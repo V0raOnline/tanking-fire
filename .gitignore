@@ -1,0 +1,7 @@
+.DS_Store
+Thumbs.db
+*.tmp
+tools/vistas/node_modules/
+tools/vistas/salida/
+*.glb
+*.gltf

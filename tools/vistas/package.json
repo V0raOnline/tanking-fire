@@ -1,0 +1,12 @@
+{
+  "name": "ldf-vistas",
+  "private": true,
+  "description": "Genera las vistas de alambre de TANKING... FIRE! a partir de un modelo 3D (.glb o .gltf)",
+  "scripts": {
+    "vistas": "node vistas.js"
+  },
+  "dependencies": {
+    "three": "0.160.0",
+    "playwright": "1.63.0"
+  }
+}
