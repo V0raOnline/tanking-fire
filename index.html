@@ -1105,9 +1105,9 @@ async function shoot(from, to, comp, outcome, he) {
   const B = ballistics(S[from].veh.id, S.dist || 1000, he);
   S.lastShot = B;
   // En pantallas estrechas los dos tanques no caben a la vez: si el blanco está fuera de la vista, se lleva hasta él
-  // antes de disparar y, tras el impacto, se vuelve a donde estaba.
-  const tgt = document.querySelector(`#veh-${to} .veh-art`); let backY = null;
-  if (tgt && !RM) { const r = tgt.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) { backY = scrollY; tgt.scrollIntoView({ block: 'center', behavior: 'smooth' }); await scrollSettled(); } }
+  // antes de disparar; tras el impacto se enseña el resultado y, al empezar la ronda siguiente, la mano (ver backToHand).
+  const tgt = document.querySelector(`#veh-${to} .veh-art`); let moved = false;
+  if (tgt && !RM) { const r = tgt.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) { moved = S.shotScrolled = true; tgt.scrollIntoView({ block: 'center', behavior: 'smooth' }); await scrollSettled(); } }
   const shooter = $('veh-' + from);
   if (shooter) { shooter.style.setProperty('--kick', from === 'p' ? '-6px' : '6px'); shooter.classList.remove('recoil'); void shooter.offsetWidth; shooter.classList.add('recoil'); }
   SFX.cannon(BALL[S[from].veh.id].cal === '128 mm' || BALL[S[from].veh.id].cal === '122 mm');
@@ -1170,7 +1170,13 @@ async function shoot(from, to, comp, outcome, he) {
     g.globalAlpha = 1;
   });
   g.clearRect(0, 0, innerWidth, innerHeight);
-  if (backY !== null) { scrollTo({ top: backY, behavior: 'smooth' }); await scrollSettled(); }
+  if (moved) { $('tray-impact').scrollIntoView({ block: 'center', behavior: 'smooth' }); await scrollSettled(); }
+}
+// Si el disparo movió la vista, al empezar la ronda se baja a la mano (con ¡Fuego! encima) si no se ve entera.
+function backToHand() {
+  if (!S.shotScrolled) return; S.shotScrolled = false;
+  const h = document.querySelector('.handbox'); if (!h) return;
+  const r = h.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) h.scrollIntoView({ block: 'end', behavior: RM ? 'auto' : 'smooth' });
 }
 
 function pips(v) {
@@ -1876,6 +1882,7 @@ async function fire() {
   S.round++;
   S.anim = { dealAI: true };
   startRound();
+  backToHand();
 }
 
 async function impact(side, who, ignoreArmor) {
