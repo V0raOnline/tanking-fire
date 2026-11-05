@@ -44,3 +44,7 @@ Pixabay, licencia de contenido de Pixabay:
 - Textura de papel envejecido (`img/papel.webp`): generada a medida con ChatGPT.
 - Tipografías: Saira Stencil One, Barlow, Barlow Condensed e IBM Plex Mono, de Google Fonts (SIL Open Font License).
 - Datos históricos: Wikipedia y otras referencias públicas citadas en el desarrollo.
+
+## Agradecimientos
+
+- A **Jalapeño**, por la idea de exportar e importar el progreso.

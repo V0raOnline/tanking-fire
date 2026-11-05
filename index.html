@@ -563,6 +563,13 @@ details.rules ol{margin:8px 0 0;padding-left:18px;font-size:13px;display:flex;fl
 .choice .art{height:110px;--art-h:110px;display:flex;align-items:flex-end;justify-content:center}
 .choice .veh-stats svg{width:14px;height:14px}
 .choice .tr{margin-top:2px}
+.choice[aria-pressed="true"]{border-color:var(--signal);box-shadow:inset 0 0 0 1px var(--signal)}
+.veh-info{display:flex;flex-direction:column;gap:10px;background:var(--raise);border:1px solid var(--signal);border-radius:9px;padding:12px 14px}
+.veh-info .vi-name{margin:0;font-family:var(--f-display);font-weight:400;font-size:24px;line-height:1.1}
+.vi-go{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.vi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.vi-grid > :nth-child(2){grid-column:1/-1;order:3}
+@media (max-width:900px){.vi-grid{grid-template-columns:minmax(0,1fr)}.veh-info .f-head{flex-direction:column}.vi-go{align-items:stretch}}
 .tut-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:var(--raise);border:1px solid var(--line);border-radius:9px;padding:12px 14px}
 .tut-row span{color:var(--muted);font-size:14px;flex:1;min-width:200px}
 .coach{position:fixed;left:50%;transform:translateX(-50%);width:min(440px,calc(100vw - 32px));z-index:18;background:var(--paper);color:var(--ink);border-radius:10px;padding:14px 16px;box-shadow:0 10px 30px #000000aa;display:flex;flex-direction:column;gap:6px}
@@ -1256,6 +1263,39 @@ function recordGame(won, score, noTop) {
   const pos = st.top.findIndex(e => e.t === entry.t);
   return { pos, best: pos === 0 };
 }
+/* ---------- Exportar e importar el progreso (archivo JSON) ----------
+   Lleva la hoja de servicio, el nivel de campaña y las batallas ganadas; los ajustes (volumen, zoom, ritmo) son de cada dispositivo y no viajan.
+   Las claves siguen con el prefijo ldf- de cuando el juego se llamaba Línea de Fuego: cambiarlas borraría el progreso de quien ya juega. */
+const SAVE_FORMAT = 1;
+function exportProgress() {
+  const data = { juego: 'TANKING... FIRE!', formato: SAVE_FORMAT, fecha: new Date().toISOString(), stats: loadStats(), campaign: CAMP, battles: BWON };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+  const a = document.createElement('a');
+  a.href = url; a.download = `tanking-fire-progreso-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+// El archivo viene de fuera: solo se aceptan campos conocidos, números finitos y textos cortos sin marcas HTML.
+function cleanSave(raw) {
+  if (!raw || typeof raw !== 'object' || raw.formato !== SAVE_FORMAT || !raw.stats || typeof raw.stats !== 'object') return null;
+  const num = x => (typeof x === 'number' && isFinite(x) && x >= 0) ? Math.floor(x) : 0;
+  const txt = x => String(x ?? '').replace(/[<>&"'`]/g, '').slice(0, 40);
+  const r = raw.stats, st = blankStats();
+  for (const k of Object.keys(st)) if (typeof st[k] === 'number') st[k] = num(r[k]);
+  if (r.bestHand && typeof r.bestHand === 'object') st.bestHand = { total: num(r.bestHand.total), combo: txt(r.bestHand.combo), veh: txt(r.bestHand.veh) };
+  if (r.byVeh && typeof r.byVeh === 'object') for (const v of VEHICLES) { const x = r.byVeh[v.id]; if (x && typeof x === 'object') st.byVeh[v.id] = { wins: num(x.wins), games: num(x.games) }; }
+  if (Array.isArray(r.top)) st.top = r.top.slice(0, 10).filter(e => e && typeof e === 'object').map(e => ({
+    score: num(e.score), won: e.won === true, veh: txt(e.veh), level: Math.min(5, Math.max(1, num(e.level) || 1)), rounds: num(e.rounds), date: txt(e.date) }));
+  if (r.ofeBest && typeof r.ofeBest === 'object') st.ofeBest = { points: num(r.ofeBest.points), beaten: num(r.ofeBest.beaten) };
+  const campaign = Math.min(5, Math.max(1, num(raw.campaign) || 1));
+  const battles = Array.isArray(raw.battles) ? BATTLES.map(b => b.id).filter(id => raw.battles.includes(id)) : [];
+  return { stats: st, campaign, battles };
+}
+function applySave(sv) {
+  saveStats(sv.stats);
+  CAMP = sv.campaign; PICK = CAMP; saveCamp();
+  BWON = sv.battles; try { localStorage.setItem('ldf-battles', JSON.stringify(BWON)); } catch (e) {}
+}
 let statsClearArmed = false;
 function showStats() {
   if (!$('overlay').hidden && !fichaOpen) return;
@@ -1282,10 +1322,25 @@ function showStats() {
     </div>
     <div class="f-scale-wrap"><h3>Mejores puntuaciones</h3>${top}
       <p class="credit">Puntuación por batalla: victoria = 1000 × nivel; +100 por ronda ganada; +150 por sector de ventaja; +50 por pieza intacta; −50 por ronda jugada. En derrota solo cuentan rondas ganadas y sectores de ventaja. Se guarda solo en este navegador.</p></div>
-    <div class="controls"><button type="button" class="btn" id="st-clear">Borrar estadísticas</button></div>
+    <div class="controls"><button type="button" class="btn" id="st-export">Exportar progreso</button><button type="button" class="btn" id="st-import">Importar progreso</button><input type="file" id="st-file" accept=".json,application/json" hidden><button type="button" class="btn" id="st-clear">Borrar estadísticas</button></div><p class="credit" id="st-msg" role="status">El archivo lleva la hoja de servicio, el nivel de campaña y las batallas ganadas, para seguir en otro navegador o guardar una copia.</p>
   </div>`;
   o.hidden = false; fichaOpen = true; statsClearArmed = false;
   $('st-close').onclick = closeFicha; $('st-close').focus();
+  let pending = null;
+  $('st-export').onclick = () => { exportProgress(); $('st-msg').textContent = 'Archivo de progreso descargado.'; };
+  $('st-import').onclick = () => {
+    if (pending) { applySave(pending); fichaOpen = false; $('overlay').hidden = true; showStats(); $('st-msg').textContent = 'Progreso importado.'; return; }
+    $('st-file').click();
+  };
+  $('st-file').onchange = async () => {
+    const f = $('st-file').files[0]; $('st-file').value = ''; if (!f) return;
+    let sv = null;
+    try { if (f.size < 200000) sv = cleanSave(JSON.parse(await f.text())); } catch (e) {}
+    if (!sv) { $('st-msg').textContent = 'Ese archivo no es un progreso de TANKING... FIRE! No se ha cambiado nada.'; return; }
+    pending = sv;
+    $('st-msg').textContent = `En el archivo: campaña nivel ${sv.campaign} · ${sv.stats.games} batallas (${sv.stats.wins} ganadas) · mejor puntuación ${sv.stats.top.length ? nf(sv.stats.top[0].score) : '—'}. Sustituye a tu progreso actual.`;
+    $('st-import').textContent = 'Toca otra vez para importarlo'; $('st-import').classList.add('fire');
+  };
   $('st-clear').onclick = () => {
     if (!statsClearArmed) { statsClearArmed = true; $('st-clear').textContent = 'Toca otra vez para borrarlo todo'; $('st-clear').classList.add('fire'); return; }
     try { localStorage.removeItem(STAT_KEY); } catch (e) {} fichaOpen = false; $('overlay').hidden = true; showStats();
@@ -1798,18 +1853,10 @@ const SPECS = {
   pershing:  { peso: '≈ 42 t', canon: '90 mm M3', blindaje: 'casco 102 mm · torre 102 mm', trip: '5', vel: '≈ 40 km/h', anio: '1945',
                nota: 'Carro pesado estadounidense que llegó a Europa en los últimos meses de la guerra; los de la 9.ª División Acorazada estuvieron en Remagen.' }
 };
-let fichaOpen = false;
-function showFicha(who) {
-  if (!S || !$('overlay').hidden) return;
-  const side = S[who], v = side.veh, d = DIMS[v.id], h = SPECS[v.id], otherWho = who === 'p' ? 'ai' : 'p', ov = S[otherWho].veh, od = DIMS[ov.id];
-  const state = Object.entries(COMPS).map(([k, l]) => `<span>${l}</span><span class="v ${side.dmg[k] ? 'bad' : 'good'}">${side.dmg[k] ? 'averiada' : 'bien'}</span>`).join('');
-  const broken = Object.keys(COMPS).filter(k => side.dmg[k]).map(k => `${COMPS[k]}: ${EFFECT[k]}.`).join(' ');
-  const o = $('overlay');
-  o.innerHTML = `<div class="dialog ficha" role="dialog" aria-modal="true" aria-labelledby="f-t">
-    <div class="f-head"><div><span class="zk">Ficha técnica · ${who === 'p' ? 'tu vehículo' : 'vehículo rival'}</span><h2 id="f-t">${v.name}</h2><span class="veh-nation">${v.nation}</span></div>
-      <button type="button" class="btn" id="f-close">Cerrar</button></div>
-    <div class="f-grid">
-      <div class="f-box"><h3>Medidas reales</h3><div class="f-rows">
+// Medidas, datos históricos y reglas del vehículo: lo mismo en la ficha de la partida y en la del menú.
+function fichaBoxes(v, side) {
+  const d = DIMS[v.id], h = SPECS[v.id];
+  return `<div class="f-box"><h3>Medidas reales</h3><div class="f-rows">
         <span>Longitud total, con cañón</span><span class="v">${fmtM(d.total)}</span>
         <span>Longitud del casco</span><span class="v">${fmtM(d.hull)}</span>
         <span>Anchura</span><span class="v">${fmtM(d.width)}</span>
@@ -1829,6 +1876,20 @@ function showFicha(who) {
         <span>Palo afín (+1 por carta)</span><span class="v s-${v.afin}">${suitIcon(v.afin)} ${SUITS[v.afin]}</span>
         <span>Cartas en mano</span><span class="v">${handSize(side)}</span></div>
         <p class="f-trait"><b>${v.trait}.</b> ${v.traitText}</p></div>
+`;
+}
+let fichaOpen = false;
+function showFicha(who) {
+  if (!S || !$('overlay').hidden) return;
+  const side = S[who], v = side.veh, d = DIMS[v.id], h = SPECS[v.id], otherWho = who === 'p' ? 'ai' : 'p', ov = S[otherWho].veh, od = DIMS[ov.id];
+  const state = Object.entries(COMPS).map(([k, l]) => `<span>${l}</span><span class="v ${side.dmg[k] ? 'bad' : 'good'}">${side.dmg[k] ? 'averiada' : 'bien'}</span>`).join('');
+  const broken = Object.keys(COMPS).filter(k => side.dmg[k]).map(k => `${COMPS[k]}: ${EFFECT[k]}.`).join(' ');
+  const o = $('overlay');
+  o.innerHTML = `<div class="dialog ficha" role="dialog" aria-modal="true" aria-labelledby="f-t">
+    <div class="f-head"><div><span class="zk">Ficha técnica · ${who === 'p' ? 'tu vehículo' : 'vehículo rival'}</span><h2 id="f-t">${v.name}</h2><span class="veh-nation">${v.nation}</span></div>
+      <button type="button" class="btn" id="f-close">Cerrar</button></div>
+    <div class="f-grid">
+      ${fichaBoxes(v, side)}
       <div class="f-box"><h3>Estado ahora</h3><div class="f-rows">${state}
         ${side.faldones ? `<span>Faldones</span><span class="v good">×${side.faldones}</span>` : ''}</div>
         <p class="f-trait">${side.destroyed ? 'Fuera de combate.' : broken || 'Sin averías.'}</p></div>
@@ -1845,7 +1906,9 @@ function showFicha(who) {
   box.innerHTML = row(who, v, d) + row(otherWho, ov, od) + `<div class="ruler" aria-hidden="true">${ruler}</div>`;
   $('f-close').onclick = closeFicha; $('f-close').focus();
 }
-function closeFicha() { if (!fichaOpen) return; fichaOpen = false; $('overlay').hidden = true; $('overlay').innerHTML = ''; if (S && S.phase === 'over') showIntro(); }
+// Si la hoja de servicio se abrió desde el menú, al cerrarla se vuelve al menú.
+let backToIntro = false;
+function closeFicha() { if (!fichaOpen) return; fichaOpen = false; $('overlay').hidden = true; $('overlay').innerHTML = ''; if (backToIntro) { backToIntro = false; showIntro(); return; } if (S && S.phase === 'over') showIntro(); }
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-ficha]');
   if (t && !t.closest('.overlay')) { showFicha(t.dataset.ficha); return; }
@@ -2007,7 +2070,7 @@ const MAN = [
     <table class="mtab"><tr><th>Concepto</th><th>Puntos</th></tr><tr><td>Victoria</td><td>1000 × nivel</td></tr><tr><td>Cada ronda ganada</td><td>+100</td></tr>
       <tr><td>Cada sector de ventaja al terminar</td><td>+150</td></tr><tr><td>Cada pieza intacta (solo si ganas)</td><td>+50</td></tr><tr><td>Cada ronda jugada (solo si ganas)</td><td>−50</td></tr></table>
     <p>En la Ofensiva se suman las batallas con el multiplicador de racha, y lo que pagas en intendencia se resta.</p>
-    <p>La hoja de servicio (Intendencia → Ver estadísticas) guarda tus 10 mejores puntuaciones, tu mejor mano, rondas, avances y retrocesos, impactos y tu mejor ofensiva. Todo se guarda en este navegador.</p>`],
+    <p>La hoja de servicio (en el menú, o en Intendencia → Ver estadísticas) guarda tus 10 mejores puntuaciones, tu mejor mano, rondas, avances y retrocesos, impactos y tu mejor ofensiva. Todo se guarda en este navegador; con <b>Exportar progreso</b> e <b>Importar progreso</b> puedes llevártelo a otro o guardar una copia.</p>`],
   ['creditos', 'Créditos', () => `
     <p>Los esquemas de alambre de los vehículos se han dibujado a partir de modelos 3D publicados con licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Cambios: cada modelo se ha convertido en vistas de alambre 2D. A la izquierda, el modelo tal como lo publica su autor; a la derecha, el esquema del juego.</p>
     ${CREDIT_MODELS.map(m => `<figure class="mcred">
@@ -2017,7 +2080,8 @@ const MAN = [
       <figcaption><b>${m.veh}</b> · <a href="${m.url}" target="_blank" rel="noopener">«${m.title}»</a> de <b>${m.author}</b>, en Sketchfab · CC BY 4.0</figcaption>
     </figure>`).join('')}
     <p>El esquema del M4A3E2 Jumbo es provisional: estamos buscando un modelo 3D con licencia clara para sustituirlo.</p>
-    <p>Efectos de sonido de Pixabay (freesound_community, floraphonic, Dragon Studio, emand_edroff, liecio). Música generada con Google Flow Music. Textura de papel generada con ChatGPT.</p>`]
+    <p>Efectos de sonido de Pixabay (freesound_community, floraphonic, Dragon Studio, emand_edroff, liecio). Música generada con Google Flow Music. Textura de papel generada con ChatGPT.</p>
+    <p>Gracias a <b>Jalapeño</b> por la idea de exportar e importar el progreso.</p>`]
 ];
 const CREDIT_MODELS = [
   { veh: 'IS-2', img: 'is2', ratio: '640/170', title: 'IS2 Heavy Tank', author: 'adrielcz', url: 'https://skfb.ly/6AGwO' },
@@ -2099,6 +2163,7 @@ function showIntro() {
     <p>Combina cartas como en el póker, tira dados y empuja el frente hasta el último sector. Cada derrota avería una pieza de tu vehículo; los ingenieros y las cartas de apoyo te mantienen en pie.</p>
     <p class="beta-note"><b>Versión beta:</b> el equilibrio de los tanques está en pruebas y alguna actualización podría reiniciar tu progreso de campaña. Fallos e ideas, en <a href="https://github.com/V0raOnline/tanking-fire/issues" target="_blank" rel="noopener">GitHub</a> o en <a href="mailto:v0raonair@gmail.com">v0raonair@gmail.com</a>.</p>
     <div class="tut-row"><button type="button" class="btn fire" id="tut-start">Nivel 0 · Aprende a jugar</button><span>Una ronda guiada con el Jumbo contra un Tiger I, paso a paso. Unos 2 minutos.</span><button type="button" class="btn" data-manual>Manual de campaña</button></div>
+    <div class="tut-row"><button type="button" class="btn" id="intro-stats">Hoja de servicio</button><span>Tus mejores puntuaciones, tu mejor mano y las victorias con cada vehículo, guardadas en este navegador.</span></div>
     <div class="lv-head"><span class="zk">Modo</span>
       <div class="seg mseg" role="group" aria-label="Modo de juego"><button type="button" data-play="batalla">Batalla suelta</button><button type="button" data-play="ofensiva">Ofensiva</button></div></div>
     <div class="bstack" id="play-desc"></div>
@@ -2116,21 +2181,38 @@ function showIntro() {
     </div>
     <div class="lv-box" id="ofe-box"></div></div>
     <div class="step-next"><button type="button" class="btn fire" data-go="3">Siguiente: vehículo</button></div></div></section>
-    <section class="step" data-step="3"><button type="button" class="step-h" data-go="3"><span class="sn">3</span><span class="st">Vehículo</span><span class="ss">elige uno para empezar</span></button><div class="step-b">
-    <div class="choices">${VEHICLES.map(v => `<button type="button" class="choice" data-veh="${v.id}">
+    <section class="step" data-step="3"><button type="button" class="step-h" data-go="3"><span class="sn">3</span><span class="st">Vehículo</span><span class="ss">toca uno para ver su ficha</span></button><div class="step-b">
+    <div class="choices">${VEHICLES.map(v => `<button type="button" class="choice" data-veh="${v.id}" aria-pressed="false" aria-controls="veh-info">
       <span class="veh-head"><span class="veh-name">${v.name}</span><span class="veh-nation">${v.nation}</span></span>
       <span class="art">${artHTML({ veh: v, dmg: {} }, 'p')}</span>
       <span class="veh-stats"><span><b>+${v.pot}</b> dado</span><span><b>${v.arm}</b> blindaje</span><span class="afin">${suitIcon(v.afin)}${SUITS[v.afin]}</span></span>
       <span class="tr"><b>${v.trait}.</b> ${v.traitText}</span><span class="histtag" data-hist="${v.id}"></span></button>`).join('')}</div>
+    <div class="veh-info" id="veh-info" hidden></div>
     <div class="bstack" id="rival-note"></div></div></section>
     <p class="credit">Esquemas de alambre dibujados a partir de modelos 3D de sus autores; los créditos y licencias están en el manual de campaña.</p></div>`;
   o.hidden = false;
-  o.querySelectorAll('.choice').forEach(b => b.onclick = () => {
+  // Primer toque: marca el vehículo y enseña su ficha. Segundo toque en la misma tarjeta (o el botón): a combatir.
+  let vsel = null;
+  const go = id => {
     const bt = battleById(BSEL); if (!introBattleOpen(bt)) { toast('Esa batalla aún está bloqueada en campaña.'); return; }
     o.hidden = true; tutEnd();
-    if (PLAY === 'ofensiva') startOfensiva(b.dataset.veh); else newGame(b.dataset.veh, { level: PICK, mode: MODE, battle: BSEL });
+    if (PLAY === 'ofensiva') startOfensiva(id); else newGame(id, { level: PICK, mode: MODE, battle: BSEL });
+  };
+  o.querySelectorAll('.choice').forEach(b => b.onclick = () => {
+    const id = b.dataset.veh;
+    if (vsel === id) { go(id); return; }
+    vsel = id;
+    o.querySelectorAll('.choice').forEach(c => c.setAttribute('aria-pressed', c === b ? 'true' : 'false'));
+    const v = VEHICLES.find(x => x.id === id), info = $('veh-info');
+    info.innerHTML = `<div class="f-head"><div><span class="zk">Ficha técnica</span><h3 class="vi-name">${v.name}</h3><span class="veh-nation">${v.nation}</span></div>
+      <div class="vi-go"><button type="button" class="btn fire" id="vi-go">¡Al combate con el ${v.name}!</button><span class="credit">o vuelve a tocar su tarjeta</span></div></div>
+      <div class="f-grid vi-grid">${fichaBoxes(v, { veh: v, dmg: {} })}</div>`;
+    info.hidden = false;
+    $('vi-go').onclick = () => go(id);
+    info.scrollIntoView({ block: 'nearest', behavior: RM ? 'auto' : 'smooth' });
   });
   $('tut-start').onclick = () => { o.hidden = true; startTutorial(); };
+  $('intro-stats').onclick = () => { backToIntro = true; o.hidden = true; showStats(); };
   syncMus();
   o.querySelectorAll('#lv-box .seg button').forEach(b => b.onclick = () => { MODE = b.dataset.mode; if (MODE === 'campaign' && PICK > CAMP) PICK = CAMP; renderLv(); renderBattles(); });
   o.querySelectorAll('.mseg button').forEach(b => b.onclick = () => { PLAY = b.dataset.play; renderBattles(); });
